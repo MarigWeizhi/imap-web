@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.imap.dao.RoleMapper">
+
+    <resultMap id="roleResultMap" type="com.imap.common.pojo.Role">
+        <result column="role_id" property="roleId"></result>
+        <result column="role_name" property="roleName"></result>
+        <result column="create_time" property="createTime"></result>
+        <result column="update_time" property="updateTime"></result>
+        <result column="create_user" property="createUser"></result>
+        <result column="is_delete" property="isDelete"></result>
+        <result column="role_level" property="roleLevel"></result>
+    </resultMap>
+
+    <insert id="save" parameterType="com.imap.common.util.PageData">
+        insert into sys_role (role_id,role_name,create_time,create_user,is_delete,role_level,update_time)
+        values
+            (null,
+             #{role_name,jdbcType=VARCHAR},
+             #{create_time,jdbcType=TIMESTAMP},
+             #{create_user,jdbcType=INTEGER},
+             0,
+             #{role_level,jdbcType=INTEGER},
+             #{update_time,jdbcType=TIMESTAMP}
+             )
+    </insert>
+
+    <update id="update" parameterType="com.imap.common.util.PageData">
+        update sys_role set
+        <if test="role_name != null">role_name=#{role_name},</if>
+        <if test="role_level != null">role_level=#{role_level},</if>
+        update_time=#{update_time}
+        where role_id=#{role_id}
+    </update>
+
+    <!--    删除-->
+    <update id="delete" parameterType="com.imap.common.util.PageData">
+        update sys_role set
+        is_delete = 1
+        where role_id in
+        <foreach collection="role_ids" item="role_id" open="(" separator="," close=")">
+            #{role_id}
+        </foreach>
+    </update>
+
+    <select id="getRoleIdByUserId" resultType="java.lang.Integer">
+        select role_id from sys_user_role
+        where user_id = #{userId}
+    </select>
+
+    <select id="findListPage" resultType="com.imap.common.util.PageData">
+        select *  from sys_role
+        where is_delete = 0 and role_level >= #{pd.roleLevel}
+            limit #{showCount}
+    </select>
+
+    <select id="getAllList" resultType="com.imap.common.util.PageData">
+        select *  from sys_role
+        where is_delete = 0 and role_level >= #{pd.roleLevel}
+    </select>
+
+    <select id="getRoleById" resultMap="roleResultMap">
+        select * from sys_role where role_id = #{roleId}
+    </select>
+
+    <select id="findListSize" parameterType="com.imap.common.util.PageData" resultType="java.lang.Integer">
+        select count(*) from sys_role
+        where is_delete = 0 and role_level >= #{pd.roleLevel}
+    </select>
+
+</mapper>

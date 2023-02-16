@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.imap.dao.UserMapper">
+
+    <resultMap id="userResultMap" type="com.imap.common.pojo.User">
+        <result column="user_id" property="userId"></result>
+        <result column="login_name" property="loginName"></result>
+        <result column="login_password" property="loginPassword"></result>
+        <result column="name" property="userName"></result>
+        <result column="last_login_time" property="lastLoginTime"></result>
+        <result column="create_user" property="createUser"></result>
+        <result column="is_delete" property="isDelete"></result>
+    </resultMap>
+
+    <!--更新-->
+    <update id="update" parameterType="com.imap.common.util.PageData">
+        update sys_user set
+        <if test="login_name != null">login_name=#{login_name},</if>
+        <if test="login_password != null">login_password=#{login_password},</if>
+        <if test="name != null">name=#{name},</if>
+        <if test="sex != null">sex=#{sex},</if>
+        <if test="phone != null">phone=#{phone},</if>
+        <if test="email != null">email=#{email},</if>
+        <if test="ipaddr != null">ipaddr=#{ipaddr},</if>
+        update_time=#{update_time}
+        where user_id=#{user_id}
+    </update>
+    <!--    删除-->
+    <update id="delete" parameterType="com.imap.common.util.PageData">
+        update sys_user set
+        is_delete = 1
+        where user_id in
+        <foreach collection="user_ids" item="user_id" open="(" separator="," close=")">
+            #{user_id}
+        </foreach>
+    </update>
+
+    <select id="findUser" resultType="com.imap.common.util.PageData">
+        select login_name,login_password,name,sex,phone,email,create_time,last_login_time,create_user
+        from sys_user
+        where 1=1
+        <if test="user_id != null and user_id != ''">
+            and user_id = #{user_id}
+        </if>
+        limit 1
+    </select>
+
+
+    <!--保存-->
+    <insert id="save" parameterType="com.imap.common.util.PageData">
+        insert into sys_user (user_id,login_name,login_password,name,sex,
+                              phone,email,create_time,create_user,last_login_time,is_delete)
+        values
+            (null,#{login_name,jdbcType=VARCHAR},#{login_password,jdbcType=VARCHAR},#{name,jdbcType=VARCHAR},
+             #{sex,jdbcType=INTEGER},#{phone,jdbcType=VARCHAR},
+             #{email,jdbcType=VARCHAR},
+             #{create_time,jdbcType=TIMESTAMP},
+             #{create_user,jdbcType=INTEGER},#{last_login_time,jdbcType=TIMESTAMP},0)
+    </insert>
+
+    <insert id="saveUserRole" parameterType="com.imap.common.util.PageData">
+        insert into sys_user_role(user_id, role_id)
+        values(#{user_id,jdbcType=INTEGER},#{role,jdbcType=INTEGER})
+    </insert>
+
+    <!--    <select id="getUserByLogin" resultMap="userResultMap">-->
+    <!--        select * from user-->
+    <!--        where user_name = #{userName} and password = #{password}-->
+    <!--    </select>-->
+
+    <select id="getUserById" resultMap="userResultMap">
+        select * from sys_user
+        where user_id = #{userId}
+    </select>
+
+    <select id="getAllList" parameterType="com.imap.common.util.PageData" resultType="com.imap.common.util.PageData">
+        select * from sys_user a
+        where 1=1
+        <if test="query_login_name != null and query_login_name.size > 0">
+            and a.login_name in
+            <foreach collection="query_login_name" item="login_name" open="(" separator="," close=")">
+                #{login_name}
+            </foreach>
+        </if>
+        <if test="query_phone != null and query_phone.size > 0">
+            and a.phone in
+            <foreach collection="query_phone" item="phone" open="(" separator="," close=")">
+                #{phone}
+            </foreach>
+        </if>
+        order by a.create_time desc
+    </select>
+    <select id="getUserByLogin" resultMap="userResultMap">
+        select * from sys_user
+        where login_name = #{userName} and login_password = #{password}
+    </select>
+
+    <select id="findListSize" parameterType="com.imap.common.util.Page" resultType="java.lang.Integer">
+        select count(*) from sys_user
+        where is_delete = 0 and (user_id = #{pd.userId} or create_user = #{pd.userId})
+    </select>
+
+    <select id="findListPage" parameterType="com.imap.common.util.Page" resultType="com.imap.common.util.PageData">
+        select login_name,
+               name,
+               sex,
+               phone,
+               email,
+               create_time
+               from sys_user
+        where is_delete = 0 and (user_id = #{pd.userId} or create_user = #{pd.userId})
+            limit #{showCount}
+    </select>
+
+</mapper>

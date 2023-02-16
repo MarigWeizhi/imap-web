@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.imap.dao.PhotoMapper">
+
+<!--    <resultMap id="alarmResultMap" type="com.fims.pojo.vo.AlarmVO">-->
+<!--        <result column="site_name" property="site"></result>-->
+<!--        <result column="type" property="type"></result>-->
+<!--        <result column="info" property="event"></result>-->
+<!--        <result column="create_time" property="time" jdbcType="TIMESTAMP"></result>-->
+<!--    </resultMap>-->
+
+
+    <select id="getPhotos" resultType="java.lang.String">
+        select url
+        from dev_site_photo
+        where site_id = #{siteId}
+        order by create_time desc
+        limit 5
+    </select>
+
+    <select id="getCameraUrl" resultType="java.lang.String">
+        select url from dev_site
+        where site_id = #{siteId}
+    </select>
+</mapper>
