@@ -102,12 +102,15 @@
     </select>
 
     <select id="findListPage" parameterType="com.imap.common.util.Page" resultType="com.imap.common.util.PageData">
-        select login_name,
+        select
+               user_id,
+               login_name,
                name,
                sex,
                phone,
                email,
-               create_time
+               create_time,
+               update_time
                from sys_user
         where is_delete = 0 and (user_id = #{pd.userId} or create_user = #{pd.userId})
             limit #{showCount}

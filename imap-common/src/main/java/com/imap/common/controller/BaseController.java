@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.imap.common.util.Page;
 import com.imap.common.util.PageData;
 import com.imap.common.util.Verify;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -14,6 +15,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class BaseController {
+
+//    自己创建完ObjectMapper实例后没有注册JavaTimeModule，会导致LocalDateTime时间转换异常
+//    而Spring容器中的ObjectMapper实例是框架已经配置好了的所以不会出现这个问题
+    @Autowired
+    public ObjectMapper objMapper;
 
     public Page dealDataAuth(Page page, PageData pd, HttpSession session){
         PageData user = (PageData) session.getAttribute("user");
@@ -64,7 +70,7 @@ public class BaseController {
     public void writeJson(HttpServletResponse response, Object object) throws IOException {
 
         response.setContentType("text/html;charset=utf-8");
-        ObjectMapper objMapper = new ObjectMapper();
+//        ObjectMapper objMapper = new ObjectMapper();
         JsonGenerator jsonGenerator = objMapper.getFactory().createGenerator(response.getOutputStream(),JsonEncoding.UTF8);
         jsonGenerator.writeObject(object);
         jsonGenerator.flush();

@@ -8,6 +8,7 @@ class ImapWebApplicationTests {
 
     @Test
     void contextLoads() {
+        short a = 1;
     }
 
 }
