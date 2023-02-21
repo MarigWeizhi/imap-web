@@ -14,23 +14,11 @@ import java.util.List;
  * @Description:
  */
 
-public interface UserService {
+public abstract class UserService implements BaseService {
 
-    User login(String userName, String password);
+    public abstract User login(String userName, String password);
 
-    User getUserById(int uid);
+    public abstract User getUserById(int uid);
 
-    List<PageData> findList(PageData pd);
-
-    List<PageData> findListPage(Page page);
-
-    int findListSize(Page page);
-
-    void save(PageData pd);
-
-    PageData findUser(PageData pd);
-
-    void update(PageData pd);
-
-    void del(PageData ids);
+    public abstract PageData findUser(PageData pd);
 }

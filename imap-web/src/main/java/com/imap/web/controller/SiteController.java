@@ -23,7 +23,15 @@ public class SiteController extends BaseController {
     ModelAndView index(HttpServletRequest request,ModelAndView mv){
         PageData pd = new PageData(request);
         mv.getModel().put("pd", pd);
-        mv.setViewName("forward:/system/site/index.jsp");
+        mv.setViewName("forward:/system/site/site_list.jsp");
+        return mv;
+    }
+
+    @RequestMapping(value = "/toAdd", method = RequestMethod.GET)
+    public ModelAndView toAdd(ModelAndView mv, HttpServletRequest request) {
+        PageData pd = new PageData(request);
+        mv.getModelMap().put("pd", pd);
+        mv.setViewName("forward:/system/site/site_add.jsp");
         return mv;
     }
 

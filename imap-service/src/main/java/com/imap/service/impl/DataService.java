@@ -28,7 +28,6 @@ public class DataService {
     @Autowired
     PhotoMapper photoMapper;
 
-
     public List<AlarmVO> getAlarmList(int siteId) {
         List<AlarmVO> alarmList = alarmMapper.getAlarmList(siteId);
         alarmList.stream().forEach(alarm -> alarm.change());

@@ -90,7 +90,7 @@ public class UserController extends BaseController {
     @RequestMapping(value = "/findList", method = RequestMethod.GET)
     public void findList(HttpServletRequest request, HttpServletResponse response) throws IOException {
         PageData pd = new PageData(request);
-        List<PageData> list = userService.findList(pd);
+        List<PageData> list = userService.getAllList(pd);
         for (String key : pd.getKeys(pd)) {
             System.out.println(key + pd.get(key));
         }
@@ -121,7 +121,7 @@ public class UserController extends BaseController {
         pd.putAll(bean2Map(session.getAttribute("user")));
         page.setPd(pd);
         List<PageData> list = userService.findListPage(page);
-        int num = userService.findListSize(page);
+        int num = userService.getListSize(page);
         Json json = new Json();
         json.setMsg("获取数据成功。");
         json.setCode(0);
@@ -149,7 +149,7 @@ public class UserController extends BaseController {
 
         //判断登录用户名称是否存在
         pd.put("query_login_name", Arrays.asList(pd.get("login_name").toString().split(",")));
-        List<PageData> list = userService.findList(pd);
+        List<PageData> list = userService.getAllList(pd);
         if (list.size() > 0) {
             json.setSuccess(false);
             json.setMsg("用户【" + pd.get("login_name").toString() + "】已经存在！");
@@ -242,7 +242,7 @@ public class UserController extends BaseController {
         if (null != pd.get("old_login_name") && !pd.get("old_login_name").equals(pd.get("login_name"))) {
             //判断登录用户名称是否存在
             pd.put("query_login_name", Arrays.asList(pd.get("login_name").toString().split(",")));
-            List<PageData> list = userService.findList(pd);
+            List<PageData> list = userService.getAllList(pd);
             if (list.size() > 0) {
                 json.setSuccess(false);
                 json.setMsg("用户【" + pd.get("login_name").toString() + "】已经存在！");
@@ -308,7 +308,7 @@ public class UserController extends BaseController {
 //        userService.delUserGroup(pd);
         //删除用户角色关联
 //        userService.delUserRole(pd);
-        userService.del(pd);
+        userService.delete(pd);
         //删除附件
         pd.put("idList", Arrays.asList(ids));
 //        List<PageData> fileList = uploadService.findFileList(pd);

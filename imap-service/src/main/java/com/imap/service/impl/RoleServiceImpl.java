@@ -16,22 +16,22 @@ import java.util.List;
  * @Description:
  */
 @Service
-public class RoleServiceImpl implements RoleService {
+public class RoleServiceImpl extends RoleService {
 
     @Autowired
     RoleMapper roleMapper;
+
     @Override
     public int getRoleId(int userId) {
         return roleMapper.getRoleIdByUserId(userId);
     }
-
     @Override
     public Role getRoleById(int roleId) {
         return roleMapper.getRoleById(roleId);
     }
 
     @Override
-    public List<PageData> findList(PageData pd) {
+    public List<PageData> getAllList(PageData pd) {
         List<PageData> listPage = roleMapper.getAllList(pd);
         listPage.stream().forEach(p -> p.put("create_time", p.get("create_time").toString()));
         listPage.stream().forEach(p -> p.put("update_time", p.get("update_time").toString()));
@@ -47,7 +47,7 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public int findListSize(Page page) {
+    public int getListSize(Page page) {
         int size = roleMapper.getAllList(page.getPd()).size();
         return size;
     }

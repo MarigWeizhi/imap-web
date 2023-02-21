@@ -4,7 +4,6 @@ import com.imap.common.controller.BaseController;
 import com.imap.common.pojo.Role;
 import com.imap.common.pojo.User;
 import com.imap.common.util.*;
-import com.imap.service.UserService;
 import com.imap.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -67,7 +66,7 @@ public class RoleController extends BaseController {
         pd.putAll(bean2Map(role));
         page.setPd(pd);
         List<PageData> list = roleService.findListPage(page);
-        int num = roleService.findListSize(page);
+        int num = roleService.getListSize(page);
         Json json = new Json();
         json.setMsg("获取数据成功。");
         json.setCode(0);
@@ -80,7 +79,7 @@ public class RoleController extends BaseController {
     @RequestMapping(value = "/findList", method = RequestMethod.GET)
     public void findList(HttpServletRequest request, HttpServletResponse response) throws IOException {
         PageData pd = new PageData(request);
-        List<PageData> list = roleService.findList(pd);
+        List<PageData> list = roleService.getAllList(pd);
         for (String key : pd.getKeys(pd)) {
             System.out.println(key + pd.get(key));
         }

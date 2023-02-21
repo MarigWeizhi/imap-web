@@ -10,6 +10,7 @@
         <i class="layui-icon layui-icon-refresh" style="line-height:30px"></i>
     </a>
 </div>
+
 <div class="layui-fluid">
 <%--    <div style="float: left; width: 15%; margin-right:15px;min-height: 580px;" id="leftDiv">--%>
 <%--        <ul id="treeDemo" class="ztree"></ul>--%>
@@ -18,6 +19,7 @@
 <%--        <input type="hidden" id="org_cascade" value="" />--%>
 <%--        <input type="hidden" id="level_num" value="" />--%>
 <%--    </div>--%>
+
     <div style="float: left; width: 83%" id="rightDiv">
         <div class="layui-row layui-col-space1">
             <div class="layui-col-md12">
@@ -37,25 +39,14 @@
                                     <label class="layui-form-lab" style="width: auto">手机号</label>
                                     <input type="text" name="phone" id="phone" style="width: 180px;height: 32px;display: inline" placeholder="请输入手机号" class="layui-input">
                                 </div>
-<%--                                <div class="layui-inline">--%>
-<%--                                    <div style="float: left;padding-top: 5px;">--%>
-<%--                                        <label class="layui-form-lab" style="width: auto">状态</label>--%>
-<%--                                    </div>--%>
-<%--                                    <div style="float: left;padding-left: 5px">--%>
-<%--                                        <select name="status" id="status" style="width: 120px;height: 32px;" class="layui-input">--%>
-<%--                                            <option value=""></option>--%>
-<%--                                            <option value="0">启用</option>--%>
-<%--                                            <option value="1">禁用</option>--%>
-<%--                                            <option value="2">休眠</option>--%>
-<%--                                        </select>--%>
-<%--                                    </div>--%>
-<%--                                </div>--%>
+
                                 <div class="layui-inline">
                                     <button type="button" class="layui-btn layui-btn-sm"  lay-submit="" onclick="reloadData()"><i class="layui-icon">&#xe615;</i></button>
                                 </div>
                             </form>
                         </div>
                     </blockquote>
+
                     <div class="layui-card-body ">
                         <table class="layui-hide" id="system_user" lay-filter="system_user"></table>
                     </div>

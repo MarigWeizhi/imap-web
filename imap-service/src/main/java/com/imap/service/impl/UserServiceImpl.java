@@ -18,7 +18,7 @@ import java.util.List;
  */
 
 @Service("userService")
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl extends UserService {
 
     @Autowired
     UserMapper userMapper;
@@ -41,7 +41,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<PageData> findList(PageData pd) {
+    public List<PageData> getAllList(PageData pd) {
         return userMapper.getAllList(pd);
     }
 
@@ -54,9 +54,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public int findListSize(Page page) {
+    public int getListSize(Page page) {
         return userMapper.findListSize(page);
     }
+
 
     @Override
     public void save(PageData pd) {
@@ -72,12 +73,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void update(PageData pd) {
+    public int update(PageData pd) {
         userMapper.update(pd);
+        return 0;
     }
 
     @Override
-    public void del(PageData pd) {
+    public void delete(PageData pd) {
         userMapper.delete(pd);
     }
 

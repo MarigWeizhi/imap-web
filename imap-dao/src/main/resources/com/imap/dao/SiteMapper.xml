@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.imap.dao.SiteMapper">
+
+    <insert id="save"></insert>
+    <update id="update"></update>
+    <delete id="delete"></delete>
+    <select id="findListPage" resultType="com.imap.common.util.PageData"></select>
+    <select id="getListSize" resultType="java.lang.Integer"></select>
+    <select id="getAllList" resultType="com.imap.common.util.PageData"></select>
+    <select id="getSiteById" resultType="com.imap.common.pojo.Site"></select>
+</mapper>

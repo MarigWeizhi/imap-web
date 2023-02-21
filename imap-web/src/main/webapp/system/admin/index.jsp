@@ -129,38 +129,50 @@
         <ul id="nav">
 
             <li id="dm">
-                <a href="/" target=“_blank”>
+                <a href="javascript:;">
                     <i class="iconfont left-nav-li" lay-tips="数据监控">&#xe6b8;</i>
                     <cite>数据监控</cite>
-                    <i class="iconfont nav_right">&#xe697;</i></a>
+                    <i class="iconfont nav_right">&#xe697;</i>
+                </a>
+                <ul class="sub-menu">
+                    <li>
+                    <a href="/" target=“_blank”>
+                    <i class="iconfont left-nav-li" lay-tips="在线监控">&#xe6a8;</i>
+                    <cite>在线监控</cite>
+<%--                    <i class="iconfont nav_right">&#xe697;</i>--%>
+                    </a>
+                    </li>
+
+                    <li>
+                        <a onclick="xadmin.add_tab('历史数据','${pageContext.request.contextPath}/system/history/index')">
+                            <i class="iconfont left-nav-li">&#xe812;</i>
+                            <cite>历史数据</cite></a>
+                    </li>
+                </ul>
             </li>
 
             <li id="last_li">
             <a href="javascript:;">
             <i class="iconfont left-nav-li" lay-tips="系统管理">&#xe6b8;</i>
             <cite>系统管理</cite>
-            <i class="iconfont nav_right">&#xe697;</i></a>
-            <ul class="sub-menu">
-            <li>
-            <a onclick="xadmin.add_tab('用户管理','${pageContext.request.contextPath}/system/user/index',true)">
-            <i class="iconfont">&#xe6a7;</i>
-            <cite>用户管理</cite></a>
-            </li>
-            <li>
-            <a onclick="xadmin.add_tab('角色管理','${pageContext.request.contextPath}/system/role/index')">
-            <i class="iconfont">&#xe6a7;</i>
-            <cite>角色管理</cite></a>
-            </li>
-            <li>
-            <a onclick="xadmin.add_tab('站点管理','${pageContext.request.contextPath}/system/site/index')">
-            <i class="iconfont">&#xe6a7;</i>
-            <cite>站点管理</cite></a>
-            </li>
-            <li>
-            <a onclick="xadmin.add_tab('历史数据','${pageContext.request.contextPath}/system/history/index')">
-            <i class="iconfont">&#xe6a7;</i>
-            <cite>历史数据</cite></a>
-            </li>
+            <i class="iconfont nav_right">&#xe697;</i>
+            </a>
+                <ul class="sub-menu">
+                <li>
+                <a onclick="xadmin.add_tab('用户管理','${pageContext.request.contextPath}/system/user/index',true)">
+                <i class="iconfont">&#xe6a7;</i>
+                <cite>用户管理</cite></a>
+                </li>
+                <li>
+                <a onclick="xadmin.add_tab('角色管理','${pageContext.request.contextPath}/system/role/index')">
+                <i class="iconfont">&#xe6a7;</i>
+                <cite>角色管理</cite></a>
+                </li>
+                <li>
+                <a onclick="xadmin.add_tab('站点管理','${pageContext.request.contextPath}/system/site/index')">
+                <i class="iconfont">&#xe6a7;</i>
+                <cite>站点管理</cite></a>
+                </li>
             </ul>
             </li>
         </ul>
