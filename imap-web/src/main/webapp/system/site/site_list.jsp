@@ -61,14 +61,15 @@
 <script type="text/html" id="toolbarDemo">
     <div class="layui-btn-container">
         <button type="button" class="layui-btn layui-btn-sm" lay-event="add"><i class="layui-icon"></i>新增</button>
-        <button type="button" class="layui-btn layui-btn-normal layui-btn-sm" lay-event="edit"><i class="layui-icon"></i>编辑</button>
+<%--        <button type="button" class="layui-btn layui-btn-normal layui-btn-sm" lay-event="edit"><i class="layui-icon"></i>编辑</button>--%>
         <button type="button" class="layui-btn layui-btn-danger layui-btn-sm" lay-event="del"><i class="layui-icon"></i>删除</button>
     </div>
 </script>
 
 <%--每行数据操作--%>
 <script type="text/html" id="barDemo">
-    <a class="layui-btn layui-btn-xs" lay-event="del">删除</a>
+    <a class="layui-btn layui-btn-xs" lay-event="del">编辑</a>
+    <a class="layui-btn layui-btn-xs" lay-event="edit">删除</a>
 </script>
 
 <%--表单逻辑--%>
@@ -92,15 +93,11 @@
                 {type: 'checkbox', fixed: 'left', width:40}
                 ,{field:'site_id', fixed: 'left',title:'站点编号', edit: 'text'}
                 ,{field:'site_name', fixed: 'left',title:'站点名称', edit: 'text'}
+                ,{field:'lat', fixed: 'left',title:'经度', edit: 'text'}
+                ,{field:'lon', fixed: 'left',title:'纬度', edit: 'text'}
                 ,{field:'create_user', fixed: 'left',title:'负责人', edit: 'text'}
                 ,{field:'update_time', fixed: 'left',title:'更新时间', edit: 'text'}
-                ,{field:'is_delete', title: '状态', sort: true,templet: function(res){
-                        if(res.is_delete=='0'){
-                            return "<span style='color: #32CD32;font-weight: bold'>启用</span>";
-                        }else  if(res.is_delete=='1'){
-                            return "<span style='color: #EE4000;font-weight: bold'>禁用</span>";
-                        }
-                    }}
+                ,{field:'create_time', fixed: 'left',title:'创建时间', edit: 'text'}
                 ,{fixed: 'right', align:'center',title:'操作', width:220, toolbar: '#barDemo'}
             ]]
             ,id:'system_site'
@@ -120,28 +117,11 @@
                 case 'add': //增加
                     add();
                     break;
-                case 'addMore': //批量增加
-                    addMore();
-                    break;
                 case 'edit': //编辑
-                    <%--if(data.length!=1){--%>
-                    <%--    layer.msg('请选择一条数据进行操作。' );--%>
-                    <%--}else{--%>
-                    <%--    if(data[0].site_level <= ${site.siteLevel} && ${site.siteLevel} != 0 ){--%>
-                    <%--        layer.msg("没有编辑权限,请选择其他数据进行编辑。", {time: 2000});--%>
-                    <%--        return;--%>
-                    <%--    }--%>
-                    <%--    edit(data[0].site_id)--%>
-                    <%--}--%>
                     break;
                 case 'del': //删除
                     if(data.length>0){
                         var delBol = true;
-                        <%--for ( var i = 0; i <data.length; i++){--%>
-                        <%--    if(data[i].site_level <= ${site.siteLevel} & ${site.siteLevel} != 0){--%>
-                        <%--        delBol = false;--%>
-                        <%--    }--%>
-                        <%--}--%>
                         if(!delBol){
                             layer.msg("批量删除中存在没有删除权限的数据，请重新选择。", {time: 2000});
                             return;
@@ -218,7 +198,6 @@
             var value = obj.value //得到修改后的值
                 ,data = obj.data //得到所在行所有键值
                 ,field = obj.field; //得到字段
-//            layer.msg('[ID: '+ data.site_id +'] ' + field + ' 字段更改为：'+ value);
             $.ajax({
                 type: "POST",//方法类型
                 dataType: "json",//预期服务器返回的数据类型
@@ -266,26 +245,6 @@
             maxmin: true,
             type: 2,
             content: '${pageContext.request.contextPath}/system/site/toAdd?',
-            area: ['800px', '500px'],
-            end: function () {
-                var val = getOpenCloseParam();
-                if(val=="reload"){
-                    reloadData();
-                }
-            }
-        });
-    }
-
-
-    //新增
-    function addMore(){
-        parent.layer.open({
-            id:'site_add',
-            //skin: 'layui-layer-molv',
-            title: '批量添加',
-            maxmin: true,
-            type: 2,
-            content: '${pageContext.request.contextPath}/system/site/toAddMore',
             area: ['800px', '500px'],
             end: function () {
                 var val = getOpenCloseParam();

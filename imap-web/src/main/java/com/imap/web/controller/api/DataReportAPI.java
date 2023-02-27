@@ -23,7 +23,7 @@ import java.io.IOException;
 
 @RestController
 @RequestMapping("/report")
-public class DataReport extends BaseController {
+public class DataReportAPI extends BaseController {
     @Autowired
     DataService dataService;
 

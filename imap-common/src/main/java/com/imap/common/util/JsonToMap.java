@@ -1,6 +1,7 @@
 package com.imap.common.util;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.TypeReference;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -34,6 +35,9 @@ public class JsonToMap {
 
     public static <T> T jsonToObj(String json, Class<T> clazz) throws IOException {
         return JSON.parseObject(json, clazz);
+    }
+    public static <T> T jsonToObj(String json, TypeReference<T> reference) {
+        return JSON.parseObject(json, reference);
     }
 
     /**
@@ -330,6 +334,7 @@ public class JsonToMap {
         newJson = newJson.replaceAll("\\\"", "\\\\\"");
         return newJson;
     }
+
 
 
 }

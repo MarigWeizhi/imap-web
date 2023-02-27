@@ -65,7 +65,7 @@ public class RoleServiceImpl extends RoleService {
     @Override
     public int update(PageData pd) {
         roleMapper.update(pd);
-        return 1;
+        return 200;
     }
 
     @Override

@@ -15,6 +15,7 @@ public class Site {
     private Double lat;
     private Double lon;
     private String url;
-    private Long createdTime;
-    private Integer createdUser;
+    private Long updateTime;
+    private Long createTime;
+    private Integer createUser;
 }

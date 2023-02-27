@@ -75,7 +75,7 @@ public class UserServiceImpl extends UserService {
     @Override
     public int update(PageData pd) {
         userMapper.update(pd);
-        return 0;
+        return 200;
     }
 
     @Override

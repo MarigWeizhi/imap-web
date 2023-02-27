@@ -4,11 +4,77 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.imap.dao.SiteMapper">
 
-    <insert id="save"></insert>
-    <update id="update"></update>
-    <delete id="delete"></delete>
-    <select id="findListPage" resultType="com.imap.common.util.PageData"></select>
-    <select id="getListSize" resultType="java.lang.Integer"></select>
-    <select id="getAllList" resultType="com.imap.common.util.PageData"></select>
-    <select id="getSiteById" resultType="com.imap.common.pojo.Site"></select>
+    <insert id="save" parameterType="com.imap.common.util.PageData">
+        insert into dev_site(site_id, site_name,
+                             lat, lon, url,
+                             update_time, create_time,
+                             create_user, is_delete)
+        values (null,
+                #{site_name,jdbcType=VARCHAR},
+                #{lat,jdbcType=FLOAT},
+                #{lon,jdbcType=FLOAT},
+                #{url,jdbcType=VARCHAR},
+                #{update_time,jdbcType=TIMESTAMP},
+                #{create_time,jdbcType=TIMESTAMP},
+                #{create_user,jdbcType=INTEGER},
+                0)
+    </insert>
+
+    <update id="update" parameterType="com.imap.common.util.PageData">
+        update dev_site set
+        <if test="site_name != null">site_name=#{site_name},</if>
+        <if test="lat != null">lat=#{lat},</if>
+        <if test="lon != null">lon=#{lon},</if>
+        <if test="url != null">url=#{url},</if>
+        update_time=#{update_time}
+        where site_id=#{site_id} and is_delete = 0
+    </update>
+
+    <update id="delete" parameterType="com.imap.common.util.PageData">
+        update dev_site set is_delete = 1
+        where site_id in
+        <foreach collection="site_ids" item="site_id" open="(" separator="," close=")">
+            #{site_id}
+        </foreach>
+    </update>
+
+    <select id="findListPage" parameterType="com.imap.common.util.Page"  resultType="com.imap.common.util.PageData">
+        select * from dev_site
+        where is_delete = 0
+        limit #{showCount} offset #{offset}
+    </select>
+
+    <select id="getListSize" resultType="java.lang.Integer">
+        select count(*) from dev_site where is_delete = 0
+    </select>
+
+    <select id="getAllList" resultType="com.imap.common.util.PageData">
+        select site_id,
+               site_name,
+               lon,
+               lat,
+               url,
+               create_user
+        from dev_site
+        where is_delete = 0
+    </select>
+
+    <select id="getSiteById" resultType="com.imap.common.pojo.Site">
+        select *  from dev_site
+        where is_delete = 0 and site_id = #{siteId}
+    </select>
+
+    <select id="getCurSiteData" resultType="com.imap.common.pojo.DataReport">
+        select site_id siteId,
+               UNIX_TIMESTAMP(`timestamp`) as `timestamp` ,
+               type,
+               version,
+               `status`,
+               `data` as dataStr
+        from dev_data_report
+        where site_id = #{siteId}
+        order by `timestamp` desc
+        limit 1
+    </select>
+
 </mapper>

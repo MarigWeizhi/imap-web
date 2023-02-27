@@ -1,9 +1,11 @@
 package com.imap.web.controller.api;
 
 import com.alibaba.fastjson.JSON;
+import com.imap.common.pojo.DataReport;
 import com.imap.common.pojo.vo.AlarmVO;
 import com.imap.common.pojo.vo.HistoryHTVO;
 import com.imap.common.pojo.vo.PhotoVO;
+import com.imap.common.pojo.vo.SiteDataVO;
 import com.imap.service.impl.DataService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -27,6 +29,13 @@ public class DataAPI {
 
     @Autowired
     DataService dataService;
+
+    @ResponseBody
+    @GetMapping("/site/{siteId}")
+    String getSiteData(@PathVariable("siteId") int siteId){
+        SiteDataVO siteData = dataService.getSiteData(siteId);
+        return JSON.toJSONString(siteData);
+    }
 
 //    /api/hmt/1
 // 没有 @ResponseBody 注解，spring会以为你返回的字符串是个url

@@ -14,6 +14,7 @@ public class Page {
 	 * 每页显示记录数
 	 */
 	private int showCount = 15;
+	private int offset = 0;
 
 	/**
 	 * 当前页
@@ -104,5 +105,9 @@ public class Page {
 
 	public void setParam(String param) {
 		this.param = param;
+	}
+
+	public Integer getOffset() {
+		return (index-1)*showCount;
 	}
 }

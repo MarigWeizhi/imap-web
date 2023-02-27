@@ -425,16 +425,23 @@ public class DateTimeUtil {
 	    	System.out.println(s);
 			return String.valueOf(s).substring(0, 10); 
 	    }
-	    
-	    public static String TimeStampDate(String timestampString){    
+
+		// 毫秒数时间戳转为日期字符串
+	    public static String timeStamp2DateString(String timestampString){
 	    	  Long timestamp = Long.parseLong(timestampString)*1000;    
 	    	  String date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date(timestamp));
 	    	  return date;    
-	    	} 
-	    
-	    
-	    
-	    /**
+	    	}
+
+	public static String timeStamp2DateString(Long time){
+		Long timestamp = time*1000;
+		String date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date(timestamp));
+		return date;
+	}
+
+
+
+	/**
 		 * 今年中的第几周
 		 * @param date
 		 * @return

@@ -28,7 +28,17 @@ public class SiteServiceImpl extends SiteService {
 
     @Override
     public List<PageData> getAllList(PageData pd) {
-        return siteMapper.getAllList(pd);
+
+        List<PageData> allList = siteMapper.getAllList(pd);
+
+        // 为每个站点查询对应管理员名字
+        allList.forEach(site -> {
+            Integer userId = (Integer) site.get("create_user");
+            String userName = userMapper.getUserById(userId).getUserName();
+            site.put("administrator",userName);
+        });
+
+        return allList;
     }
 
     @Override
@@ -51,15 +61,16 @@ public class SiteServiceImpl extends SiteService {
     public int update(PageData pd) {
         try{
             siteMapper.update(pd);
-            return 1;
+            return 200;
         }catch (Exception e){
-            return 0;
+            return 400;
         }
     }
 
     @Override
     public void delete(PageData pd) {
         siteMapper.delete(pd);
+//      TODO 对应监控配置删除
     }
 
     @Override

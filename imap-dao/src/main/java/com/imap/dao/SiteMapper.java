@@ -1,6 +1,7 @@
 package com.imap.dao;
 
 import com.imap.common.pojo.Site;
+import com.imap.common.pojo.DataReport;
 import com.imap.common.util.Page;
 import com.imap.common.util.PageData;
 import org.apache.ibatis.annotations.Mapper;
@@ -23,4 +24,6 @@ public interface SiteMapper {
     List<PageData> getAllList(PageData pd);
 
     Site getSiteById(int siteId);
+
+    DataReport getCurSiteData(int siteId);
 }
