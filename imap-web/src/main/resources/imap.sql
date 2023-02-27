@@ -11,7 +11,7 @@
  Target Server Version : 100422
  File Encoding         : 65001
 
- Date: 27/02/2023 16:20:46
+ Date: 27/02/2023 22:46:21
 */
 
 SET NAMES utf8mb4;
@@ -39,6 +39,46 @@ CREATE TABLE `dev_alarm`  (
 INSERT INTO `dev_alarm` VALUES (1, 1, 1, '设备异常', NULL, '2022-10-08 10:31:24');
 INSERT INTO `dev_alarm` VALUES (22, 1, 2, '温度过高：50.0℃', NULL, '2023-01-08 13:15:49');
 INSERT INTO `dev_alarm` VALUES (23, 1, 2, '湿度过高：90.0%', NULL, '2023-01-08 13:15:49');
+
+-- ----------------------------
+-- Table structure for dev_avg_data
+-- ----------------------------
+DROP TABLE IF EXISTS `dev_avg_data`;
+CREATE TABLE `dev_avg_data`  (
+                                 `site_id` int(11) NOT NULL,
+                                 `end_time` datetime(0) NOT NULL,
+                                 `type` int(11) NOT NULL COMMENT '时间粒度1：分钟、2：小时、3：天、4：星期、5：月',
+                                 `avg_tmp` decimal(8, 2) NULL DEFAULT NULL,
+                                 `avg_hmt` decimal(8, 2) NULL DEFAULT NULL,
+                                 `avg_lx` decimal(8, 2) NULL DEFAULT NULL,
+                                 PRIMARY KEY (`site_id`, `end_time`, `type`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of dev_avg_data
+-- ----------------------------
+INSERT INTO `dev_avg_data` VALUES (1, '2023-02-27 14:07:15', 5, 58.15, 0.46, 361.09);
+INSERT INTO `dev_avg_data` VALUES (1, '2023-02-27 14:07:20', 5, 95.49, 0.61, 145.60);
+INSERT INTO `dev_avg_data` VALUES (1, '2023-02-27 14:07:30', 5, 65.07, 0.50, 598.20);
+INSERT INTO `dev_avg_data` VALUES (1, '2023-02-27 14:07:35', 5, 48.92, 0.57, 719.72);
+INSERT INTO `dev_avg_data` VALUES (1, '2023-02-27 14:07:40', 5, 29.25, 0.29, 217.27);
+INSERT INTO `dev_avg_data` VALUES (1, '2023-02-27 14:07:45', 5, 41.73, 0.64, 469.65);
+INSERT INTO `dev_avg_data` VALUES (2, '2023-02-27 14:07:20', 5, 47.55, 0.44, 390.20);
+INSERT INTO `dev_avg_data` VALUES (2, '2023-02-27 14:07:25', 5, 51.59, 0.68, 360.43);
+INSERT INTO `dev_avg_data` VALUES (2, '2023-02-27 14:07:30', 5, 42.29, 0.92, 378.73);
+INSERT INTO `dev_avg_data` VALUES (3, '2023-02-27 14:07:20', 5, 51.91, 0.08, 12.88);
+INSERT INTO `dev_avg_data` VALUES (3, '2023-02-27 14:07:30', 5, 16.94, 0.08, 640.02);
+INSERT INTO `dev_avg_data` VALUES (3, '2023-02-27 14:07:35', 5, 38.60, 0.72, 202.01);
+INSERT INTO `dev_avg_data` VALUES (3, '2023-02-27 14:07:40', 5, 63.71, 0.24, 755.24);
+INSERT INTO `dev_avg_data` VALUES (3, '2023-02-27 14:07:45', 5, 88.66, 0.33, 682.26);
+INSERT INTO `dev_avg_data` VALUES (4, '2023-02-27 14:07:15', 5, 47.18, 0.69, 506.10);
+INSERT INTO `dev_avg_data` VALUES (4, '2023-02-27 14:07:25', 5, 48.66, 0.67, 336.53);
+INSERT INTO `dev_avg_data` VALUES (4, '2023-02-27 14:07:30', 5, 6.31, 0.03, 425.08);
+INSERT INTO `dev_avg_data` VALUES (4, '2023-02-27 14:07:40', 5, 30.28, 0.37, 219.48);
+INSERT INTO `dev_avg_data` VALUES (4, '2023-02-27 14:07:45', 5, 27.68, 0.98, 999.66);
+INSERT INTO `dev_avg_data` VALUES (5, '2023-02-27 14:07:10', 5, 29.48, 0.60, 825.91);
+INSERT INTO `dev_avg_data` VALUES (5, '2023-02-27 14:07:15', 5, 21.27, 0.21, 480.10);
+INSERT INTO `dev_avg_data` VALUES (5, '2023-02-27 14:07:35', 5, 2.01, 0.04, 38.02);
 
 -- ----------------------------
 -- Table structure for dev_data_report

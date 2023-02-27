@@ -52,11 +52,6 @@ public class DataReportAPI extends BaseController {
             dataService.addAlarm(pd2);
         }
 
-//        dataService.updateHT(pd);
-//        Json json = new Json();
-//        json.setSuccess(true);
-//        json.setMsg("上报成功。");
-//        this.writeJson(response, json);
     }
 
     @PostMapping("/alarm/{siteId}")
