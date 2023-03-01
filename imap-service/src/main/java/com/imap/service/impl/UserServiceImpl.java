@@ -7,6 +7,7 @@ import com.imap.dao.UserMapper;
 import com.imap.service.RoleService;
 import com.imap.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -46,6 +47,7 @@ public class UserServiceImpl extends UserService {
     }
 
     @Override
+//    @Cacheable(cacheNames = "page", unless = "#result==null")
     public List<PageData> findListPage(Page page) {
 //        PageHelper.startPage(page.getIndex(), page.getShowCount());
         List<PageData> listPage = userMapper.findListPage(page);

@@ -52,13 +52,18 @@
             <version>1.2.6.RELEASE</version>
         </dependency>
 
+<!--        redis-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
+
         <!--mysql-->
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <!--            <version>5.1.49</version>-->
         </dependency>
-
 
         <!--        mybatis-->
         <dependency>

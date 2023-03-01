@@ -7,6 +7,7 @@ import com.imap.common.util.*;
 import com.imap.service.RoleService;
 import com.imap.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -101,8 +102,9 @@ public class UserController extends BaseController {
         this.writeJson(response, json);
     }
 
-    //    @RequiresPermissions("userList")
+
     @RequestMapping(value = "/findListPage", method = RequestMethod.GET)
+    //    @RequiresPermissions("userList")
     public void findListPage(Page page, HttpServletRequest request, HttpServletResponse response, HttpSession session) throws IOException {
         PageData pd = new PageData(request);
         //处理数据权限
