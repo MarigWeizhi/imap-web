@@ -1,0 +1,295 @@
+* {
+  margin: 0;
+  border: 0;
+  padding: 0;
+}
+html,
+body {
+  height: 100%;
+}
+.container {
+  position: absolute;
+  width: 1920px;
+  height: 1080px;
+  background: rgba(255, 255, 255, 1)
+    url(../images/182c50ed-f477-45bc-928c-79d3d2a848fe.png) no-repeat;
+  background-size: cover;
+  overflow-x: hidden;
+  transform-origin: 0px 0px;
+  filter: hue-rotate(0deg) saturate(100%) brightness(100%) contrast(100%)
+    opacity(100%) grayscale(0%);
+}
+.container::-webkit-scrollbar {
+  display: none;
+}
+#itemc984bb50-b835-11ed-9b45-97a79d61fdee {
+  overflow: hidden;
+  position: absolute;
+  left: 1566.32px;
+  top: 96.19px;
+  width: 346.98px;
+  height: 1013.11px;
+  z-index: 5;
+  transform: rotate(0deg);
+}
+#item206558bf-f378-454d-b229-611a5eadcde9 {
+  overflow: hidden;
+  position: absolute;
+  left: 6.68px;
+  top: 67.31px;
+  width: 337px;
+  height: 885.99px;
+  z-index: 3;
+  transform: rotate(0deg);
+  background: rgba(0, 0, 0, 0);
+}
+#itemec3ee3d0-b837-11ed-9b45-97a79d61fdee {
+  overflow: hidden;
+  position: absolute;
+  left: 14.84px;
+  top: 14.48px;
+  width: 315.83px;
+  height: 55.05px;
+  z-index: 2;
+  transform: rotate(0deg);
+}
+#item20a15e90-b834-11ed-9b45-97a79d61fdee {
+  overflow: hidden;
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  width: 346.98px;
+  height: 1013.11px;
+  z-index: 1;
+  transform: rotate(0deg);
+}
+#item636e2c90-74ff-11ec-9a45-85cd06378d51 {
+  overflow: hidden;
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  width: 1920px;
+  height: 100px;
+  z-index: 4;
+  transform: rotate(0deg);
+}
+#itemcbfec770-74fe-11ec-9a45-85cd06378d51 {
+  overflow: hidden;
+  position: absolute;
+  left: 1278.57px;
+  top: 25.72px;
+  width: 588.57px;
+  height: 60px;
+  z-index: 4;
+  transform: rotate(0deg);
+}
+#item53f09140-74ff-11ec-9a45-85cd06378d51 {
+  overflow: hidden;
+  position: absolute;
+  left: 91px;
+  top: 19.86px;
+  width: 300px;
+  height: 50px;
+  z-index: 3;
+  transform: rotate(0deg);
+}
+#item67dfb2a7-05b3-4c1a-863c-72e8c9af8184 {
+  overflow: hidden;
+  position: absolute;
+  left: 45px;
+  top: 12.71px;
+  width: 60px;
+  height: 60px;
+  z-index: 2;
+  transform: rotate(0deg);
+}
+#itemfdb138dc-a109-458c-bc48-f73d5cbc9745 {
+  overflow: hidden;
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  width: 1920px;
+  height: 100px;
+  z-index: 1;
+  transform: rotate(0deg);
+}
+#item8b26fd80-7440-11ec-b9a4-a304abb9328e {
+  overflow: hidden;
+  position: absolute;
+  left: 5.7px;
+  top: 98.49px;
+  width: 571.85px;
+  height: 971.21px;
+  z-index: 3;
+  transform: rotate(0deg);
+}
+#itemea836a60-7441-11ec-b9a4-a304abb9328e {
+  overflow: hidden;
+  position: absolute;
+  left: 15.24px;
+  top: 18.81px;
+  width: 539.24px;
+  height: 292.7px;
+  z-index: 4;
+  transform: rotate(0deg);
+}
+#itemd2c36d65-04ee-419c-8252-fd8b146bf9b1 {
+  overflow: hidden;
+  position: absolute;
+  left: 21.55px;
+  top: 48.95px;
+  width: 502.5px;
+  height: 243.75px;
+  z-index: 2;
+  transform: rotate(0deg);
+}
+#itema61b51e0-7440-11ec-b9a4-a304abb9328e {
+  overflow: hidden;
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  width: 539.24px;
+  height: 50px;
+  z-index: 1;
+  transform: rotate(0deg);
+}
+#itemefc42c30-7441-11ec-b9a4-a304abb9328e {
+  overflow: hidden;
+  position: absolute;
+  left: 15.72px;
+  top: 301.13px;
+  width: 539.55px;
+  height: 336.41px;
+  z-index: 3;
+  transform: rotate(0deg);
+}
+#itemefc42c32-7441-11ec-b9a4-a304abb9328e {
+  overflow: hidden;
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  width: 539.55px;
+  height: 50px;
+  z-index: 2;
+  transform: rotate(0deg);
+}
+#item593872f5-ca97-498f-a0a9-d568087b7f72 {
+  overflow: hidden;
+  position: absolute;
+  left: 79.76px;
+  top: 36.41px;
+  width: 400px;
+  height: 300px;
+  z-index: 1;
+  transform: rotate(0deg);
+}
+#itemf2b865f0-7441-11ec-b9a4-a304abb9328e {
+  overflow: hidden;
+  position: absolute;
+  left: 22.83px;
+  top: 633.03px;
+  width: 525.45px;
+  height: 321.21px;
+  z-index: 2;
+  transform: rotate(0deg);
+}
+#itemf2b865f2-7441-11ec-b9a4-a304abb9328e {
+  overflow: hidden;
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  width: 525.45px;
+  height: 50px;
+  z-index: 2;
+  transform: rotate(0deg);
+}
+#itemccfb645f-19a6-4e78-b5db-6a6b349adcc0 {
+  overflow: hidden;
+  position: absolute;
+  left: 2.38px;
+  top: 41.21px;
+  width: 512.72px;
+  height: 280px;
+  z-index: 1;
+  transform: rotate(0deg);
+}
+#itemda89986b-47dc-4287-a774-a9ffb6461ff3 {
+  overflow: hidden;
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  width: 571.85px;
+  height: 971.21px;
+  z-index: 1;
+  transform: rotate(0deg);
+}
+#item8854a6d0-7444-11ec-b9a4-a304abb9328e {
+  overflow: hidden;
+  position: absolute;
+  left: 578.82px;
+  top: 758.92px;
+  width: 986.21px;
+  height: 304.38px;
+  z-index: 2;
+  transform: rotate(0deg);
+}
+#item8015f312-20ec-4cd2-bacd-d52b5826e288 {
+  overflow: hidden;
+  position: absolute;
+  left: 33.68px;
+  top: 16.08px;
+  width: 940px;
+  height: 273.75px;
+  z-index: 3;
+  transform: rotate(0deg);
+}
+#item8de8acf1-74ed-11ec-9a45-85cd06378d51 {
+  overflow: hidden;
+  position: absolute;
+  left: 25.71px;
+  top: 0px;
+  width: 230.93px;
+  height: 55.05px;
+  z-index: 2;
+  transform: rotate(0deg);
+}
+#item03ba64c5-0eb3-4c85-892a-699fddff22c2 {
+  overflow: hidden;
+  position: absolute;
+  left: 0px;
+  top: 4.89px;
+  width: 986.21px;
+  height: 299.49px;
+  z-index: 1;
+  transform: rotate(0deg);
+}
+#item75409e50-7444-11ec-b9a4-a304abb9328e {
+  overflow: hidden;
+  position: absolute;
+  left: 568.41px;
+  top: 103.36px;
+  width: 1003.6px;
+  height: 671.2px;
+  z-index: 1;
+  transform: rotate(0deg);
+}
+#itemdb023df8-378f-403c-ba2b-0a062a1f6d8b {
+  overflow: hidden;
+  position: absolute;
+  left: 28.54px;
+  top: 17.37px;
+  width: 952.72px;
+  height: 618.89px;
+  z-index: 2;
+  transform: rotate(0deg);
+}
+#itemaae92740-f536-46f5-aff0-e7178773154a {
+  overflow: hidden;
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  width: 1003.6px;
+  height: 671.2px;
+  z-index: 1;
+  transform: rotate(0deg);
+}

@@ -60,7 +60,15 @@
     </select>
 
     <select id="getSiteById" resultType="com.imap.common.pojo.Site">
-        select *  from dev_site
+        select site_id siteId,
+               site_name siteName,
+               lat,
+               lon,
+               url,
+               UNIX_TIMESTAMP(update_time) updateTime,
+               UNIX_TIMESTAMP(create_time) createTime,
+               create_user createUser
+       from dev_site
         where is_delete = 0 and site_id = #{siteId}
     </select>
 

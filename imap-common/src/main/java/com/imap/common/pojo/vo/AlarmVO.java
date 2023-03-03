@@ -17,12 +17,10 @@ import lombok.NoArgsConstructor;
 public class AlarmVO {
     private String site;
     private String type;
-    private String event;
+    private String info;
     private String time;
 
     public void change() {
-        this.type = String.valueOf(AlarmEnum.values()[Integer.valueOf(this.type)]);
-//        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-//        this.time = format.format(Long.valueOf(time));
+        this.type = AlarmEnum.values()[Integer.valueOf(this.type)].getDescription();
     }
 }

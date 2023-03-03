@@ -7,16 +7,82 @@
     <resultMap id="alarmResultMap" type="com.imap.common.pojo.vo.AlarmVO">
         <result column="site_name" property="site"></result>
         <result column="type" property="type"></result>
-        <result column="info" property="event"></result>
-        <result column="create_time" property="time" jdbcType="TIMESTAMP"></result>
+        <result column="info" property="info"></result>
+        <result column="create_time" property="time"></result>
     </resultMap>
 
     <select id="getAlarmList" resultMap="alarmResultMap">
-        select site_name,type,info,dev_alarm.create_time as create_time
+        select site_name,
+               type,
+               info,
+               dev_alarm.create_time as create_time
         from dev_alarm join dev_site ds on dev_alarm.site_id = ds.site_id
         where dev_alarm.site_id = #{siteId}
-        order by create_time desc
-        limit 10;
+        order by dev_alarm.create_time desc
+        limit 20;
+    </select>
+
+    <select id="getAlarmTop" resultType="com.imap.common.pojo.vo.DataItemVO">
+        select a.site_name as time,
+               t.value,
+               '告警数' as name
+        from dev_site a right join (
+            select b.site_id,
+                   count(b.site_id) as value
+           from dev_alarm b
+           group by b.site_id
+        ) t on a.site_id = t.site_id
+        order by t.value desc
+        limit #{n}
+    </select>
+
+    <select id="getAlarmTypes" resultType="com.imap.common.pojo.vo.AlarmTypeVO">
+        select type as name,
+               count(*) as value
+        from dev_alarm
+        group by type
+    </select>
+
+    <select id="getAlarmsPerMonth" resultType="com.imap.common.pojo.vo.DataItemVO">
+        select date_format(create_time,'%Y-%m') as time,
+               count(*) as value,
+               '告警数' as name
+        from dev_alarm
+        group by date_format(create_time,'%Y-%m')
+        having #{time} >= time
+        order by time
+        limit #{n}
+    </select>
+
+    <select id="getAllAlarmsWithSite" resultType="com.imap.common.pojo.vo.DataItemVO">
+        select b.site_name as time,
+               t.value,
+               t.name
+        from ((select a.site_id,
+                     count(*) as value,
+                     '异常' as name
+              from dev_alarm a
+              group by a.site_id)
+              union
+              (select b.site_id,
+                      sum(if(b.status=1,1,0)) as value,
+                      '已解决' as name
+               from dev_alarm b
+               group by b.site_id
+               )
+        ) t left join dev_site b on t.site_id =b.site_id
+        order by time,value
+        limit #{n}
+    </select>
+
+    <select id="getAllAlarms" resultType="com.imap.common.pojo.vo.AlarmVO">
+        select
+            b.site_name as site,
+            a.type as type,
+            a.create_time as time
+        from dev_alarm a left join dev_site b on a.site_id = b.site_id
+        order by time,site
+        limit #{n}
     </select>
 
     <insert id="addAlarm" parameterType="com.imap.common.util.PageData">

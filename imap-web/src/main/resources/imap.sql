@@ -11,7 +11,7 @@
  Target Server Version : 100422
  File Encoding         : 65001
 
- Date: 27/02/2023 22:46:21
+ Date: 04/03/2023 01:35:56
 */
 
 SET NAMES utf8mb4;
@@ -31,14 +31,25 @@ CREATE TABLE `dev_alarm`  (
                               PRIMARY KEY (`alarm_id`) USING BTREE,
                               INDEX `FK_dev_site_alarm`(`site_id`) USING BTREE,
                               CONSTRAINT `dev_alarm_ibfk_1` FOREIGN KEY (`site_id`) REFERENCES `dev_site` (`site_id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 24 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '设备告警信息' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 37 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '设备告警信息' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of dev_alarm
 -- ----------------------------
-INSERT INTO `dev_alarm` VALUES (1, 1, 1, '设备异常', NULL, '2022-10-08 10:31:24');
-INSERT INTO `dev_alarm` VALUES (22, 1, 2, '温度过高：50.0℃', NULL, '2023-01-08 13:15:49');
-INSERT INTO `dev_alarm` VALUES (23, 1, 2, '湿度过高：90.0%', NULL, '2023-01-08 13:15:49');
+INSERT INTO `dev_alarm` VALUES (1, 1, 3, '设备异常', 0, '2022-10-08 10:31:24');
+INSERT INTO `dev_alarm` VALUES (22, 1, 0, '温度过高：50.0℃', 0, '2023-01-08 13:15:49');
+INSERT INTO `dev_alarm` VALUES (23, 1, 1, '湿度过高：90.0%', 0, '2023-01-08 13:15:49');
+INSERT INTO `dev_alarm` VALUES (24, 2, 2, '亮度异常', 0, '2023-02-08 10:31:24');
+INSERT INTO `dev_alarm` VALUES (25, 1, 3, '设备异常', 1, '2022-10-07 10:31:24');
+INSERT INTO `dev_alarm` VALUES (28, 3, 1, '湿度过高：90.0%', 1, '2023-01-08 13:15:49');
+INSERT INTO `dev_alarm` VALUES (29, 3, 1, '湿度过高：80.0%', 0, '2023-01-08 13:15:49');
+INSERT INTO `dev_alarm` VALUES (30, 4, 2, '亮度异常', 0, '2023-02-08 10:31:24');
+INSERT INTO `dev_alarm` VALUES (31, 5, 3, '设备异常', 1, '2023-02-08 10:31:24');
+INSERT INTO `dev_alarm` VALUES (32, 5, 3, '设备异常', 0, '2023-02-08 10:31:24');
+INSERT INTO `dev_alarm` VALUES (33, 1, 1, '湿度过高：90.0%', 1, '2023-01-08 13:15:49');
+INSERT INTO `dev_alarm` VALUES (34, 1, 1, '湿度过高：90.0%', 1, '2023-01-08 13:15:49');
+INSERT INTO `dev_alarm` VALUES (35, 1, 2, '亮度异常', 0, '2023-01-08 13:15:49');
+INSERT INTO `dev_alarm` VALUES (36, 1, 0, '温度过高：50.0℃', 0, '2023-01-08 13:15:49');
 
 -- ----------------------------
 -- Table structure for dev_avg_data
@@ -57,14 +68,20 @@ CREATE TABLE `dev_avg_data`  (
 -- ----------------------------
 -- Records of dev_avg_data
 -- ----------------------------
-INSERT INTO `dev_avg_data` VALUES (1, '2023-02-27 14:07:15', 5, 58.15, 0.46, 361.09);
-INSERT INTO `dev_avg_data` VALUES (1, '2023-02-27 14:07:20', 5, 95.49, 0.61, 145.60);
-INSERT INTO `dev_avg_data` VALUES (1, '2023-02-27 14:07:30', 5, 65.07, 0.50, 598.20);
-INSERT INTO `dev_avg_data` VALUES (1, '2023-02-27 14:07:35', 5, 48.92, 0.57, 719.72);
-INSERT INTO `dev_avg_data` VALUES (1, '2023-02-27 14:07:40', 5, 29.25, 0.29, 217.27);
-INSERT INTO `dev_avg_data` VALUES (1, '2023-02-27 14:07:45', 5, 41.73, 0.64, 469.65);
-INSERT INTO `dev_avg_data` VALUES (2, '2023-02-27 14:07:20', 5, 47.55, 0.44, 390.20);
-INSERT INTO `dev_avg_data` VALUES (2, '2023-02-27 14:07:25', 5, 51.59, 0.68, 360.43);
+INSERT INTO `dev_avg_data` VALUES (1, '2023-03-02 00:07:15', 2, 58.15, 0.46, 361.09);
+INSERT INTO `dev_avg_data` VALUES (1, '2023-03-02 02:07:20', 2, 95.49, 0.61, 145.60);
+INSERT INTO `dev_avg_data` VALUES (1, '2023-03-02 04:07:30', 2, 65.07, 0.50, 598.20);
+INSERT INTO `dev_avg_data` VALUES (1, '2023-03-02 06:07:35', 2, 48.92, 0.57, 719.72);
+INSERT INTO `dev_avg_data` VALUES (1, '2023-03-02 08:07:40', 2, 29.25, 0.29, 217.27);
+INSERT INTO `dev_avg_data` VALUES (1, '2023-03-02 14:07:45', 2, 41.73, 0.64, 469.65);
+INSERT INTO `dev_avg_data` VALUES (1, '2023-03-03 00:07:15', 2, 58.15, 0.46, 361.09);
+INSERT INTO `dev_avg_data` VALUES (1, '2023-03-03 02:07:20', 2, 95.49, 0.61, 145.60);
+INSERT INTO `dev_avg_data` VALUES (1, '2023-03-03 04:07:30', 2, 65.07, 0.50, 598.20);
+INSERT INTO `dev_avg_data` VALUES (1, '2023-03-03 06:07:35', 2, 48.92, 0.57, 719.72);
+INSERT INTO `dev_avg_data` VALUES (1, '2023-03-03 08:07:40', 2, 29.25, 0.29, 217.27);
+INSERT INTO `dev_avg_data` VALUES (1, '2023-03-03 14:07:45', 2, 41.73, 0.64, 469.65);
+INSERT INTO `dev_avg_data` VALUES (2, '2023-02-27 14:07:20', 2, 47.55, 0.44, 390.20);
+INSERT INTO `dev_avg_data` VALUES (2, '2023-02-27 14:07:25', 2, 51.59, 0.68, 360.43);
 INSERT INTO `dev_avg_data` VALUES (2, '2023-02-27 14:07:30', 5, 42.29, 0.92, 378.73);
 INSERT INTO `dev_avg_data` VALUES (3, '2023-02-27 14:07:20', 5, 51.91, 0.08, 12.88);
 INSERT INTO `dev_avg_data` VALUES (3, '2023-02-27 14:07:30', 5, 16.94, 0.08, 640.02);
@@ -108,7 +125,7 @@ INSERT INTO `dev_data_report` VALUES (20, 1, '2023-02-27 14:26:31', 'report', 1,
 INSERT INTO `dev_data_report` VALUES (21, 1, '2023-02-27 14:26:32', 'report', 1, 0, '{\"tmp\":3.79,\"lx\":224.8,\"hmt\":0.53}');
 INSERT INTO `dev_data_report` VALUES (22, 2, '2023-02-27 14:26:33', 'report', 1, 0, '{\"tmp\":84.99,\"lx\":872.38,\"hmt\":0.52}');
 INSERT INTO `dev_data_report` VALUES (23, 5, '2023-02-27 14:26:34', 'report', 1, 0, '{\"tmp\":37.27,\"lx\":695.96,\"hmt\":0.99}');
-INSERT INTO `dev_data_report` VALUES (24, 1, '2023-02-27 14:26:35', 'report', 1, 0, '{\"tmp\":71.18,\"lx\":376.89,\"hmt\":0.76}');
+INSERT INTO `dev_data_report` VALUES (24, 1, '2023-02-27 14:26:35', 'report', 1, 0, '{\"tmp\":23.36,\"lx\":200.89,\"hmt\":0.45}');
 INSERT INTO `dev_data_report` VALUES (25, 3, '2023-02-27 14:26:36', 'report', 1, 0, '{\"tmp\":67.43,\"lx\":189.84,\"hmt\":0.2}');
 INSERT INTO `dev_data_report` VALUES (26, 5, '2023-02-27 14:26:37', 'report', 1, 0, '{\"tmp\":52.42,\"lx\":160.99,\"hmt\":0.14}');
 INSERT INTO `dev_data_report` VALUES (27, 2, '2023-02-27 14:26:38', 'report', 1, 0, '{\"tmp\":15.02,\"lx\":246.85,\"hmt\":0.76}');
@@ -150,13 +167,16 @@ CREATE TABLE `dev_site`  (
                              `create_user` int(11) NULL DEFAULT NULL,
                              `is_delete` int(11) NULL DEFAULT NULL,
                              PRIMARY KEY (`site_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '站点信息' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '站点信息' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of dev_site
 -- ----------------------------
 INSERT INTO `dev_site` VALUES (1, 'FIMS_SITE_001', 121.65796481150367, 31.27103070027770, 'http://192.168.2.12:5000/device/1', '2023-02-27 11:41:03', '2022-10-07 22:41:02', 1, 0);
 INSERT INTO `dev_site` VALUES (2, 'FIMS_SITE_002', 116.39747700000000, 39.90869200000000, 'http://localhost:5000/device/2', '2023-02-27 11:41:03', '2022-10-07 22:41:02', 1, 0);
+INSERT INTO `dev_site` VALUES (3, 'FIMS_SITE_003', 120.39747700000000, 35.90869200000000, 'http://localhost:5000/device/2', '2023-02-27 11:41:03', '2022-10-07 22:41:02', 1, 0);
+INSERT INTO `dev_site` VALUES (4, 'FIMS_SITE_004', 121.39747700000000, 37.90869200000000, 'http://localhost:5000/device/2', '2023-02-27 11:41:03', '2022-10-07 22:41:02', 1, 0);
+INSERT INTO `dev_site` VALUES (5, 'FIMS_SITE_005', 119.39747700000000, 39.90869200000000, 'http://localhost:5000/device/2', '2023-02-27 11:41:03', '2022-10-07 22:41:02', 1, 0);
 
 -- ----------------------------
 -- Table structure for dev_site_photo

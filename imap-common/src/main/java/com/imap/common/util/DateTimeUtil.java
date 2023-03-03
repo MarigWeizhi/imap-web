@@ -13,6 +13,9 @@ import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.*;
 
 /**  
@@ -25,6 +28,18 @@ import java.util.*;
 public class DateTimeUtil {
 	static String[] weeks = { "日", "一", "二", "三", "四", "五", "六" };
 
+
+	// 定义一个静态方法，参数为时间间隔和时间粒度，返回现在时刻减去该事件间隔对应的时间，格式为yyyy-MM-dd
+	public static String subtractTime(long interval, ChronoUnit unit) {
+		// 获取当前时刻
+		LocalDateTime now = LocalDateTime.now();
+		// 根据时间粒度和时间间隔计算减去后的时刻
+		LocalDateTime result = now.minus(interval, unit);
+		// 定义一个日期格式化对象
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		// 将结果转换为字符串并返回
+		return result.format(formatter);
+	}
 
 	/**
 	 * 根据日期字符串判断当月第几周
@@ -97,8 +112,7 @@ public class DateTimeUtil {
 		Date curTime = formatter.parse(formatter.format(currTime));
 	    return curTime;
 	  }
-	
-	
+
 	
 	public static String getDate()
 	  {
@@ -878,4 +892,12 @@ public class DateTimeUtil {
 	}
 
 
+	public static String transform(String time, String pattern) {
+		Date date = new Date(time);
+		return new SimpleDateFormat(pattern).format(date);
+	}
+
+	public static String transform(Date time, String pattern) {
+		return new SimpleDateFormat(pattern).format(time);
+	}
 }

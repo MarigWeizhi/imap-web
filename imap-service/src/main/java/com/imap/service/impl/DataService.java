@@ -2,24 +2,23 @@ package com.imap.service.impl;
 
 import com.alibaba.fastjson.TypeReference;
 import com.imap.common.pojo.DataReport;
-import com.imap.common.pojo.vo.AlarmVO;
-import com.imap.common.pojo.vo.PhotoVO;
-import com.imap.common.pojo.vo.SiteDataVO;
+import com.imap.common.pojo.vo.*;
 import com.imap.common.util.DateTimeUtil;
 import com.imap.common.util.JsonToMap;
 import com.imap.common.util.PageData;
 import com.imap.dao.SiteMapper;
 import com.imap.dao.AlarmMapper;
 import com.imap.dao.PhotoMapper;
+import com.imap.dao.DataMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
-import java.math.BigDecimal;
-import java.sql.Timestamp;
+import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -42,6 +41,9 @@ public class DataService {
     @Autowired
     SiteMapper siteMapper;
 
+    @Autowired
+    DataMapper dataMapper;
+
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     public List<AlarmVO> getAlarmList(int siteId) {
@@ -57,6 +59,7 @@ public class DataService {
                 .collect(Collectors.toList());
         return collect;
     }
+
     public String getCameraUrl(int siteId) {
         return photoMapper.getCameraUrl(siteId);
     }
@@ -70,7 +73,7 @@ public class DataService {
      * cacheNames: 起一个缓存的命名空间，对应缓存的唯一标识
      * value：缓存结果   key：默认只有一个参数的情况下，key值默认就是方法参数值; 如果没有参数或者多个参数的情况：会使用SimpleKeyGenerate来为生成key
      */
-    @Cacheable(cacheNames = "siteData", unless = "#result==null")
+//    @Cacheable(cacheNames = "siteData", unless = "#result==null")
     public SiteDataVO getSiteData(int siteId) {
         DataReport data = siteMapper.getCurSiteData(siteId);
         Map<String,Double> map = JsonToMap.jsonToObj(data.getDataStr(), new TypeReference<Map<String,Double>>(){});
@@ -81,10 +84,60 @@ public class DataService {
                 data.getStatus(),
                 DateTimeUtil.timeStamp2DateString(data.getTimestamp()),
                 data.getData().get("tmp"),
-                data.getData().get("hmt")*100,
+                data.getData().get("hmt"),
                 data.getData().get("lx")
         );
-        logger.info("获取数据" + siteDataVO);
+//        logger.info("获取数据" + siteDataVO);
         return siteDataVO;
     }
+
+    public List<TmpOrHmtVO> getYesterdayData(int siteId, String type) {
+        String time = DateTimeUtil.subtractTime(1, ChronoUnit.DAYS);
+        List<TmpOrHmtVO> list = new ArrayList<>();
+        if("tmp".equals(type)){
+            list = dataMapper.getTmp(siteId,time);
+        }
+        if("hmt".equals(type)){
+            list = dataMapper.getHmt(siteId,time);
+        }
+        if("lx".equals(type)){
+            list = dataMapper.getLx(siteId,time);
+        }
+        list.forEach(item -> {
+            item.setTime(DateTimeUtil.transform(item.getDate(),"HH:mm"));
+        });
+        return list;
+    }
+
+    public List<DataItemVO> getAlarmTop(int n) {
+        return alarmMapper.getAlarmTop(n);
+    }
+
+    public List<DataItemVO> getAlarmsPerMonth() {
+        Date now = new Date();
+        String transform = DateTimeUtil.transform(now, "yyyy-MM");
+        List<DataItemVO> alarmsPerMonth = alarmMapper.getAlarmsPerMonth(transform, 7);
+        return alarmsPerMonth;
+    }
+
+    public List<DataItemVO> getAllAlarmsWithSite() {
+        List<DataItemVO> allAlarmsWithSite = alarmMapper.getAllAlarmsWithSite(5);
+        return allAlarmsWithSite;
+    }
+
+    public List<AlarmVO> getAllAlarms() {
+        List<AlarmVO> allAlarms = alarmMapper.getAllAlarms(50);
+        allAlarms.forEach(item -> item.change());
+        return allAlarms;
+    }
+
+    public List<AlarmTypeVO> getAlarmTypes() {
+        List<AlarmTypeVO> alarmTypes = alarmMapper.getAlarmTypes();
+        alarmTypes.forEach(
+                item->item.setName(AlarmEnum.values()[Integer.valueOf(item.getName())]
+                        .getDescription()));
+        return alarmTypes;
+    }
+
+
 }
