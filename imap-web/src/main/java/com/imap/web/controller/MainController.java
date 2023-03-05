@@ -39,4 +39,10 @@ public class MainController {
         return mv;
     }
 
+    @RequestMapping("/*")
+    ModelAndView to404(ModelAndView mv){
+        mv.setViewName("forward:/404.jsp");
+        return mv;
+    }
+
 }

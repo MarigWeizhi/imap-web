@@ -7,8 +7,8 @@
         html{background: url(${pageContext.request.contextPath}/img/login-background.jpg) no-repeat 0px 0px;}
     </style>
     <meta charset="UTF-8">
-    <title>数据智能监控系统-用户登入</title>
-    <link href="${pageContext.request.contextPath}/css/login.css" rel="stylesheet">
+    <title>数据智能监控平台-用户登入</title>
+    <link href="${pageContext.request.contextPath}/static/css/login.css" rel="stylesheet">
     <style>
         img{width:100%; height:auto;}
     </style>

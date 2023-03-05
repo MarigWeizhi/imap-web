@@ -11,6 +11,14 @@
         <result column="create_time" property="time"></result>
     </resultMap>
 
+    <update id="setStatus">
+        update dev_alarm set status = 1
+        where alarm_id in
+        <foreach collection="alarmIds" item="alarmId" open="(" separator="," close=")">
+            #{alarmId}
+        </foreach>
+    </update>
+
     <select id="getAlarmList" resultMap="alarmResultMap">
         select site_name,
                type,
@@ -75,7 +83,22 @@
         limit #{n}
     </select>
 
-    <select id="getAllAlarms" resultType="com.imap.common.pojo.vo.AlarmVO">
+    <select id="getAllAlarms" resultType="com.imap.common.util.PageData">
+        select
+            b.site_name as site,
+            a.type as type,
+            a.create_time as time
+        from dev_alarm a left join dev_site b on a.site_id = b.site_id
+        order by time,site
+    </select>
+
+    <select id="getListSize" resultType="java.lang.Integer">
+        select
+            count(*)
+        from dev_alarm
+    </select>
+
+    <select id="getAlarms" resultType="com.imap.common.pojo.vo.AlarmVO">
         select
             b.site_name as site,
             a.type as type,
@@ -84,6 +107,33 @@
         order by time,site
         limit #{n}
     </select>
+
+    <select id="getAlarmById" resultType="com.imap.common.pojo.vo.AlarmTableVO">
+        select alarm_id alarmId,
+               site_name siteName,
+               name,
+               email,
+               type,
+               status,
+               info,
+               a.create_time as time
+        from dev_alarm a left join dev_site b on a.site_id = b.site_id left join sys_user c on b.create_user = c.create_user
+        where alarm_id = #{alarmId}
+    </select>
+
+    <select id="findListPage" parameterType="com.imap.common.util.Page" resultType="com.imap.common.util.PageData">
+        select
+            alarm_id,
+            site_name,
+            type,
+            status,
+            create_time
+        from dev_alarm a left join dev_site b on a.site_id = b.site_id
+        where b.is_delete = 0
+        limit #{showCount} offset #{offset}
+    </select>
+
+
 
     <insert id="addAlarm" parameterType="com.imap.common.util.PageData">
         insert into dev_alarm(alarm_id,site_id,type,info,create_time)

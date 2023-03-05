@@ -13,7 +13,6 @@ import com.imap.dao.DataMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.time.temporal.ChronoUnit;
@@ -126,7 +125,7 @@ public class DataService {
     }
 
     public List<AlarmVO> getAllAlarms() {
-        List<AlarmVO> allAlarms = alarmMapper.getAllAlarms(50);
+        List<AlarmVO> allAlarms = alarmMapper.getAlarms(50);
         allAlarms.forEach(item -> item.change());
         return allAlarms;
     }

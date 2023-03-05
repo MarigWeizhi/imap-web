@@ -12,17 +12,17 @@ import javax.servlet.http.HttpServletRequest;
  * @Date: create in 2023/3/3 23:11
  * @Description:
  */
-@ControllerAdvice
-public class GlobalExceptionHandler {
-
-    @ExceptionHandler(NoHandlerFoundException.class)
-    public ModelAndView handle404Exception(HttpServletRequest request, Exception e) {
-        // TODO 未生效
-
-        ModelAndView mav = new ModelAndView();
-        mav.addObject("exception", e);
-        mav.addObject("url", request.getRequestURL());
-        mav.setViewName("forward:/404.jsp");
-        return mav;
-    }
-}
+//@ControllerAdvice
+//public class GlobalExceptionHandler {
+//
+//    @ExceptionHandler(NoHandlerFoundException.class)
+//    public ModelAndView handle404Exception(HttpServletRequest request, Exception e) {
+//        // TODO 未生效
+//
+//        ModelAndView mav = new ModelAndView();
+//        mav.addObject("exception", e);
+//        mav.addObject("url", request.getRequestURL());
+//        mav.setViewName("forward:/404.jsp");
+//        return mav;
+//    }
+//}
