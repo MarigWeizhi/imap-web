@@ -113,7 +113,7 @@
                update_time
                from sys_user
         where is_delete = 0 and (user_id = #{pd.userId} or create_user = #{pd.userId})
-            limit #{showCount}
+        limit #{showCount} offset #{offset}
     </select>
 
 </mapper>

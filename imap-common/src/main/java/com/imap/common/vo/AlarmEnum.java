@@ -1,4 +1,4 @@
-package com.imap.common.pojo.vo;
+package com.imap.common.vo;
 
 public enum AlarmEnum {
     TEMPERATURE_ABNORMAL("温度异常"),

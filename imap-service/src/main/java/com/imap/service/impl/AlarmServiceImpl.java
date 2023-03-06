@@ -1,6 +1,6 @@
 package com.imap.service.impl;
 
-import com.imap.common.pojo.vo.AlarmTableVO;
+import com.imap.common.vo.AlarmTableVO;
 import com.imap.common.util.Page;
 import com.imap.common.util.PageData;
 import com.imap.dao.AlarmMapper;
@@ -23,14 +23,14 @@ public class AlarmServiceImpl extends AlarmService {
     AlarmMapper alarmMapper;
 
     @Override
-    public void setStatus(List<Integer> alarmIds) {
+    public int setStatus(List<Integer> alarmIds) {
         alarmMapper.setStatus(alarmIds);
+        return 200;
     }
 
     @Override
     public AlarmTableVO getInfo(Integer alarmId) {
         AlarmTableVO alarmTableVO = alarmMapper.getAlarmById(alarmId);
-        alarmTableVO.change();
         return alarmTableVO;
     }
 

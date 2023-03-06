@@ -1,4 +1,4 @@
-package com.imap.common.pojo.vo;
+package com.imap.common.vo;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

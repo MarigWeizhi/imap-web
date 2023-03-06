@@ -41,7 +41,6 @@ public class SiteController extends BaseController {
     @Autowired
     UserService userService;
 
-
     @RequestMapping(value = "/index", method = RequestMethod.GET)
     ModelAndView index(HttpServletRequest request,ModelAndView mv){
         PageData pd = new PageData(request);
@@ -61,10 +60,8 @@ public class SiteController extends BaseController {
     @RequestMapping(value = "/toUpdate", method = RequestMethod.GET)
     public ModelAndView toUpdate(ModelAndView mv, HttpServletRequest request) {
         PageData pd = new PageData(request);
-        Site site = siteService.getSiteById(Integer.parseInt((String) pd.get("site_id")));
-        PageData p = new PageData();
-        p.putAll(bean2Map(site));
-        mv.getModelMap().put("p", p);
+        PageData site = siteService.getSiteConfigById(Integer.parseInt((String) pd.get("site_id")));
+        mv.getModelMap().put("p", site);
         mv.setViewName("forward:/system/site/site_update.jsp");
         return mv;
     }
@@ -75,6 +72,7 @@ public class SiteController extends BaseController {
         String time = DateTimeUtil.getDateTimeStr();
         pd.put("create_time", time);
         pd.put("update_time", time);
+        // TODO 待实现
         Json json = new Json();
         int num = siteService.update(pd);
         json.setCode(num);
@@ -88,10 +86,11 @@ public class SiteController extends BaseController {
         PageData pd = new PageData(request);
         Json json = new Json();
         String time = DateTimeUtil.getDateTimeStr();
-        pd.put("site_name", pd.get("site_name").toString());
-        pd.put("lat", pd.get("lat").toString());
-        pd.put("lon", pd.get("lon").toString());
-        pd.put("url", pd.get("url").toString());
+
+        pd.put("tmp_open", pd.get("tmp_open")!=null?1:0);
+        pd.put("hmt_open", pd.get("hmt_open")!=null?1:0);
+        pd.put("lx_open", pd.get("lx_open")!=null?1:0);
+
         pd.put("create_time", time);
         pd.put("update_time", time);
         User user = (User) session.getAttribute("user");

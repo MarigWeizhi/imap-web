@@ -2,7 +2,7 @@ package com.imap.web.controller.api;
 
 import com.alibaba.fastjson.JSON;
 import com.imap.common.pojo.Site;
-import com.imap.common.pojo.vo.*;
+import com.imap.common.vo.*;
 import com.imap.service.SiteService;
 import com.imap.service.impl.DataService;
 import org.springframework.beans.factory.annotation.Autowired;

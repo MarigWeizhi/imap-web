@@ -91,13 +91,19 @@
             ,title: '告警数据表'
             ,cols: [[
                 {type: 'checkbox', fixed: 'left', width:40}
-                ,{field:'alarm_id', fixed: 'left',title:'告警编号', edit: 'text'}
-                ,{field:'site_name', fixed: 'left',title:'站点名称', edit: 'text'}
-                ,{field:'type', fixed: 'left',title:'告警类型', edit: 'text'}
-                // ,{field:'info', fixed: 'left',title:'告警信息', edit: 'text'}
-                // ,{field:'create_user', fixed: 'left',title:'负责人', edit: 'text'}
-                ,{field:'create_time', fixed: 'left',title:'创建时间', edit: 'text'}
-                ,{field:'status', fixed: 'left',title:'状态', edit: 'text'}
+                ,{field:'alarm_id', width:80, fixed: 'left',title:'告警编号'}
+                ,{field:'site_name',width:200, fixed: 'left',title:'站点名称', sort: true}
+                ,{field:'type', width:120,title:'告警类型', fixed: 'left', sort: true, templet: function(res){
+                        if(res.status=='0') return '温度异常';
+                        if(res.status=='1') return '湿度异常';
+                        if(res.status=='2') return '亮度异常';
+                        if(res.status=='3') return '其他异常';
+                        return '未知';}}
+                ,{field:'create_time',width:220, fixed: 'left',title:'创建时间', sort: true}
+                ,{field:'status',width:120, title:'状态', fixed: 'left', sort: true, templet: function(res){
+                        if(res.status=='1') return '已处理';
+                        if(res.status=='0') return '未处理';
+                        return '未知';}}
                 ,{fixed: 'right', align:'center',title:'操作', width:220, toolbar: '#barDemo'}
             ]]
             ,id:'system_alarm'
@@ -114,7 +120,8 @@
                 case 'laytable_tips': //小提示
                     layer.msg("小提示：告警信息模块", {time: 2000});
                     break;
-                case 'setStatus': //标记为已处理
+                case 'setStatus':
+                    //批量标记为已处理
                     setStatus(data);
                     break;
             };
@@ -135,8 +142,9 @@
                 });
             }
 
-            if(obj.event === 'setStatus'){//标记为已处理
-                setStatus([data.alarm_id])
+            if(obj.event === 'setStatus'){
+                //标记单个id为已处理
+                setStatus([{'alarm_id':data.alarm_id}])
             }
         });
 

@@ -53,7 +53,7 @@
     <select id="findListPage" resultType="com.imap.common.util.PageData">
         select *  from sys_role
         where is_delete = 0 and role_level >= #{pd.roleLevel}
-            limit #{showCount}
+        limit #{showCount} offset #{offset}
     </select>
 
     <select id="getAllList" resultType="com.imap.common.util.PageData">

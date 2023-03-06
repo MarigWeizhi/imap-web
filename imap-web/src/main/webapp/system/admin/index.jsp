@@ -173,6 +173,11 @@
                 <i class="iconfont">&#xe6a7;</i>
                 <cite>站点管理</cite></a>
                 </li>
+                <li>
+                    <a onclick="xadmin.add_tab('告警管理','${pageContext.request.contextPath}/system/alarm/index')">
+                        <i class="iconfont">&#xe6a7;</i>
+                        <cite>告警管理</cite></a>
+                </li>
             </ul>
             </li>
         </ul>

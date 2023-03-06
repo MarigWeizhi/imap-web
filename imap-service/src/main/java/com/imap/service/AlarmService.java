@@ -1,6 +1,6 @@
 package com.imap.service;
 
-import com.imap.common.pojo.vo.AlarmTableVO;
+import com.imap.common.vo.AlarmTableVO;
 
 import java.util.List;
 
@@ -11,7 +11,7 @@ import java.util.List;
  */
 public abstract class AlarmService implements BaseService {
 
-    public abstract void setStatus(List<Integer> alarmIds);
+    public abstract int setStatus(List<Integer> alarmIds);
 
     public abstract AlarmTableVO getInfo(Integer alarmId);
 

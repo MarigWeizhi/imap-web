@@ -2,7 +2,7 @@ package com.imap.service.impl;
 
 import com.alibaba.fastjson.TypeReference;
 import com.imap.common.pojo.DataReport;
-import com.imap.common.pojo.vo.*;
+import com.imap.common.vo.*;
 import com.imap.common.util.DateTimeUtil;
 import com.imap.common.util.JsonToMap;
 import com.imap.common.util.PageData;

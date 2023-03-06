@@ -11,7 +11,7 @@ import java.util.List;
 @Mapper
 public interface SiteMapper {
 
-    void save(PageData pd);
+    int save(PageData pd);
 
     void delete(PageData pd);
 
@@ -26,4 +26,10 @@ public interface SiteMapper {
     Site getSiteById(int siteId);
 
     DataReport getCurSiteData(int siteId);
+
+    PageData getSiteConfigById(int siteId);
+
+    void addConfig(PageData pd);
+
+    void deleteConfig(PageData pd);
 }

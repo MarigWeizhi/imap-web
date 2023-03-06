@@ -5,14 +5,14 @@
     <table class="layui-table" style="width:95%;margin:10px auto;">
         <tr>
             <td width="16%" align="right"><label class="layui-form-label">告警编号：</label></td>
-            <td>${p.alarm_id}</td>
+            <td>${p.alarmId}</td>
             <td width="16%" align="right"><label class="layui-form-label">站点名称：</label></td>
-            <td>${p.site_name}</td>
+            <td>${p.siteName}</td>
         </tr>
         <tr>
-            <td align="right"><label class="layui-form-label">站点负责人：</label></td>
+            <td align="right"><label class="layui-form-label">负责人：</label></td>
             <td>${p.name}</td>
-            <td align="right"><label class="layui-form-label">负责人邮箱：</label></td>
+            <td align="right"><label class="layui-form-label">联系邮箱：</label></td>
             <td>${p.email}</td>
         </tr>
         <tr>
@@ -32,11 +32,10 @@
         <tr>
             <td align="right"><label class="layui-form-label">告警信息：</label></td>
             <td>${p.info}</td>
-        </tr>
-        <tr>
             <td align="right"><label class="layui-form-label">告警时间：</label></td>
             <td>${p.time}</td>
         </tr>
+
         <tr>
             <td style="text-align: center; padding-top: 10px;" colspan="4">
                 <div class="layui-form-item">

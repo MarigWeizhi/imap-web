@@ -11,7 +11,7 @@
  Target Server Version : 100422
  File Encoding         : 65001
 
- Date: 04/03/2023 01:35:56
+ Date: 07/03/2023 02:29:55
 */
 
 SET NAMES utf8mb4;
@@ -36,9 +36,9 @@ CREATE TABLE `dev_alarm`  (
 -- ----------------------------
 -- Records of dev_alarm
 -- ----------------------------
-INSERT INTO `dev_alarm` VALUES (1, 1, 3, '设备异常', 0, '2022-10-08 10:31:24');
-INSERT INTO `dev_alarm` VALUES (22, 1, 0, '温度过高：50.0℃', 0, '2023-01-08 13:15:49');
-INSERT INTO `dev_alarm` VALUES (23, 1, 1, '湿度过高：90.0%', 0, '2023-01-08 13:15:49');
+INSERT INTO `dev_alarm` VALUES (1, 1, 3, '设备异常', 1, '2022-10-08 10:31:24');
+INSERT INTO `dev_alarm` VALUES (22, 1, 0, '温度过高：50.0℃', 1, '2023-01-08 13:15:49');
+INSERT INTO `dev_alarm` VALUES (23, 1, 1, '湿度过高：90.0%', 1, '2023-01-08 13:15:49');
 INSERT INTO `dev_alarm` VALUES (24, 2, 2, '亮度异常', 0, '2023-02-08 10:31:24');
 INSERT INTO `dev_alarm` VALUES (25, 1, 3, '设备异常', 1, '2022-10-07 10:31:24');
 INSERT INTO `dev_alarm` VALUES (28, 3, 1, '湿度过高：90.0%', 1, '2023-01-08 13:15:49');
@@ -48,7 +48,7 @@ INSERT INTO `dev_alarm` VALUES (31, 5, 3, '设备异常', 1, '2023-02-08 10:31:2
 INSERT INTO `dev_alarm` VALUES (32, 5, 3, '设备异常', 0, '2023-02-08 10:31:24');
 INSERT INTO `dev_alarm` VALUES (33, 1, 1, '湿度过高：90.0%', 1, '2023-01-08 13:15:49');
 INSERT INTO `dev_alarm` VALUES (34, 1, 1, '湿度过高：90.0%', 1, '2023-01-08 13:15:49');
-INSERT INTO `dev_alarm` VALUES (35, 1, 2, '亮度异常', 0, '2023-01-08 13:15:49');
+INSERT INTO `dev_alarm` VALUES (35, 1, 2, '亮度异常', 1, '2023-01-08 13:15:49');
 INSERT INTO `dev_alarm` VALUES (36, 1, 0, '温度过高：50.0℃', 0, '2023-01-08 13:15:49');
 
 -- ----------------------------
@@ -139,18 +139,24 @@ CREATE TABLE `dev_monitor_config`  (
                                        `config_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'config_id',
                                        `site_id` int(11) NOT NULL COMMENT 'site_id;',
                                        `timestamp` datetime(0) NULL DEFAULT NULL COMMENT 'timestamp;',
-                                       `status` int(11) NULL DEFAULT NULL COMMENT 'status;',
                                        `version` int(11) NULL DEFAULT NULL COMMENT 'version;',
                                        `interval` int(11) NULL DEFAULT NULL COMMENT 'interval;',
+                                       `is_delete` int(11) NULL DEFAULT NULL COMMENT 'is_delete;',
                                        `monitor_items` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'monitor_items;',
                                        PRIMARY KEY (`config_id`) USING BTREE,
                                        INDEX `report_idx`(`config_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '监控配置' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '监控配置' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of dev_monitor_config
 -- ----------------------------
-INSERT INTO `dev_monitor_config` VALUES (1, 1, '2023-02-15 16:00:56', 1, 1, 1, 'ss');
+INSERT INTO `dev_monitor_config` VALUES (3, 10, '2023-03-07 01:47:58', 1, 2, 1, '{\"tmp\":{\"max\":\"20.6\",\"min\":\"27.2\",\"open\":\"1\",\"type\":\"tmp\"},\"lx\":{\"max\":\"2000\",\"min\":\"0\",\"open\":\"0\",\"type\":\"lx\"},\"hmt\":{\"max\":\"0.1\",\"min\":\"0.8\",\"open\":\"1\",\"type\":\"hmt\"}}');
+INSERT INTO `dev_monitor_config` VALUES (4, 12, '2023-03-07 02:19:26', 1, 20, 0, '{\"tmp\":{\"max\":\"60.0\",\"min\":\"10.0\",\"open\":\"1\",\"type\":\"tmp\"},\"lx\":{\"max\":\"10000.0\",\"min\":\"0.0\",\"open\":\"0\",\"type\":\"lx\"},\"hmt\":{\"max\":\"0.9\",\"min\":\"0.1\",\"open\":\"1\",\"type\":\"hmt\"}}');
+INSERT INTO `dev_monitor_config` VALUES (5, 1, '2023-03-07 02:19:26', 1, 20, 0, '{\"tmp\":{\"max\":\"60.0\",\"min\":\"10.0\",\"open\":\"1\",\"type\":\"tmp\"},\"lx\":{\"max\":\"10000.0\",\"min\":\"0.0\",\"open\":\"0\",\"type\":\"lx\"},\"hmt\":{\"max\":\"0.9\",\"min\":\"0.1\",\"open\":\"1\",\"type\":\"hmt\"}}');
+INSERT INTO `dev_monitor_config` VALUES (6, 2, '2023-03-07 02:19:26', 1, 20, 0, '{\"tmp\":{\"max\":\"60.0\",\"min\":\"10.0\",\"open\":\"1\",\"type\":\"tmp\"},\"lx\":{\"max\":\"10000.0\",\"min\":\"0.0\",\"open\":\"0\",\"type\":\"lx\"},\"hmt\":{\"max\":\"0.9\",\"min\":\"0.1\",\"open\":\"1\",\"type\":\"hmt\"}}');
+INSERT INTO `dev_monitor_config` VALUES (7, 3, '2023-03-07 02:19:26', 1, 20, 0, '{\"tmp\":{\"max\":\"60.0\",\"min\":\"10.0\",\"open\":\"1\",\"type\":\"tmp\"},\"lx\":{\"max\":\"10000.0\",\"min\":\"0.0\",\"open\":\"0\",\"type\":\"lx\"},\"hmt\":{\"max\":\"0.9\",\"min\":\"0.1\",\"open\":\"1\",\"type\":\"hmt\"}}');
+INSERT INTO `dev_monitor_config` VALUES (8, 4, '2023-03-07 02:19:26', 1, 20, 0, '{\"tmp\":{\"max\":\"60.0\",\"min\":\"10.0\",\"open\":\"1\",\"type\":\"tmp\"},\"lx\":{\"max\":\"10000.0\",\"min\":\"0.0\",\"open\":\"0\",\"type\":\"lx\"},\"hmt\":{\"max\":\"0.9\",\"min\":\"0.1\",\"open\":\"1\",\"type\":\"hmt\"}}');
+INSERT INTO `dev_monitor_config` VALUES (9, 5, '2023-03-07 02:19:26', 1, 20, 0, '{\"tmp\":{\"max\":\"60.0\",\"min\":\"10.0\",\"open\":\"1\",\"type\":\"tmp\"},\"lx\":{\"max\":\"10000.0\",\"min\":\"0.0\",\"open\":\"0\",\"type\":\"lx\"},\"hmt\":{\"max\":\"0.9\",\"min\":\"0.1\",\"open\":\"1\",\"type\":\"hmt\"}}');
 
 -- ----------------------------
 -- Table structure for dev_site
@@ -167,16 +173,18 @@ CREATE TABLE `dev_site`  (
                              `create_user` int(11) NULL DEFAULT NULL,
                              `is_delete` int(11) NULL DEFAULT NULL,
                              PRIMARY KEY (`site_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '站点信息' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 13 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '站点信息' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of dev_site
 -- ----------------------------
-INSERT INTO `dev_site` VALUES (1, 'FIMS_SITE_001', 121.65796481150367, 31.27103070027770, 'http://192.168.2.12:5000/device/1', '2023-02-27 11:41:03', '2022-10-07 22:41:02', 1, 0);
-INSERT INTO `dev_site` VALUES (2, 'FIMS_SITE_002', 116.39747700000000, 39.90869200000000, 'http://localhost:5000/device/2', '2023-02-27 11:41:03', '2022-10-07 22:41:02', 1, 0);
-INSERT INTO `dev_site` VALUES (3, 'FIMS_SITE_003', 120.39747700000000, 35.90869200000000, 'http://localhost:5000/device/2', '2023-02-27 11:41:03', '2022-10-07 22:41:02', 1, 0);
-INSERT INTO `dev_site` VALUES (4, 'FIMS_SITE_004', 121.39747700000000, 37.90869200000000, 'http://localhost:5000/device/2', '2023-02-27 11:41:03', '2022-10-07 22:41:02', 1, 0);
-INSERT INTO `dev_site` VALUES (5, 'FIMS_SITE_005', 119.39747700000000, 39.90869200000000, 'http://localhost:5000/device/2', '2023-02-27 11:41:03', '2022-10-07 22:41:02', 1, 0);
+INSERT INTO `dev_site` VALUES (1, 'IMAP_SITE_001', 121.65796481150367, 31.27103070027770, 'http://192.168.2.12:5000/device/1', '2023-02-27 11:41:03', '2022-10-07 22:41:02', 1, 0);
+INSERT INTO `dev_site` VALUES (2, 'IMAP_SITE_002', 116.39747700000000, 39.90869200000000, 'http://localhost:5000/device/2', '2023-02-27 11:41:03', '2022-10-07 22:41:02', 1, 0);
+INSERT INTO `dev_site` VALUES (3, 'IMAP_SITE_003', 120.39747700000000, 35.90869200000000, 'http://localhost:5000/device/2', '2023-02-27 11:41:03', '2022-10-07 22:41:02', 1, 0);
+INSERT INTO `dev_site` VALUES (4, 'IMAP_SITE_004', 121.39747700000000, 37.90869200000000, 'http://localhost:5000/device/2', '2023-02-27 11:41:03', '2022-10-07 22:41:02', 1, 0);
+INSERT INTO `dev_site` VALUES (5, 'IMAP_SITE_005', 119.39747700000000, 39.90869200000000, 'http://localhost:5000/device/2', '2023-02-27 11:41:03', '2022-10-07 22:41:02', 1, 0);
+INSERT INTO `dev_site` VALUES (10, '测试', 20.00000000000000, 20.00000000000000, 'url', '2023-03-07 01:47:58', '2023-03-07 01:47:58', 1, 1);
+INSERT INTO `dev_site` VALUES (12, 'IMAP_测试', 60.00000000000000, 20.00000000000000, 'url', '2023-03-07 02:19:26', '2023-03-07 02:19:26', 1, 0);
 
 -- ----------------------------
 -- Table structure for dev_site_photo

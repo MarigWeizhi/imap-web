@@ -1,6 +1,6 @@
 package com.imap.dao;
 
-import com.imap.common.pojo.vo.TmpOrHmtVO;
+import com.imap.common.vo.TmpOrHmtVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 

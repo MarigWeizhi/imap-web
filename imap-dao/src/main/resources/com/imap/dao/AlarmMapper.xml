@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.imap.dao.AlarmMapper">
 
-    <resultMap id="alarmResultMap" type="com.imap.common.pojo.vo.AlarmVO">
+    <resultMap id="alarmResultMap" type="com.imap.common.vo.AlarmVO">
         <result column="site_name" property="site"></result>
         <result column="type" property="type"></result>
         <result column="info" property="info"></result>
@@ -14,7 +14,7 @@
     <update id="setStatus">
         update dev_alarm set status = 1
         where alarm_id in
-        <foreach collection="alarmIds" item="alarmId" open="(" separator="," close=")">
+        <foreach collection="collection" item="alarmId" open="(" separator="," close=")">
             #{alarmId}
         </foreach>
     </update>
@@ -30,7 +30,7 @@
         limit 20;
     </select>
 
-    <select id="getAlarmTop" resultType="com.imap.common.pojo.vo.DataItemVO">
+    <select id="getAlarmTop" resultType="com.imap.common.vo.DataItemVO">
         select a.site_name as time,
                t.value,
                '告警数' as name
@@ -44,14 +44,14 @@
         limit #{n}
     </select>
 
-    <select id="getAlarmTypes" resultType="com.imap.common.pojo.vo.AlarmTypeVO">
+    <select id="getAlarmTypes" resultType="com.imap.common.vo.AlarmTypeVO">
         select type as name,
                count(*) as value
         from dev_alarm
         group by type
     </select>
 
-    <select id="getAlarmsPerMonth" resultType="com.imap.common.pojo.vo.DataItemVO">
+    <select id="getAlarmsPerMonth" resultType="com.imap.common.vo.DataItemVO">
         select date_format(create_time,'%Y-%m') as time,
                count(*) as value,
                '告警数' as name
@@ -62,7 +62,7 @@
         limit #{n}
     </select>
 
-    <select id="getAllAlarmsWithSite" resultType="com.imap.common.pojo.vo.DataItemVO">
+    <select id="getAllAlarmsWithSite" resultType="com.imap.common.vo.DataItemVO">
         select b.site_name as time,
                t.value,
                t.name
@@ -98,7 +98,7 @@
         from dev_alarm
     </select>
 
-    <select id="getAlarms" resultType="com.imap.common.pojo.vo.AlarmVO">
+    <select id="getAlarms" resultType="com.imap.common.vo.AlarmVO">
         select
             b.site_name as site,
             a.type as type,
@@ -108,7 +108,7 @@
         limit #{n}
     </select>
 
-    <select id="getAlarmById" resultType="com.imap.common.pojo.vo.AlarmTableVO">
+    <select id="getAlarmById" resultType="com.imap.common.vo.AlarmTableVO">
         select alarm_id alarmId,
                site_name siteName,
                name,
@@ -117,7 +117,7 @@
                status,
                info,
                a.create_time as time
-        from dev_alarm a left join dev_site b on a.site_id = b.site_id left join sys_user c on b.create_user = c.create_user
+        from (dev_alarm a left join dev_site b on a.site_id = b.site_id) join sys_user c on b.create_user = c.user_id
         where alarm_id = #{alarmId}
     </select>
 
@@ -127,7 +127,7 @@
             site_name,
             type,
             status,
-            create_time
+            a.create_time as create_time
         from dev_alarm a left join dev_site b on a.site_id = b.site_id
         where b.is_delete = 0
         limit #{showCount} offset #{offset}

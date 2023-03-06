@@ -61,15 +61,14 @@
 <script type="text/html" id="toolbarDemo">
     <div class="layui-btn-container">
         <button type="button" class="layui-btn layui-btn-sm" lay-event="add"><i class="layui-icon"></i>新增</button>
-<%--        <button type="button" class="layui-btn layui-btn-normal layui-btn-sm" lay-event="edit"><i class="layui-icon"></i>编辑</button>--%>
         <button type="button" class="layui-btn layui-btn-danger layui-btn-sm" lay-event="del"><i class="layui-icon"></i>删除</button>
     </div>
 </script>
 
 <%--每行数据操作--%>
 <script type="text/html" id="barDemo">
-    <a class="layui-btn layui-btn-xs" lay-event="del">编辑</a>
-    <a class="layui-btn layui-btn-xs" lay-event="edit">删除</a>
+    <a class="layui-btn layui-btn-xs" lay-event="edit">监控配置</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
 </script>
 
 <%--表单逻辑--%>
@@ -91,14 +90,14 @@
             ,title: '站点数据表'
             ,cols: [[
                 {type: 'checkbox', fixed: 'left', width:40}
-                ,{field:'site_id', fixed: 'left',title:'站点编号', edit: 'text'}
-                ,{field:'site_name', fixed: 'left',title:'站点名称', edit: 'text'}
-                ,{field:'lat', fixed: 'left',title:'经度', edit: 'text'}
-                ,{field:'lon', fixed: 'left',title:'纬度', edit: 'text'}
-                ,{field:'create_user', fixed: 'left',title:'负责人', edit: 'text'}
-                ,{field:'update_time', fixed: 'left',title:'更新时间', edit: 'text'}
-                ,{field:'create_time', fixed: 'left',title:'创建时间', edit: 'text'}
-                ,{fixed: 'right', align:'center',title:'操作', width:220, toolbar: '#barDemo'}
+                ,{field:'site_id', width:80, fixed: 'left',title:'站点编号'}
+                ,{field:'site_name',width:200, fixed: 'left',title:'站点名称', edit: 'text'}
+                ,{field:'lat',width:180, fixed: 'left',title:'经度', edit: 'text'}
+                ,{field:'lon',width:180, fixed: 'left',title:'纬度', edit: 'text'}
+                ,{field:'create_user',width:80, fixed: 'left',title:'负责人', edit: 'text'}
+                ,{field:'update_time',width:200, fixed: 'left',title:'更新时间'}
+                ,{field:'create_time',width:200, fixed: 'left',title:'创建时间'}
+                ,{fixed: 'right', align:'center',title:'操作', width:150, toolbar: '#barDemo'}
             ]]
             ,id:'system_site'
             ,page: true
@@ -117,8 +116,6 @@
                 case 'add': //增加
                     add();
                     break;
-                case 'edit': //编辑
-                    break;
                 case 'del': //删除
                     if(data.length>0){
                         var delBol = true;
@@ -126,7 +123,7 @@
                             layer.msg("批量删除中存在没有删除权限的数据，请重新选择。", {time: 2000});
                             return;
                         }
-                        layer.confirm('删除数据会同步删除【站点信息】，真的要删除数据么?', function(index){
+                        layer.confirm('删除数据会同步删除【监控配置信息】，真的要删除数据么?', function(index){
                             var ids = [];
                             var names = [];
                             for ( var i = 0; i <data.length; i++){
@@ -168,8 +165,8 @@
             if(obj.event === 'info'){
                 info(data.site_id);
             }else if(obj.event === 'del'){
-                layer.confirm('删除数据会同步删除【站点菜单信息】，真的要删除数据么?', function(index){
-                    $.get("${pageContext.request.contextPath}/system/site/del?ids="+data.site_id,null,function(res){
+                layer.confirm('删除数据会同步删除【监控配置信息】，真的要删除数据么?', function(index){
+                    $.get("${pageContext.request.contextPath}/system/site/del?site_ids="+data.site_id,null,function(res){
                         if (res.success) {
                             layer.msg("数据删除成功。", {time: 2000});
                             reloadData();
@@ -186,10 +183,6 @@
                 edit(data.site_id)
             } else if(obj.event === 'assignAuth'){
                 assignAuth(data.site_id)
-            } else if(obj.event === 'setStatus1'){
-                updateStatus(data.site_id,'1');
-            } else if(obj.event === 'setStatus0'){
-                updateStatus(data.site_id,'0');
             }
         });
 
@@ -287,6 +280,8 @@
     }
 
 
+
+
     //设置权限
     function assignAuth(id){
         parent.layer.open({
@@ -300,22 +295,6 @@
             end: function () {
             }
         });
-    }
-
-
-    function updateStatus(id,status){
-        $.get("${pageContext.request.contextPath}/system/site/updateStatus?id="+id+"&status="+status,null,function(res){
-            if (res.success) {
-                layer.tips("状态修改成功。");
-                reloadData();
-            }else{
-                if(res.loseSession=='loseSession'){
-                    loseSession(res.msg,res.url)
-                }else{
-                    layer.msg(res.msg, {time: 2000});
-                }
-            }
-        },'json');
     }
 
 </script>

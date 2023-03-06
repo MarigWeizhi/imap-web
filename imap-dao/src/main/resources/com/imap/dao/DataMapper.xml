@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.imap.dao.DataMapper">
 
-    <select id="getHmt" resultType="com.imap.common.pojo.vo.TmpOrHmtVO">
+    <select id="getHmt" resultType="com.imap.common.vo.TmpOrHmtVO">
         select end_time as date,
                avg_hmt * 100 as value,
                '湿度' as name
@@ -13,7 +13,7 @@
         order by end_time
     </select>
 
-    <select id="getTmp" resultType="com.imap.common.pojo.vo.TmpOrHmtVO">
+    <select id="getTmp" resultType="com.imap.common.vo.TmpOrHmtVO">
         select end_time as date,
                avg_tmp as value,
                '温度' as name
@@ -22,7 +22,7 @@
         order by end_time
     </select>
 
-    <select id="getLx" resultType="com.imap.common.pojo.vo.TmpOrHmtVO">
+    <select id="getLx" resultType="com.imap.common.vo.TmpOrHmtVO">
         select end_time as date,
                avg_lx as value,
                '亮度' as name

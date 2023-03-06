@@ -21,23 +21,23 @@
         </tr>
         <tr>
             <td align="right"><label class="layui-form-label">上报周期(秒)：</label></td>
-            <td colspan="3"><input type="text" name="report_interval" id="report_interval" lay-verify="field_len10|intNumberNo0" autocomplete="off" placeholder="上报周期(秒)" class="layui-input"></td>
+            <td colspan="3"><input type="text" name="interval" id="interval" lay-verify="field_len10|intNumberNo0" autocomplete="off" placeholder="上报周期(秒)" class="layui-input"></td>
         </tr>
         <tr>
             <td align="right"><label class="layui-form-label">温度监控阈值（单位℃）：</label></td>
-            <td colspan="3"><input type="checkbox" checked="" name="tmp" lay-skin="switch" lay-filter="switchTest" lay-text="开启监控|暂不监控"></td>
+            <td colspan="3"><input type="checkbox" checked="" name="tmp_open" lay-skin="switch" lay-filter="switchTest" lay-text="开启监控|暂不监控"></td>
             <td colspan="3"><input type="text" name="tmp_min" id="tmp_min" lay-verify="field_len50|float" autocomplete="off" placeholder="最低温度" class="layui-input"></td>
             <td colspan="3"><input type="text" name="tmp_max" id="tmp_max" lay-verify="field_len50|float" autocomplete="off" placeholder="最高温度" class="layui-input"></td>
         </tr>
         <tr>
             <td align="right"><label class="layui-form-label">湿度监控阈值（范围0-1）：</label></td>
-            <td colspan="3"><input type="checkbox" checked="" name="hmt" lay-skin="switch" lay-filter="switchTest" lay-text="开启监控|暂不监控"></td>
+            <td colspan="3"><input type="checkbox" checked="" name="hmt_open" lay-skin="switch" lay-filter="switchTest" lay-text="开启监控|暂不监控"></td>
             <td colspan="3"><input type="text" name="hmt_min" id="hmt_min" lay-verify="field_len50|float" autocomplete="off" placeholder="最低湿度" class="layui-input"></td>
             <td colspan="3"><input type="text" name="hmt_max" id="hmt_max" lay-verify="field_len50|float" autocomplete="off" placeholder="最高湿度" class="layui-input"></td>
         </tr>
         <tr>
             <td align="right"><label class="layui-form-label">亮度监控阈值（单位lx）：</label></td>
-            <td colspan="3"><input type="checkbox" checked="" name="lx" lay-skin="switch" lay-filter="switchTest" lay-text="开启监控|暂不监控"></td>
+            <td colspan="3"><input type="checkbox" checked="" name="lx_open" lay-skin="switch" lay-filter="switchTest" lay-text="开启监控|暂不监控"></td>
             <td colspan="3"><input type="text" name="lx_min" id="lx_min" lay-verify="field_len50|float" autocomplete="off" placeholder="最低亮度" class="layui-input"></td>
             <td colspan="3"><input type="text" name="lx_max" id="lx_max" lay-verify="field_len50|float" autocomplete="off" placeholder="最高亮度" class="layui-input"></td>
         </tr>

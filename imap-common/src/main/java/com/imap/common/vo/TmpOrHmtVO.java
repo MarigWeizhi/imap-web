@@ -1,4 +1,4 @@
-package com.imap.common.pojo.vo;
+package com.imap.common.vo;
 
 import com.alibaba.fastjson.annotation.JSONField;
 import lombok.Data;

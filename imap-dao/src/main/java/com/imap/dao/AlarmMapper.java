@@ -1,9 +1,9 @@
 package com.imap.dao;
 
-import com.imap.common.pojo.vo.AlarmTableVO;
-import com.imap.common.pojo.vo.AlarmTypeVO;
-import com.imap.common.pojo.vo.DataItemVO;
-import com.imap.common.pojo.vo.AlarmVO;
+import com.imap.common.vo.AlarmTableVO;
+import com.imap.common.vo.AlarmTypeVO;
+import com.imap.common.vo.DataItemVO;
+import com.imap.common.vo.AlarmVO;
 import com.imap.common.util.Page;
 import com.imap.common.util.PageData;
 import org.apache.ibatis.annotations.Mapper;
