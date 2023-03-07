@@ -5,7 +5,7 @@
 <mapper namespace="com.imap.dao.SiteMapper">
 
     <insert id="save" parameterType="com.imap.common.util.PageData">
-        <selectKey keyProperty="id" order="AFTER" resultType="int">
+        <selectKey keyProperty="siteId" order="AFTER" resultType="int">
             select last_insert_id()
         </selectKey>
         insert into dev_site(site_id, site_name,
@@ -23,28 +23,16 @@
                 0)
     </insert>
 
-    <insert id="addConfig" parameterType="com.imap.common.util.PageData">
-        insert into dev_monitor_config(config_id, site_id,
-                             timestamp, version,`interval`,
-                                       is_delete,monitor_items)
-        values (null,
-                #{siteId,jdbcType=INTEGER},
-                #{create_time,jdbcType=TIMESTAMP},
-                1,
-                #{interval,jdbcType=INTEGER},
-                0,
-                #{monitorItems,jdbcType=VARCHAR}
-                )
-    </insert>
-
     <update id="update" parameterType="com.imap.common.util.PageData">
         update dev_site set
         <if test="site_name != null">site_name=#{site_name},</if>
-        <if test="lat != null">lat=#{lat},</if>
         <if test="lon != null">lon=#{lon},</if>
+        <if test="lat != null">lat=#{lat},</if>
         <if test="url != null">url=#{url},</if>
+        <if test="create_user != null">create_user=#{create_user},</if>
+        <if test="is_delete != null">is_delete=#{is_delete},</if>
         update_time=#{update_time}
-        where site_id=#{site_id} and is_delete = 0
+        where site_id=#{site_id}
     </update>
 
     <update id="delete" parameterType="com.imap.common.util.PageData">
@@ -55,12 +43,36 @@
         </foreach>
     </update>
 
+    <insert id="addConfig" parameterType="com.imap.common.util.PageData">
+        insert into dev_monitor_config(config_id, site_id,
+                                       timestamp, version,`interval`,
+                                       is_delete,monitor_items)
+        values (null,
+                #{siteId,jdbcType=INTEGER},
+                #{create_time,jdbcType=TIMESTAMP},
+                1,
+                #{interval,jdbcType=INTEGER},
+                0,
+                #{monitorItems,jdbcType=VARCHAR}
+               )
+    </insert>
+
     <update id="deleteConfig" parameterType="com.imap.common.util.PageData">
         update dev_monitor_config set is_delete = 1
         where site_id in
         <foreach collection="site_ids" item="site_id" open="(" separator="," close=")">
             #{site_id}
         </foreach>
+    </update>
+
+    <update id="updateConfig">
+        update dev_monitor_config set
+        <if test="version != null">version=#{version},</if>
+        <if test="interval != null">`interval`=#{interval},</if>
+        <if test="monitorItems != null">monitor_items=#{monitorItems},</if>
+        <if test="is_delete != null">is_delete=#{is_delete},</if>
+        `timestamp`=#{update_time}
+        where site_id=#{site_id}
     </update>
 
     <select id="findListPage" parameterType="com.imap.common.util.Page"  resultType="com.imap.common.util.PageData">

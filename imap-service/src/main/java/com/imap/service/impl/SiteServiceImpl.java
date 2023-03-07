@@ -1,8 +1,10 @@
 package com.imap.service.impl;
 
 import com.alibaba.fastjson.TypeReference;
+import com.imap.common.pojo.MonitorConfig;
 import com.imap.common.pojo.MonitorItem;
 import com.imap.common.pojo.Site;
+import com.imap.common.util.DateTimeUtil;
 import com.imap.common.util.JsonToMap;
 import com.imap.common.util.Page;
 import com.imap.common.util.PageData;
@@ -12,8 +14,10 @@ import com.imap.service.SiteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -31,6 +35,9 @@ public class SiteServiceImpl extends SiteService {
     @Autowired
     UserMapper userMapper;
 
+    @Autowired
+    KafkaService kafkaService;
+
     @Override
     public List<PageData> getAllList(PageData pd) {
 
@@ -40,7 +47,7 @@ public class SiteServiceImpl extends SiteService {
         allList.forEach(site -> {
             Integer userId = (Integer) site.get("create_user");
             String userName = userMapper.getUserById(userId).getUserName();
-            site.put("administrator",userName);
+            site.put("administrator", userName);
         });
 
         return allList;
@@ -59,41 +66,63 @@ public class SiteServiceImpl extends SiteService {
 
     @Override
     public void save(PageData pd) {
+        // save执行后自动注入siteId在pd内，供addConfig使用
         siteMapper.save(pd);
-        int siteId = (int)pd.get("id");
-        MonitorItem tmp = new MonitorItem("tmp",
-                Integer.valueOf(pd.get("tmp_open").toString()) ,
-                Double.valueOf(pd.get("tmp_max").toString()),
-                Double.valueOf(pd.get("tmp_min").toString()));
-        MonitorItem hmt = new MonitorItem("hmt",
-                Integer.valueOf(pd.get("hmt_open").toString()) ,
-                Double.valueOf(pd.get("hmt_max").toString()),
-                Double.valueOf(pd.get("hmt_min").toString()));
-        MonitorItem lx = new MonitorItem("lx",
-                Integer.valueOf(pd.get("lx_open").toString()) ,
-                Double.valueOf(pd.get("lx_max").toString()),
-                Double.valueOf(pd.get("lx_min").toString()));
-        ConcurrentHashMap<String, MonitorItem> map = new ConcurrentHashMap<>();
-        map.put("tmp",tmp);
-        map.put("hmt",hmt);
-        map.put("lx",lx);
-        pd.put("monitorItems",JsonToMap.map2json(map));
-        pd.put("siteId",siteId);
+        ConcurrentHashMap<String, MonitorItem> monitorItems = getMonitorItems(pd);
+        pd.put("monitorItems", JsonToMap.map2json(monitorItems));
         siteMapper.addConfig(pd);
+
+        Integer siteId = (Integer) pd.get("siteId");
+        long time = Timestamp.valueOf(pd.get("create_time").toString()).getTime();
+        int version = 1;
+        int interval = Integer.valueOf(pd.get("interval").toString());
+        int isDelete = 0;
+        MonitorConfig monitorConfig = new MonitorConfig(siteId, time, version, interval, isDelete, monitorItems);
+
+        // 将配置信息发送给kafka
+        kafkaService.updateMonitorConfig(monitorConfig.toJson());
     }
 
     @Override
     public int update(PageData pd) {
-        try{
+        try {
+            Integer siteId = Integer.valueOf(pd.get("site_id").toString());
+            PageData versionPd = siteMapper.getSiteConfigById(siteId);
+            int version = (Integer) versionPd.get("version") + 1;
+            long time = Timestamp.valueOf(pd.get("update_time").toString()).getTime();
+            int interval = Integer.valueOf(pd.get("interval").toString());
+            int isDelete = 0;
+            ConcurrentHashMap<String, MonitorItem> monitorItems = getMonitorItems(pd);
+            pd.put("monitorItems", JsonToMap.map2json(monitorItems));
+            pd.put("version", version);
+            pd.put("interval", interval);
+            // 更新站点信息和更新配置信息
             siteMapper.update(pd);
+            siteMapper.updateConfig(pd);
+
+            MonitorConfig monitorConfig = new MonitorConfig(siteId, time, version, interval, isDelete, monitorItems);
+            // 将配置信息发送给kafka
+            kafkaService.updateMonitorConfig(monitorConfig.toJson());
             return 200;
-        }catch (Exception e){
+        } catch (Exception e) {
+            System.out.println(e);
             return 400;
         }
     }
 
     @Override
     public void delete(PageData pd) {
+        List<Integer> ids = (List<Integer>) pd.get("site_ids");
+        for (Integer id : ids) {
+            PageData config = siteMapper.getSiteConfigById(id);
+            MonitorConfig monitorConfig = new MonitorConfig(id,
+                    System.currentTimeMillis(),
+                    (Integer)config.get("version"),
+                    (Integer)config.get("interval"),
+                    1,
+                    JsonToMap.jsonToObj(config.get("monitor_items").toString(),new TypeReference<Map<String, MonitorItem>>(){}));
+            kafkaService.updateMonitorConfig(monitorConfig.toJson());
+        }
         siteMapper.delete(pd);
         siteMapper.deleteConfig(pd);
     }
@@ -110,23 +139,44 @@ public class SiteServiceImpl extends SiteService {
         HashMap<String, MonitorItem> monitorItems = JsonToMap.jsonToObj(
                 siteConfig.get("monitor_items").toString(),
                 new TypeReference<HashMap<String, MonitorItem>>() {});
+
         MonitorItem tmp = monitorItems.get("tmp");
         MonitorItem hmt = monitorItems.get("hmt");
         MonitorItem lx = monitorItems.get("lx");
 
-        siteConfig.put("tmpMin",tmp.getMin());
-        siteConfig.put("tmpMax",tmp.getMax());
-        siteConfig.put("tmpOpen",tmp.getOpen());
+        siteConfig.put("tmpMin", tmp.getMin());
+        siteConfig.put("tmpMax", tmp.getMax());
+        siteConfig.put("tmpOpen", tmp.getOpen());
 
-        siteConfig.put("hmtMin",hmt.getMin());
-        siteConfig.put("hmtMax",hmt.getMax());
-        siteConfig.put("hmtOpen",hmt.getOpen());
+        siteConfig.put("hmtMin", hmt.getMin());
+        siteConfig.put("hmtMax", hmt.getMax());
+        siteConfig.put("hmtOpen", hmt.getOpen());
 
-        siteConfig.put("lxMin",lx.getMin());
-        siteConfig.put("lxMax",lx.getMax());
-        siteConfig.put("lxOpen",lx.getOpen());
+        siteConfig.put("lxMin", lx.getMin());
+        siteConfig.put("lxMax", lx.getMax());
+        siteConfig.put("lxOpen", lx.getOpen());
 
         siteConfig.putAll(JsonToMap.bean2Map(site));
         return siteConfig;
+    }
+
+    private static ConcurrentHashMap<String, MonitorItem> getMonitorItems(PageData pd) {
+        MonitorItem tmp = new MonitorItem("tmp",
+                Integer.valueOf(pd.get("tmp_open").toString()),
+                Double.valueOf(pd.get("tmp_max").toString()),
+                Double.valueOf(pd.get("tmp_min").toString()));
+        MonitorItem hmt = new MonitorItem("hmt",
+                Integer.valueOf(pd.get("hmt_open").toString()),
+                Double.valueOf(pd.get("hmt_max").toString()),
+                Double.valueOf(pd.get("hmt_min").toString()));
+        MonitorItem lx = new MonitorItem("lx",
+                Integer.valueOf(pd.get("lx_open").toString()),
+                Double.valueOf(pd.get("lx_max").toString()),
+                Double.valueOf(pd.get("lx_min").toString()));
+        ConcurrentHashMap<String, MonitorItem> map = new ConcurrentHashMap<>();
+        map.put("tmp", tmp);
+        map.put("hmt", hmt);
+        map.put("lx", lx);
+        return map;
     }
 }

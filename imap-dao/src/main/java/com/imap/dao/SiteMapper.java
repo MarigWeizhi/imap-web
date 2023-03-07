@@ -32,4 +32,6 @@ public interface SiteMapper {
     void addConfig(PageData pd);
 
     void deleteConfig(PageData pd);
+
+    void updateConfig(PageData pd);
 }

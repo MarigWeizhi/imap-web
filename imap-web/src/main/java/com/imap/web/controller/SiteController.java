@@ -70,14 +70,21 @@ public class SiteController extends BaseController {
     public void update(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws IOException {
         PageData pd = new PageData(request);
         String time = DateTimeUtil.getDateTimeStr();
-        pd.put("create_time", time);
         pd.put("update_time", time);
-        // TODO 待实现
+
+        pd.put("tmp_open", pd.get("tmp_open")!=null?1:0);
+        pd.put("hmt_open", pd.get("hmt_open")!=null?1:0);
+        pd.put("lx_open", pd.get("lx_open")!=null?1:0);
+
         Json json = new Json();
         int num = siteService.update(pd);
         json.setCode(num);
-        json.setSuccess(true);
-        json.setMsg("操作成功。");
+        if (num==200){
+            json.setSuccess(true);
+            json.setMsg("操作成功。");
+        }else {
+            json.setMsg("异常：" + num);
+        }
         this.writeJson(response, json);
     }
 
