@@ -1,5 +1,6 @@
 package com.imap.dao;
 
+import com.imap.common.po.AlarmPO;
 import com.imap.common.vo.AlarmTableVO;
 import com.imap.common.vo.AlarmTypeVO;
 import com.imap.common.vo.DataItemVO;
@@ -15,8 +16,6 @@ import java.util.List;
 public interface AlarmMapper {
 
     List<AlarmVO> getAlarmList(int siteId);
-
-    void addAlarm(PageData pd);
 
     List<DataItemVO> getAlarmTop(int n);
     List<AlarmTypeVO> getAlarmTypes();
@@ -36,6 +35,8 @@ public interface AlarmMapper {
     int getListSize(Page page);
 
     List<PageData> getAllAlarms();
+
+    void addAlarm(AlarmPO alarmPO);
 }
 
 

@@ -15,4 +15,13 @@ public enum AlarmEnum {
     public String getDescription() {
         return description;
     }
+
+    public static AlarmEnum from(String type){
+        switch(type){
+            case "tmp":return AlarmEnum.TEMPERATURE_ABNORMAL;
+            case "hmt":return AlarmEnum.HUMIDITY_ABNORMAL;
+            case "lx":return AlarmEnum.BRIGHTNESS_ABNORMAL;
+            default: return AlarmEnum.OTHER_ABNORMAL;
+        }
+    }
 }

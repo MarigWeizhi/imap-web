@@ -34,4 +34,6 @@ public interface SiteMapper {
     void deleteConfig(PageData pd);
 
     void updateConfig(PageData pd);
+
+    void setCurSiteData(DataReport dataReport);
 }

@@ -51,7 +51,6 @@ public class AlarmServiceImpl extends AlarmService {
 
     @Override
     public void save(PageData pd) {
-        alarmMapper.addAlarm(pd);
     }
 
     @Override

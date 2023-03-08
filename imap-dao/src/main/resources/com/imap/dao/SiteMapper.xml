@@ -75,6 +75,7 @@
         where site_id=#{site_id}
     </update>
 
+
     <select id="findListPage" parameterType="com.imap.common.util.Page"  resultType="com.imap.common.util.PageData">
         select * from dev_site
         where is_delete = 0
@@ -121,6 +122,15 @@
         order by `timestamp` desc
         limit 1
     </select>
+
+    <update id="setCurSiteData" parameterType="com.imap.common.pojo.DataReport" >
+        update dev_data_report
+        set `timestamp` = #{date},
+            `version` = #{version},
+            `status`=#{status},
+            `data` = #{dataStr}
+        where site_id = #{siteId} and type = 'report'
+    </update>
 
     <select id="getSiteConfigById" resultType="com.imap.common.util.PageData">
         select `interval`,

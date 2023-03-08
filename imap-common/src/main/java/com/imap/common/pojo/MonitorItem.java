@@ -9,7 +9,7 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class MonitorItem {
     private String type;
-    private int open;
+    private Integer open;
     private Double max;
     private Double min;
 }

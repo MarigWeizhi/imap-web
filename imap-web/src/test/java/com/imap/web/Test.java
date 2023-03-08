@@ -1,5 +1,7 @@
 package com.imap.web;
 
+import com.imap.common.util.DateTimeUtil;
+
 import java.sql.Timestamp;
 
 import static com.imap.common.util.DateTimeUtil.getDateTimeStr;
@@ -14,5 +16,6 @@ public class Test {
 
         long time = Timestamp.valueOf(getDateTimeStr()).getTime();
         System.out.println(time);
+        System.out.println(DateTimeUtil.timeStamp2DateString(1678297096000L));
     }
 }
