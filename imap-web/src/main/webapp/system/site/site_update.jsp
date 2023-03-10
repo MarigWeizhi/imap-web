@@ -11,13 +11,13 @@
         </tr>
         <tr>
             <td align="right"><label class="layui-form-label">站点经度：</label></td>
-            <td colspan="3"><input type="text" name="lat" id="lat"  value="${p.lat}" lay-verify="field_len10|float" autocomplete="off" placeholder="站点经度" class="layui-input"></td>
-            <td align="right"><label class="layui-form-label">站点纬度：</label></td>
-            <td colspan="3"><input type="text" name="lon" id="lon" value="${p.lon}" lay-verify="field_len10|float" autocomplete="off" placeholder="站点纬度" class="layui-input"></td>
+            <td colspan="3"><input type="text" name="lon" id="lon" value="${p.lon}" lay-verify="longitude" autocomplete="off" placeholder="站点经度" class="layui-input"></td>
+            <td align="right"><label class="layui-form-label">站点维度：</label></td>
+            <td colspan="3"><input type="text" name="lat" id="lat"  value="${p.lat}" lay-verify="latitude" autocomplete="off" placeholder="站点维度" class="layui-input"></td>
         </tr>
         <tr>
             <td align="right"><label class="layui-form-label">站点监控url：</label></td>
-            <td colspan="3"><input type="text" name="url" id="url" value="${p.url}"lay-verify="field_len50" autocomplete="off" placeholder="站点监控url" class="layui-input"></td>
+            <td colspan="3"><input type="text" name="url" id="url" value="${p.url}"lay-verify="field_len120" autocomplete="off" placeholder="站点监控url" class="layui-input"></td>
             <td align="right"><label class="layui-form-label">上报周期(秒)：</label></td>
             <td colspan="3"><input type="text" name="interval" id="interval" value="${p.interval}" lay-verify="field_len10|intNumberNo0" autocomplete="off" placeholder="上报周期(秒)" class="layui-input"></td>
         </tr>

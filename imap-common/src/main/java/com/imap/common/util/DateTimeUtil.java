@@ -448,7 +448,7 @@ public class DateTimeUtil {
 	    	}
 
 	public static String timeStamp2DateString(Long time){
-		Long timestamp = time*1000;
+		Long timestamp = time;
 		String date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date(timestamp));
 		return date;
 	}

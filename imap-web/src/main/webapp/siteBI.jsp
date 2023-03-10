@@ -1241,7 +1241,7 @@
             <!-- 组件727fa19f-69a7-4549-807c-7815372fc953开始-->
 
             <div id="item727fa19f-69a7-4549-807c-7815372fc953">
-                <p class="">430 lx</p>
+                <p id="lxData">430 lx</p>
             </div>
 
             <style>
@@ -1344,6 +1344,7 @@
 
                 // 自己加的部分
                 updateLx = function (cur_lx) {
+                    $('#lxData').text(cur_lx + ' lx');
                     var mask = document.getElementsByClassName("mask")[0];
                     var max_lx = 1000
                     // 亮度比

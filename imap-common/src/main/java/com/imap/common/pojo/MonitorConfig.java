@@ -44,9 +44,12 @@ public class MonitorConfig {
                 MathUtil.getRandomData(2,2), 0.00);
         MonitorItem hmt = new MonitorItem("hmt", 1,
                 MathUtil.getRandomData(0,2), 0.00);
+        MonitorItem lx = new MonitorItem("lx", 1,
+                MathUtil.getRandomData(4,2), 0.00);
         ConcurrentHashMap<String, MonitorItem> monitorItemConcurrentHashMap = new ConcurrentHashMap<>();
         monitorItemConcurrentHashMap.put("tmp",tmp);
         monitorItemConcurrentHashMap.put("hmt",hmt);
+        monitorItemConcurrentHashMap.put("lx",lx);
         monitorConfig.setMonitorItems(monitorItemConcurrentHashMap);
         return monitorConfig;
     }

@@ -1907,7 +1907,7 @@
                                             '</br>维度：' + lat +
                                             '</br>时间：' + data.time +
                                             '</br>温度：' + data.tmp + " ℃" +
-                                            '</br>湿度：' + data.hmt + " %" +
+                                            '</br>湿度：' + data.hmt*100 + " %" +
                                             '</br>亮度：' + data.lx + " lx" +
                                             '</br>站点监控：' + '<button class="layui-btn layui-btn-sm" onclick="xadmin.open(\'' +
                                             name + '\',\'' + url + '\',650,530)"> 监控视频</button>' +
