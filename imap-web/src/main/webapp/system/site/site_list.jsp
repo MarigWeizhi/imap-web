@@ -238,7 +238,7 @@
             maxmin: true,
             type: 2,
             content: '${pageContext.request.contextPath}/system/site/toAdd?',
-            area: ['800px', '450px'],
+            area: ['800px', '500px'],
             end: function () {
                 var val = getOpenCloseParam();
                 if(val=="reload"){

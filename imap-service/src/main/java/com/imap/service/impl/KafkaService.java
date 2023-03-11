@@ -3,8 +3,9 @@ package com.imap.service.impl;
 import com.imap.common.pojo.AlarmItem;
 import com.imap.common.pojo.DataReport;
 import com.imap.common.util.JsonToMap;
-import com.imap.dao.SiteMapper;
-import com.imap.service.SiteService;
+import com.imap.service.AlarmService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -26,13 +27,17 @@ public class KafkaService {
     @Autowired
     private DataService dataService;
 
+    @Autowired
+    private AlarmService alarmService;
+
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
+
     @KafkaListener(topics = "alarm", groupId = "alarm-group")
     public void listenAlarm(String alarm) {
         // 处理接收到的消息
         AlarmItem alarmItem = AlarmItem.from(alarm);
-        dataService.addAlarm(alarmItem);
-
-        System.out.println("listenAlarm：" + alarm);
+        alarmService.addAlarm(alarmItem);
+        logger.info("listenAlarm：" + alarm);
     }
 
     @KafkaListener(topics = "report")
@@ -40,8 +45,8 @@ public class KafkaService {
         try {
             dataService.setSiteData(JsonToMap.jsonToObj(dataReport, DataReport.class));
         } catch (IOException e) {
-            System.out.println("无法解析该数据");
-            System.out.println(e);
+            logger.warn("无法解析该数据");
+            logger.warn(e.getMessage());
         }
         System.out.println("listenDataReport：" + dataReport);
     }

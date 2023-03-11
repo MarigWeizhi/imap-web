@@ -52,7 +52,6 @@ public class Verify {
 		}
 	}
 
-
 	public static boolean verifyIsNull(Object obj){
 		if(obj!=null&&!obj.equals("")&&obj!="undefined"){
 			return false;
@@ -145,4 +144,11 @@ public class Verify {
 		return (str == null ? "" : str.trim());
 	}
 
+	public static boolean verifyIsNull(PageData pd, String... keys) {
+		if(pd==null) return true;
+		for (String key : keys) {
+			if(pd.get(key)==null)return true;
+		}
+		return false;
+	}
 }

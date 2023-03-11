@@ -33,6 +33,15 @@ public class MonitorConfig {
     private Integer isDelete; // 是否删除
     private Map<String,MonitorItem> monitorItems;  // 保存各个监控传感器配置项
 
+
+    public String toJson() {
+        try {
+            return JsonToMap.objToJson(this);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public static MonitorConfig getDefaultConfig(Integer siteId){
         MonitorConfig monitorConfig = new MonitorConfig();
         monitorConfig.setSiteId(siteId);
@@ -52,14 +61,6 @@ public class MonitorConfig {
         monitorItemConcurrentHashMap.put("lx",lx);
         monitorConfig.setMonitorItems(monitorItemConcurrentHashMap);
         return monitorConfig;
-    }
-
-    public String toJson() {
-        try {
-            return JsonToMap.objToJson(this);
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
-        }
     }
 
     public static List<MonitorConfig> getDefaultConfigList(){

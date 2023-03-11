@@ -1,10 +1,9 @@
 package com.imap.service.impl;
 
 import com.alibaba.fastjson.TypeReference;
-import com.imap.common.po.AlarmPO;
-import com.imap.common.pojo.AlarmItem;
+import com.imap.common.po.BaseDataPO;
 import com.imap.common.pojo.DataReport;
-import com.imap.common.pojo.MonitorItem;
+import com.imap.common.pojo.DataTypeEnum;
 import com.imap.common.vo.*;
 import com.imap.common.util.DateTimeUtil;
 import com.imap.common.util.JsonToMap;
@@ -20,12 +19,8 @@ import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
-import java.text.SimpleDateFormat;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -69,6 +64,8 @@ public class DataService {
         return photoMapper.getCameraUrl(siteId);
     }
 
+
+    // 暂时弃用
     public void addAlarm(PageData pd) {
     }
 
@@ -77,6 +74,7 @@ public class DataService {
      * cacheNames: 起一个缓存的命名空间，对应缓存的唯一标识
      * value：缓存结果   key：默认只有一个参数的情况下，key值默认就是方法参数值; 如果没有参数或者多个参数的情况：会使用SimpleKeyGenerate来为生成key
      */
+//    {"tmp":2000.96,"lx":163.86,"hmt":0.68}
     @Cacheable(cacheNames = "siteData", key = "#siteId",unless = "#result==null")
     public SiteDataVO getSiteData(int siteId) {
         DataReport data = siteMapper.getCurSiteData(siteId);
@@ -112,6 +110,7 @@ public class DataService {
         return siteDataVO;
     }
 
+    @Cacheable(cacheNames = "yesterday", key = "#siteId + #type",unless = "#result==null")
     public List<TmpOrHmtVO> getYesterdayData(int siteId, String type) {
         String time = DateTimeUtil.subtractTime(1, ChronoUnit.DAYS);
         List<TmpOrHmtVO> list = new ArrayList<>();
@@ -125,8 +124,11 @@ public class DataService {
             list = dataMapper.getLx(siteId,time);
         }
         list.forEach(item -> {
+            Date date = new Date(item.getDate().getTime() + 8 * 60 * 60 * 1000);
             item.setTime(DateTimeUtil.transform(item.getDate(),"HH:mm"));
         });
+        list.sort(Comparator.comparing(TmpOrHmtVO::getTime));
+        logger.info("yesterday " + siteId + " "+ type);
         return list;
     }
 
@@ -160,19 +162,22 @@ public class DataService {
         return alarmTypes;
     }
 
-    public void addAlarm(AlarmItem alarmItem) {
-        DataReport dataReport = alarmItem.getDataReport();
-        MonitorItem monitorItem = alarmItem.getMonitorItem();
-        AlarmEnum alarmEnum = AlarmEnum.from(monitorItem.getType());
-        Integer siteId = dataReport.getSiteId();
-        Integer type = alarmEnum.ordinal();
-        String info = alarmEnum.getDescription()
-                + ": 当前值为：" + dataReport.getData().get(monitorItem.getType())
-                + " 参考值为：" +  monitorItem.getMin()  + " ~ " + monitorItem.getMax();
-        Integer status = 0; // 0是未处理
-        String createDate = DateTimeUtil.timeStamp2DateString(dataReport.getTimestamp());
-        AlarmPO alarmPO = new AlarmPO(null,siteId,type,info,status,createDate);
-        alarmMapper.addAlarm(alarmPO);
-    }
 
+    public HistoryItemVO getHistoryData(Integer siteId, DataTypeEnum dataType, Integer timeType, String start, String end) {
+        PageData pageData = new PageData();
+        pageData.put("siteId",siteId);
+        pageData.put(dataType.getType(),"1");
+        pageData.put("timeType",timeType);
+        pageData.put("start",start);
+        pageData.put("end",end);
+        String siteName = siteMapper.getSiteById(siteId).getSiteName();
+        String title = "站点："+siteName+"历史" + dataType.getTypeStr() + "数据";
+        List<BaseDataPO> list = dataMapper.getHistoryData(pageData);
+        List<List<String>> data = list.stream().map(baseDataPO ->
+                        Arrays.asList(
+                                DateTimeUtil.getDateTimeStr(baseDataPO.getTime()),
+                                baseDataPO.getValue() + ""))
+                .collect(Collectors.toList());
+        return new HistoryItemVO(siteId,title,data);
+    }
 }

@@ -140,4 +140,25 @@
         where site_id = #{siteId} and is_delete = 0
     </select>
 
+    <select id="getMonitorConfig" resultType="com.imap.common.po.MonitorConfigPO">
+        select site_id siteId,
+               `timestamp`,
+                version,
+                `interval`,
+                is_delete isDelete,
+                monitor_items monitorItems
+        from dev_monitor_config
+        where site_id = #{siteId}
+    </select>
+
+    <update id="setMonitorConfig" parameterType="com.imap.common.po.MonitorConfigPO">
+        update dev_monitor_config
+        set `timestamp` = #{timestamp},
+            version = #{version},
+            `interval` = #{interval},
+            is_delete = #{isDelete},
+            monitor_items = #{monitorItems}
+        where site_id = #{siteId}
+    </update>
+
 </mapper>

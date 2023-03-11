@@ -31,6 +31,14 @@
         order by end_time
     </select>
 
+    <select id="getHistoryData" parameterType="com.imap.common.util.PageData" resultType="com.imap.common.po.BaseDataPO">
+        select end_time time,
+        <if test="tmp != null">avg_tmp value</if>
+        <if test="hmt != null">avg_hmt value</if>
+        <if test="lx != null">avg_lx value</if>
+        from dev_avg_data
+
+    </select>
 
 
 </mapper>

@@ -17,6 +17,7 @@ import java.util.Map;
 @Configuration
 public class DataSourceConfig {
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
+
 	@Bean(name = "master",initMethod = "init",destroyMethod = "close")
 	@ConfigurationProperties(prefix = "spring.datasource.master")
 	public DataSource dataSource1() {

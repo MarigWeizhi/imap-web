@@ -30,11 +30,11 @@ public class DataReport {
     private Integer version;  // 监控版本
     private Integer status; // 数据状态 0为正常，1为异常
     private Map<String,Double> data;  // 数据
-    private String dataStr;  // 数据
+    private String dataStr = "";  // 数据
 
     public String getDataStr() {
         try {
-            return JsonToMap.objToJson(data);
+            return "".equals(dataStr)?JsonToMap.objToJson(data):dataStr;
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }

@@ -9,6 +9,7 @@ import com.imap.service.SiteService;
 import com.imap.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -57,6 +58,27 @@ public class SiteController extends BaseController {
         return mv;
     }
 
+    @RequestMapping(value = "/save", method = RequestMethod.POST)
+    public void save(HttpServletRequest request, MultipartFile file, HttpServletResponse response, HttpSession session) throws Exception {
+        PageData pd = new PageData(request);
+        Json json = new Json();
+        String time = DateTimeUtil.getDateTimeStr();
+
+        pd.put("tmp_open", pd.get("tmp_open")!=null?1:0);
+        pd.put("hmt_open", pd.get("hmt_open")!=null?1:0);
+        pd.put("lx_open", pd.get("lx_open")!=null?1:0);
+
+        pd.put("create_time", time);
+        pd.put("update_time", time);
+        User user = (User) session.getAttribute("user");
+        pd.put("create_user", user.getUserId());
+
+        siteService.save(pd);
+        json.setSuccess(true);
+        json.setMsg("操作成功。");
+        this.writeJson(response, json);
+    }
+
     @RequestMapping(value = "/toUpdate", method = RequestMethod.GET)
     public ModelAndView toUpdate(ModelAndView mv, HttpServletRequest request) {
         PageData pd = new PageData(request);
@@ -85,27 +107,6 @@ public class SiteController extends BaseController {
         }else {
             json.setMsg("异常：" + num);
         }
-        this.writeJson(response, json);
-    }
-
-    @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public void save(HttpServletRequest request, MultipartFile file, HttpServletResponse response, HttpSession session) throws Exception {
-        PageData pd = new PageData(request);
-        Json json = new Json();
-        String time = DateTimeUtil.getDateTimeStr();
-
-        pd.put("tmp_open", pd.get("tmp_open")!=null?1:0);
-        pd.put("hmt_open", pd.get("hmt_open")!=null?1:0);
-        pd.put("lx_open", pd.get("lx_open")!=null?1:0);
-
-        pd.put("create_time", time);
-        pd.put("update_time", time);
-        User user = (User) session.getAttribute("user");
-        pd.put("create_user", user.getUserId());
-
-        siteService.save(pd);
-        json.setSuccess(true);
-        json.setMsg("操作成功。");
         this.writeJson(response, json);
     }
 
@@ -175,5 +176,6 @@ public class SiteController extends BaseController {
         json.setSuccess(true);
         this.writeJson(response, json);
     }
+
 
 }

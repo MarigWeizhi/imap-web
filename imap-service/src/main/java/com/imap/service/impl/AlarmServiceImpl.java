@@ -1,10 +1,18 @@
 package com.imap.service.impl;
 
+import com.imap.common.po.AlarmPO;
+import com.imap.common.pojo.AlarmItem;
+import com.imap.common.pojo.DataReport;
+import com.imap.common.pojo.MonitorItem;
+import com.imap.common.util.DateTimeUtil;
+import com.imap.common.vo.AlarmEnum;
 import com.imap.common.vo.AlarmTableVO;
 import com.imap.common.util.Page;
 import com.imap.common.util.PageData;
 import com.imap.dao.AlarmMapper;
 import com.imap.service.AlarmService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +29,8 @@ public class AlarmServiceImpl extends AlarmService {
 
     @Autowired
     AlarmMapper alarmMapper;
+
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Override
     public int setStatus(List<Integer> alarmIds) {
@@ -50,16 +60,35 @@ public class AlarmServiceImpl extends AlarmService {
     }
 
     @Override
+    // 由addAlarm代替
     public void save(PageData pd) {
     }
 
+    public void addAlarm(AlarmItem alarmItem) {
+        DataReport dataReport = alarmItem.getDataReport();
+        MonitorItem monitorItem = alarmItem.getMonitorItem();
+        AlarmEnum alarmEnum = AlarmEnum.from(monitorItem.getType());
+        Integer siteId = dataReport.getSiteId();
+        Integer type = alarmEnum.ordinal();
+        String info = alarmEnum.getDescription()
+                + ": 当前值为：" + dataReport.getData().get(monitorItem.getType())
+                + " 参考值为：" +  monitorItem.getMin()  + " ~ " + monitorItem.getMax();
+        Integer status = 0; // 0是未处理
+        String createDate = DateTimeUtil.timeStamp2DateString(dataReport.getTimestamp());
+        AlarmPO alarmPO = new AlarmPO(null,siteId,type,info,status,createDate);
+        logger.info("addAlarm:" + alarmPO);
+        alarmMapper.addAlarm(alarmPO);
+    }
+
     @Override
+    //不提供更新和删除接口
     public int update(PageData pd) {
         return 0;
     }
 
     @Override
     public void delete(PageData pd) {
-
     }
+
+
 }

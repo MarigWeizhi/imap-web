@@ -1,8 +1,11 @@
 package com.imap.web;
 
+import com.alibaba.fastjson.TypeReference;
 import com.imap.common.util.DateTimeUtil;
+import com.imap.common.util.JsonToMap;
 
 import java.sql.Timestamp;
+import java.util.Map;
 
 import static com.imap.common.util.DateTimeUtil.getDateTimeStr;
 
@@ -13,9 +16,8 @@ import static com.imap.common.util.DateTimeUtil.getDateTimeStr;
  */
 public class Test {
     public static void main(String[] args) {
-
-        long time = Timestamp.valueOf(getDateTimeStr()).getTime();
-        System.out.println(time);
+        String str = "{\"tmp\":2000.96,\"lx\":163.86,\"hmt\":0.68}";
+        System.out.println(JsonToMap.jsonToObj(str, new TypeReference<Map<String,Double>>(){}));
         System.out.println(DateTimeUtil.timeStamp2DateString(1678297096000L));
     }
 }

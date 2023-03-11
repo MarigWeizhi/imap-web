@@ -14,6 +14,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
@@ -29,7 +30,8 @@ public class DateTimeUtil {
 	static String[] weeks = { "日", "一", "二", "三", "四", "五", "六" };
 
 
-	// 定义一个静态方法，参数为时间间隔和时间粒度，返回现在时刻减去该事件间隔对应的时间，格式为yyyy-MM-dd
+
+	// 参数为时间间隔和时间粒度，返回现在时刻减去该事件间隔对应的时间，格式为yyyy-MM-dd
 	public static String subtractTime(long interval, ChronoUnit unit) {
 		// 获取当前时刻
 		LocalDateTime now = LocalDateTime.now();
@@ -67,10 +69,15 @@ public class DateTimeUtil {
 	    return curTime;
 	  }
 
-	public static String getDateTimeStr(Date date) throws Exception{
+	public static String getDateTimeStr(Date date){
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");    //格式化规则
 		String strDate= sdf.format(date ); //格式化成yyyy-MM-dd格式的时间字符串
-		Date newDate =sdf.parse(strDate);
+		Date newDate = null;
+		try {
+			newDate = sdf.parse(strDate);
+		} catch (ParseException e) {
+			throw new RuntimeException(e);
+		}
 		return sdf.format(newDate);
 	}
 
@@ -900,4 +907,7 @@ public class DateTimeUtil {
 	public static String transform(Date time, String pattern) {
 		return new SimpleDateFormat(pattern).format(time);
 	}
+
+
+
 }

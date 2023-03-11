@@ -6,7 +6,7 @@
         <tr>
             <td width="15%" align="right"><label class="layui-form-label">站点名称：<span style="color: red">*</span></label></td>
             <td colspan="3"><input type="text" name="site_name" id="site_name" lay-verify="required|field_len50" autocomplete="off" placeholder="站点名称" class="layui-input"></td>
-            <td align="right"><label class="layui-form-label">站点监控url：</label></td>
+            <td align="right"><label class="layui-form-label">监控url：</label></td>
             <td colspan="3"><input type="text" name="url" id="url" lay-verify="field_len120" autocomplete="off" placeholder="站点监控url" class="layui-input"></td>
         </tr>
         <tr>

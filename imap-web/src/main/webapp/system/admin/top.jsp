@@ -17,7 +17,12 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/qingfeng.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/scroll/smallscroll.css">
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery-1.9.1.min.js"></script>
-    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/plugins/xadmin/lib/layui/layui.js" charset="utf-8"></script>
+<%--    <script src="https://cdn.bootcss.com/echarts/4.2.1-rc1/echarts.min.js"></script>--%>
+    <script src="/static/js/echarts/echarts.min.js"></script>
+    <link rel="stylesheet" href="/resources/layui-v2.8.0-rc/css/layui.css">
+    <script src="/resources/layui-v2.8.0-rc/layui.js"></script>
+<%--    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/plugins/xadmin/lib/layui/layui.js" charset="utf-8"></script>--%>
+<%--    <link rel="stylesheet" href="/resources/plugins/xadmin/lib/layui/css/layui.css" tppabs="https://www.layui.site/layui/dist/css/layui.css"  media="all">--%>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/plugins/xadmin/js/xadmin.js"></script>
     <!--[if lt IE 9]>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/plugins/xadmin/js/html5.min.js"></script>

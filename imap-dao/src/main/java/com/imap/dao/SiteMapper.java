@@ -1,5 +1,6 @@
 package com.imap.dao;
 
+import com.imap.common.po.MonitorConfigPO;
 import com.imap.common.pojo.Site;
 import com.imap.common.pojo.DataReport;
 import com.imap.common.util.Page;
@@ -36,4 +37,8 @@ public interface SiteMapper {
     void updateConfig(PageData pd);
 
     void setCurSiteData(DataReport dataReport);
+
+    MonitorConfigPO getMonitorConfig(Integer siteId);
+    void setMonitorConfig(MonitorConfigPO monitorConfig);
+
 }

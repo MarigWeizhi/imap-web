@@ -1,10 +1,10 @@
 package com.imap.service.impl;
 
 import com.alibaba.fastjson.TypeReference;
+import com.imap.common.po.MonitorConfigPO;
 import com.imap.common.pojo.MonitorConfig;
 import com.imap.common.pojo.MonitorItem;
 import com.imap.common.pojo.Site;
-import com.imap.common.util.DateTimeUtil;
 import com.imap.common.util.JsonToMap;
 import com.imap.common.util.Page;
 import com.imap.common.util.PageData;
@@ -12,6 +12,8 @@ import com.imap.dao.SiteMapper;
 import com.imap.dao.UserMapper;
 import com.imap.service.SiteService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
@@ -40,9 +42,7 @@ public class SiteServiceImpl extends SiteService {
 
     @Override
     public List<PageData> getAllList(PageData pd) {
-
         List<PageData> allList = siteMapper.getAllList(pd);
-
         // 为每个站点查询对应管理员名字
         allList.forEach(site -> {
             Integer userId = (Integer) site.get("create_user");
@@ -93,14 +93,15 @@ public class SiteServiceImpl extends SiteService {
             int interval = Integer.valueOf(pd.get("interval").toString());
             int isDelete = 0;
             ConcurrentHashMap<String, MonitorItem> monitorItems = getMonitorItems(pd);
+            MonitorConfig monitorConfig = new MonitorConfig(siteId, time, version, interval, isDelete, monitorItems);
+
             pd.put("monitorItems", JsonToMap.map2json(monitorItems));
             pd.put("version", version);
             pd.put("interval", interval);
             // 更新站点信息和更新配置信息
             siteMapper.update(pd);
-            siteMapper.updateConfig(pd);
-
-            MonitorConfig monitorConfig = new MonitorConfig(siteId, time, version, interval, isDelete, monitorItems);
+//            siteMapper.updateConfig(pd);
+            setMonitorConfig(monitorConfig);
             // 将配置信息发送给kafka
             kafkaService.updateMonitorConfig(monitorConfig.toJson());
             return 200;
@@ -108,6 +109,19 @@ public class SiteServiceImpl extends SiteService {
             System.out.println(e);
             return 400;
         }
+    }
+
+    @Override
+    @Cacheable(value = "config" ,key = "#siteId")
+    public MonitorConfig getMonitorConfig(Integer siteId) {
+        return siteMapper.getMonitorConfig(siteId).to();
+    }
+
+    @Override
+    @CachePut(value = "config" ,key = "#result.siteId")
+    public MonitorConfig setMonitorConfig(MonitorConfig monitorConfig) {
+        siteMapper.setMonitorConfig(MonitorConfigPO.from(monitorConfig));
+        return monitorConfig;
     }
 
     @Override
@@ -128,12 +142,12 @@ public class SiteServiceImpl extends SiteService {
     }
 
     @Override
-    public Site getSiteById(int siteId) {
+    public Site getSiteById(Integer siteId) {
         return siteMapper.getSiteById(siteId);
     }
 
     @Override
-    public PageData getSiteConfigById(int siteId) {
+    public PageData getSiteConfigById(Integer siteId) {
         Site site = siteMapper.getSiteById(siteId);
         PageData siteConfig = siteMapper.getSiteConfigById(siteId);
         HashMap<String, MonitorItem> monitorItems = JsonToMap.jsonToObj(

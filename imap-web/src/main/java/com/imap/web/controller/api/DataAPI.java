@@ -1,6 +1,8 @@
 package com.imap.web.controller.api;
 
 import com.alibaba.fastjson.JSON;
+import com.imap.common.po.MonitorConfigPO;
+import com.imap.common.pojo.MonitorConfig;
 import com.imap.common.pojo.Site;
 import com.imap.common.vo.*;
 import com.imap.service.SiteService;
@@ -105,6 +107,12 @@ public class DataAPI {
     String getAllAlarms(){
         List<AlarmVO> list = dataService.getAllAlarms();
         return JSON.toJSONString(list);
+    }
+
+    @GetMapping("/config/{siteId}")
+    String getMonitorConfig(@PathVariable("siteId")int siteId){
+        MonitorConfig monitorConfig = siteService.getMonitorConfig(siteId);
+        return JSON.toJSONString(monitorConfig);
     }
 
 
