@@ -4,12 +4,14 @@ import com.alibaba.fastjson.TypeReference;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.imap.common.pojo.MonitorConfig;
 import com.imap.common.pojo.MonitorItem;
+import com.imap.common.util.DateTimeUtil;
 import com.imap.common.util.JsonToMap;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.Map;
 
 /**
@@ -23,7 +25,7 @@ import java.util.Map;
 @NoArgsConstructor
 public class MonitorConfigPO implements Serializable {
     private Integer siteId;  // 监控站点
-    private Long timestamp; // 创建时间
+    private String time; // 创建时间
     private Integer version;    // 监控配置版本，设备端拉取最新版
     private Integer interval;   // 设备数据上报时间间隔
     private Integer isDelete; // 是否删除
@@ -32,7 +34,7 @@ public class MonitorConfigPO implements Serializable {
     public static MonitorConfigPO from(MonitorConfig config) {
         try {
             return new MonitorConfigPO(config.getSiteId(),
-                    config.getTimestamp(),
+                    DateTimeUtil.timeStamp2DateString(config.getTimestamp()),
                     config.getVersion(),
                     config.getInterval(),
                     config.getIsDelete(),
@@ -43,7 +45,8 @@ public class MonitorConfigPO implements Serializable {
     }
 
     public MonitorConfig to() {
-        return new MonitorConfig(siteId,timestamp,version,interval,isDelete,
+        long ts = Timestamp.valueOf(time).getTime();
+        return new MonitorConfig(siteId,ts,version,interval,isDelete,
                 JsonToMap.jsonToObj(monitorItems,new TypeReference<Map<String,MonitorItem>>(){}));
     }
 }

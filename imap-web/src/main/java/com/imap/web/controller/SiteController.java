@@ -126,6 +126,9 @@ public class SiteController extends BaseController {
     @RequestMapping(value = "/findListPage", method = RequestMethod.GET)
     public void findListPage(Page page, HttpServletRequest request, HttpServletResponse response, HttpSession session) throws IOException {
         PageData pd = new PageData(request);
+        // 去除空过滤项
+        Verify.removeNull(pd,"filter_create_user","filter_site_name");
+
         //处理数据权限
 //        page = dealDataAuth(page,pd,session);
         //处理分页

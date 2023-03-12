@@ -94,11 +94,15 @@
     <select id="getUserByLogin" resultMap="userResultMap">
         select * from sys_user
         where login_name = #{userName} and login_password = #{password}
+        limit 1
     </select>
 
     <select id="findListSize" parameterType="com.imap.common.util.Page" resultType="java.lang.Integer">
         select count(*) from sys_user
         where is_delete = 0 and (user_id = #{pd.userId} or create_user = #{pd.userId})
+        <if test="pd.filter_login_name != null">and login_name like concat('%', #{pd.filter_login_name}, '%')</if>
+        <if test="pd.filter_name != null">and name like concat('%', #{pd.filter_name}, '%')</if>
+        <if test="pd.filter_email != null">and email like concat('%', #{pd.filter_email}, '%')</if>
     </select>
 
     <select id="findListPage" parameterType="com.imap.common.util.Page" resultType="com.imap.common.util.PageData">
@@ -113,6 +117,9 @@
                update_time
                from sys_user
         where is_delete = 0 and (user_id = #{pd.userId} or create_user = #{pd.userId})
+        <if test="pd.filter_login_name != null">and login_name like concat('%', #{pd.filter_login_name}, '%')</if>
+        <if test="pd.filter_name != null">and name like concat('%', #{pd.filter_name}, '%')</if>
+        <if test="pd.filter_email != null">and email like concat('%', #{pd.filter_email}, '%')</if>
         limit #{showCount} offset #{offset}
     </select>
 

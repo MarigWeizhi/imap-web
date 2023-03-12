@@ -79,11 +79,16 @@
     <select id="findListPage" parameterType="com.imap.common.util.Page"  resultType="com.imap.common.util.PageData">
         select * from dev_site
         where is_delete = 0
+        <if test="pd.filter_site_name != null">and site_name like concat('%', #{pd.filter_site_name}, '%')</if>
+        <if test="pd.filter_create_user != null">and create_user = #{pd.filter_create_user}</if>
         limit #{showCount} offset #{offset}
     </select>
 
     <select id="getListSize" resultType="java.lang.Integer">
-        select count(*) from dev_site where is_delete = 0
+        select count(*) from dev_site
+        where is_delete = 0
+        <if test="pd.filter_site_name != null">and site_name like concat('%', #{pd.filter_site_name}, '%')</if>
+        <if test="pd.filter_create_user != null">and create_user = #{pd.filter_create_user}</if>
     </select>
 
     <select id="getAllList" resultType="com.imap.common.util.PageData">
@@ -153,7 +158,7 @@
 
     <update id="setMonitorConfig" parameterType="com.imap.common.po.MonitorConfigPO">
         update dev_monitor_config
-        set `timestamp` = #{timestamp},
+        set `timestamp` = #{time},
             version = #{version},
             `interval` = #{interval},
             is_delete = #{isDelete},

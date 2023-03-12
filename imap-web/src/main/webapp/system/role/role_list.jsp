@@ -49,18 +49,19 @@
 <script type="text/html" id="toolbarDemo">
     <div class="layui-btn-container">
             <button type="button" class="layui-btn layui-btn-sm" lay-event="add"><i class="layui-icon"></i>新增</button>
-            <button type="button" class="layui-btn layui-btn-sm" lay-event="addMore"><i class="layui-icon"></i>批量新增</button>
-            <button type="button" class="layui-btn layui-btn-normal layui-btn-sm" lay-event="edit"><i class="layui-icon"></i>编辑</button>
-            <button type="button" class="layui-btn layui-btn-danger layui-btn-sm" lay-event="del"><i class="layui-icon"></i>删除</button>
-            <button type="button" class="layui-btn layui-btn-primary layui-btn-sm" lay-event="assignAuth"><i class="layui-icon">&#xe716;</i>权限分配</button>
+<%--            <button type="button" class="layui-btn layui-btn-sm" lay-event="addMore"><i class="layui-icon"></i>批量新增</button>--%>
+<%--            <button type="button" class="layui-btn layui-btn-normal layui-btn-sm" lay-event="edit"><i class="layui-icon"></i>编辑</button>--%>
+<%--            <button type="button" class="layui-btn layui-btn-primary layui-btn-sm" lay-event="assignAuth"><i class="layui-icon">&#xe716;</i>权限分配</button>--%>
     </div>
 </script>
 
 <script type="text/html" id="barDemo">
-        <a class="layui-btn layui-btn-xs" lay-event="info">详情</a>
-        <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="assignAuth">分配权限</a>
-        {{ d.status == '0' ? '<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="setStatus1">禁用</a>' : '' }}
-        {{ d.status == '1' ? '<a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="setStatus0">启用</a>' : '' }}
+<%--        <a class="layui-btn layui-btn-xs" lay-event="info">详情</a>--%>
+        <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit">编辑</a>
+        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i class="layui-icon"></i>删除</a>
+<%--        <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="assignAuth"><i class="layui-icon">&#xe716;</i>分配权限</a>--%>
+<%--        {{ d.status == '0' ? '<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="setStatus1">禁用</a>' : '' }}--%>
+<%--        {{ d.status == '1' ? '<a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="setStatus0">启用</a>' : '' }}--%>
 </script>
 
 <script>
@@ -80,13 +81,13 @@
             }]
             ,title: '角色数据表'
             ,cols: [[
-                {type: 'checkbox', fixed: 'left', width:40}
-                ,{field:'role_id', fixed: 'left',title:'角色编号', edit: 'text'}
-                ,{field:'role_name', fixed: 'left',title:'角色名称', edit: 'text'}
-                ,{field:'role_level', fixed: 'left',title:'角色等级', edit: 'text'}
-                ,{field:'create_user', fixed: 'left',title:'创建者编号', edit: 'text'}
-                ,{field:'update_time', fixed: 'left',title:'更新时间', edit: 'text'}
-                ,{field:'is_delete', title: '状态', sort: true,templet: function(res){
+                {type: 'checkbox', fixed: 'left', width:50}
+                ,{field:'role_id', fixed: 'left', width:100,title:'角色编号'}
+                ,{field:'role_name', fixed: 'left', width:180,title:'角色名称'}
+                ,{field:'role_level', fixed: 'left', width:100,title:'角色等级'}
+                ,{field:'create_user', fixed: 'left', width:100,title:'创建者编号'}
+                ,{field:'update_time', fixed: 'left', width:200,title:'更新时间'}
+                ,{field:'is_delete', title: '状态', width:100, sort: true,templet: function(res){
                     if(res.is_delete=='0'){
                         return "<span style='color: #32CD32;font-weight: bold'>启用</span>";
                     }else  if(res.is_delete=='1'){
@@ -203,33 +204,6 @@
             } else if(obj.event === 'setStatus0'){
                 updateStatus(data.role_id,'0');
             }
-        });
-
-        //监听单元格编辑
-        table.on('edit(system_role)', function(obj){
-            var value = obj.value //得到修改后的值
-                    ,data = obj.data //得到所在行所有键值
-                    ,field = obj.field; //得到字段
-//            layer.msg('[ID: '+ data.role_id +'] ' + field + ' 字段更改为：'+ value);
-            $.ajax({
-                type: "POST",//方法类型
-                dataType: "json",//预期服务器返回的数据类型
-                url: "${pageContext.request.contextPath}/system/role/update?"+field+"="+value ,//url
-                data: {
-                    id:data.role_id
-                },
-                success: function (res) {
-                    if (res.success) {
-                        location.reload();
-                    }else{
-                        if(res.loseSession=='loseSession'){
-                            loseSession(res.msg,res.url)
-                        }else{
-                            layer.msg(res.msg, {time: 2000});
-                        }
-                    }
-                }
-            });
         });
 
     });

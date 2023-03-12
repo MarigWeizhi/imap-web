@@ -28,20 +28,32 @@
                     <div class="layui-card-body ">
                         <form class="layui-form layui-col-space5">
                             <div class="layui-inline">
-                                <label class="layui-form-lab" style="width: auto">告警编号</label>
-                                <input type="text" name="alarm_name" id="alarm_id" style="width: 180px;height: 32px;display: inline" placeholder="请输入告警编号" class="layui-input">
+                                <label class="layui-form-lab" style="width: auto">站点名称</label>
+                                <input type="text" name="site_name" id="site_name" style="width: 180px;height: 32px;display: inline" placeholder="请输入站点名称" class="layui-input">
                             </div>
                             <div class="layui-inline">
                                 <div style="float: left;padding-top: 5px;">
                                     <label class="layui-form-lab" style="width: auto">告警类型</label>
                                 </div>
                                 <div style="float: left;padding-left: 5px">
-                                    <select name="status" id="status" style="width: 120px;height: 32px;" class="layui-input">
+                                    <select name="type" id="type" style="width: 120px;height: 32px;" class="layui-input">
                                         <option value=""></option>
                                         <option value="0">温度异常</option>
                                         <option value="1">湿度异常</option>
                                         <option value="2">亮度异常</option>
                                         <option value="3">其他异常</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <div style="float: left;padding-top: 5px;">
+                                    <label class="layui-form-lab" style="width: auto">状态</label>
+                                </div>
+                                <div style="float: left;padding-left: 5px">
+                                    <select name="status" id="status" style="width: 120px;height: 32px;" class="layui-input">
+                                        <option value=""></option>
+                                        <option value="0">未处理</option>
+                                        <option value="1">已处理</option>
                                     </select>
                                 </div>
                             </div>
@@ -69,7 +81,7 @@
 <%--每行数据操作--%>
 <script type="text/html" id="barDemo">
     <a class="layui-btn layui-btn-xs" lay-event="info">详情</a>
-    <a class="layui-btn layui-btn-xs" lay-event="setStatus">标记已处理</a>
+    <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="setStatus">标记已处理</a>
 </script>
 
 <%--表单逻辑--%>
@@ -90,20 +102,23 @@
             }]
             ,title: '告警数据表'
             ,cols: [[
-                {type: 'checkbox', fixed: 'left', width:40}
-                ,{field:'alarm_id', width:80, fixed: 'left',title:'告警编号'}
+                {type: 'checkbox', fixed: 'left', width:50}
+                ,{field:'alarm_id', width:100, fixed: 'left',title:'告警编号'}
                 ,{field:'site_name',width:200, fixed: 'left',title:'站点名称', sort: true}
                 ,{field:'type', width:120,title:'告警类型', fixed: 'left', sort: true, templet: function(res){
-                        if(res.status=='0') return '温度异常';
-                        if(res.status=='1') return '湿度异常';
-                        if(res.status=='2') return '亮度异常';
-                        if(res.status=='3') return '其他异常';
+                        if(res.type=='0') return "<span style='color: #ee4c44;font-weight: bold'>温度异常</span>";
+                        if(res.type=='1') return "<span style='color: #477dde;font-weight: bold'>湿度异常</span>";
+                        if(res.type=='2') return "<span style='color: #9e53e1;font-weight: bold'>亮度异常</span>";
+                        if(res.type=='3') return "<span style='color: #838385;font-weight: bold'>其他异常</span>";
                         return '未知';}}
                 ,{field:'create_time',width:220, fixed: 'left',title:'创建时间', sort: true}
-                ,{field:'status',width:120, title:'状态', fixed: 'left', sort: true, templet: function(res){
-                        if(res.status=='1') return '已处理';
-                        if(res.status=='0') return '未处理';
-                        return '未知';}}
+                ,{field:'status', width:120, title: '状态', fixed: 'left', sort: true,templet: function(res){
+                        if(res.status=='1'){
+                            return "<span style='color: #32CD32;font-weight: bold'>已处理</span>";
+                        }else{
+                            return "<span style='color: #EE4000;font-weight: bold'>未处理</span>";
+                        }
+                    }}
                 ,{fixed: 'right', align:'center',title:'操作', width:220, toolbar: '#barDemo'}
             ]]
             ,id:'system_alarm'
@@ -151,16 +166,18 @@
     });
 
     function reloadData(){
-        var alarm_name = $('#alarm_name').val();
-        var status = $("#status option:selected").val();
+        var site_name = $('#site_name').val();
+        var type = $('#type').val();
+        var status = $("#status").val();
         //执行重载
         table.reload('system_alarm', {
             page: {
                 curr: 1 //重新从第 1 页开始
             }
             ,where: {
-                alarm_name: alarm_name,
-                status:status
+                filter_site_name: site_name,
+                filter_type:type,
+                filter_status:status
             }
         });
     }

@@ -304,28 +304,10 @@ public class UserController extends BaseController {
         List<Integer> ids = Arrays.stream(pd.get("user_ids").toString().split(","))
                 .map(item -> Integer.parseInt(item)).collect(Collectors.toList());
         pd.put("user_ids", ids);
-        //删除关联组织
-//        userService.delUserOrganize(pd);
-        //删除组用户关联表
-//        userService.delUserGroup(pd);
-        //删除用户角色关联
-//        userService.delUserRole(pd);
-        userService.delete(pd);
-        //删除附件
         pd.put("idList", Arrays.asList(ids));
-//        List<PageData> fileList = uploadService.findFileList(pd);
-//        for (PageData p:fileList) {
-//            String savePath = ParaUtil.localName;
-//            String path = savePath+p.get("file_path");
-//            // 防止http头注入和路径遍历
-//            if(FileUtil.http_header_manipulation(path) || FileUtil.directory_traversal_check(path)) {
-//                throw new RuntimeException("文件名非法");
-//            }
-//            File files = new File(path);
-//            files.delete();
-//            files.deleteOnExit();
-//        }
-//        uploadService.del(ids);
+        //删除用户角色关联
+        userService.delUserRole(pd);
+        userService.delete(pd);
         Json json = new Json();
         json.setSuccess(true);
         json.setMsg("操作成功。");

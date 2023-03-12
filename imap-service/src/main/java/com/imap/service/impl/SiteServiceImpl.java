@@ -128,6 +128,7 @@ public class SiteServiceImpl extends SiteService {
     public void delete(PageData pd) {
         List<Integer> ids = (List<Integer>) pd.get("site_ids");
         for (Integer id : ids) {
+            // 批量通知kafka删除
             PageData config = siteMapper.getSiteConfigById(id);
             MonitorConfig monitorConfig = new MonitorConfig(id,
                     System.currentTimeMillis(),

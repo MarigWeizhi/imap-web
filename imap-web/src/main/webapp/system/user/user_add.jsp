@@ -108,7 +108,7 @@
         <tr>
             <td style="text-align: center; padding-top: 10px;" colspan="4">
                 <div class="layui-form-item">
-                    <button type="button" class="layui-btn layui-btn-sm" id="submit_button" lay-submit="" lay-filter="submit_form">保存</button>
+                    <button class="layui-btn layui-btn-sm" id="submit_button" lay-submit lay-filter="submit_form">保存</button>
                     <button type="button" class="layui-btn layui-btn-danger layui-btn-sm" id="cancel">取消</button>
                 </div>
             </td>
@@ -144,34 +144,35 @@
 
         //监听提交
         form.on('submit(submit_form)', function(data){
+            console.log("提交");
             layer.msg('正在提交数据。');
             $("#submit_button").attr('disabled',true);
-                $.ajax({
-                    type: "POST",//方法类型
-                    dataType: "json",//预期服务器返回的数据类型
-                    url: "${pageContext.request.contextPath}/system/user/save" ,//url
-                    data: $('#form').serialize(),
-                    success: function (res) {
-                        if (res.success) {
-                            layer.msg("数据保存成功。", {time: 2000},function(){
-                                setOpenCloseParam("reload");
-                                var index = parent.layer.getFrameIndex(window.name);
-                                parent.layer.close(index);
-                            });
-                        }else{
-                            $("#submit_button").attr('disabled',false);
-                            if(res.loseSession=='loseSession'){
-                                loseSession(res.msg,res.url)
-                            }else{
-                                layer.msg(res.msg, {time: 2000});
-                            }
-                        }
-                    },
-                    error : function() {
+            $.ajax({
+                type: "POST",//方法类型
+                dataType: "json",//预期服务器返回的数据类型
+                url: "${pageContext.request.contextPath}/system/user/save" ,//url
+                data: $('#form').serialize(),
+                success: function (res) {
+                    if (res.success) {
+                        layer.msg("数据保存成功。", {time: 2000},function(){
+                            setOpenCloseParam("reload");
+                            var index = parent.layer.getFrameIndex(window.name);
+                            parent.layer.close(index);
+                        });
+                    }else{
                         $("#submit_button").attr('disabled',false);
-                        layer.msg("异常！");
+                        if(res.loseSession=='loseSession'){
+                            loseSession(res.msg,res.url)
+                        }else{
+                            layer.msg(res.msg, {time: 2000});
+                        }
                     }
-                });
+                },
+                error : function() {
+                    $("#submit_button").attr('disabled',false);
+                    layer.msg("异常！");
+                }
+            });
             return false;
         });
 

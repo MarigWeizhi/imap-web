@@ -14,7 +14,7 @@
         <tr>
             <td style="text-align: center; padding-top: 10px;" colspan="4">
                 <div class="layui-form-item">
-                    <button type="button" class="layui-btn layui-btn-sm" id="submit_button" lay-submit="" lay-filter="submit_form">保存</button>
+                    <button class="layui-btn layui-btn-sm" id="submit_button" lay-submit="" lay-filter="submit_form">保存</button>
                     <button type="button" class="layui-btn layui-btn-danger layui-btn-sm" id="cancel">取消</button>
                 </div>
             </td>

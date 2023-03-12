@@ -9,6 +9,7 @@ import com.imap.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -62,6 +63,7 @@ public class UserServiceImpl extends UserService {
 
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void save(PageData pd) {
         userMapper.save(pd);
         User user = userMapper.getUserByLogin(pd.get("login_name").toString(), pd.get("login_password").toString());
@@ -74,6 +76,8 @@ public class UserServiceImpl extends UserService {
         return userMapper.findUser(pd);
     }
 
+
+
     @Override
     public int update(PageData pd) {
         userMapper.update(pd);
@@ -83,6 +87,11 @@ public class UserServiceImpl extends UserService {
     @Override
     public void delete(PageData pd) {
         userMapper.delete(pd);
+    }
+
+    @Override
+    public void delUserRole(PageData pd) {
+        // user逻辑删除即可，实际UserRole不删也行
     }
 
 

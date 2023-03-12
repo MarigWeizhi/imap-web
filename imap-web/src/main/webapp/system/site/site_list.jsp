@@ -19,11 +19,11 @@
     </a>
 </div>
 
-<%--搜索栏--%>
 <div class="layui-fluid">
     <div class="layui-row layui-col-space1">
         <div class="layui-col-md12">
             <div class="layui-card">
+                <%--搜索栏--%>
                 <blockquote id="search" class="layui-elem-quote" style="position: relative;">
                     <div class="layui-card-body ">
                         <form class="layui-form layui-col-space5">
@@ -32,16 +32,8 @@
                                 <input type="text" name="site_name" id="site_name" style="width: 180px;height: 32px;display: inline" placeholder="请输入站点名称" class="layui-input">
                             </div>
                             <div class="layui-inline">
-                                <div style="float: left;padding-top: 5px;">
-                                    <label class="layui-form-lab" style="width: auto">状态</label>
-                                </div>
-                                <div style="float: left;padding-left: 5px">
-                                    <select name="status" id="status" style="width: 120px;height: 32px;" class="layui-input">
-                                        <option value=""></option>
-                                        <option value="0">启用</option>
-                                        <option value="1">禁用</option>
-                                    </select>
-                                </div>
+                                <label class="layui-form-lab" style="width: auto">负责人</label>
+                                <input type="text" name="create_user" id="create_user" style="width: 180px;height: 32px;display: inline" placeholder="请输入负责人id" class="layui-input">
                             </div>
                             <div class="layui-inline">
                                 <button type="button" class="layui-btn layui-btn-sm"  lay-submit="" onclick="reloadData()"><i class="layui-icon">&#xe615;</i></button>
@@ -89,14 +81,14 @@
             }]
             ,title: '站点数据表'
             ,cols: [[
-                {type: 'checkbox', fixed: 'left', width:40}
-                ,{field:'site_id', width:80, fixed: 'left',title:'站点编号'}
-                ,{field:'site_name',width:200, fixed: 'left',title:'站点名称', edit: 'text'}
-                ,{field:'lat',width:180, fixed: 'left',title:'经度', edit: 'text'}
-                ,{field:'lon',width:180, fixed: 'left',title:'纬度', edit: 'text'}
-                ,{field:'create_user',width:80, fixed: 'left',title:'负责人', edit: 'text'}
-                ,{field:'update_time',width:200, fixed: 'left',title:'更新时间'}
-                ,{field:'create_time',width:200, fixed: 'left',title:'创建时间'}
+                {type: 'checkbox', fixed: 'left', width:50}
+                ,{field:'site_id', width:100, fixed: 'left',title:'站点编号'}
+                ,{field:'site_name',width:160, fixed: 'left',title:'站点名称'}
+                ,{field:'lat',width:160, fixed: 'left',title:'经度'}
+                ,{field:'lon',width:160, fixed: 'left',title:'纬度'}
+                ,{field:'create_user',width:80, fixed: 'left',title:'负责人'}
+                ,{field:'update_time',width:180, fixed: 'left',title:'更新时间'}
+                ,{field:'create_time',width:180, fixed: 'left',title:'创建时间'}
                 ,{fixed: 'right', align:'center',title:'操作', width:150, toolbar: '#barDemo'}
             ]]
             ,id:'system_site'
@@ -125,12 +117,10 @@
                         }
                         layer.confirm('删除数据会同步删除【监控配置信息】，真的要删除数据么?', function(index){
                             var ids = [];
-                            var names = [];
                             for ( var i = 0; i <data.length; i++){
                                 ids.push(data[i].site_id);
-                                names.push(data[i].site_name);
                             }
-                            $.get("${pageContext.request.contextPath}/system/site/del?site_ids="+ids+"&names="+names,null,function(res){
+                            $.get("${pageContext.request.contextPath}/system/site/del?site_ids="+ids,null,function(res){
                                 console.log(res);
                                 if (res.success) {
                                     layer.msg("数据删除成功。", {time: 2000});
@@ -216,15 +206,15 @@
 
     function reloadData(){
         var site_name = $('#site_name').val();
-        var status = $("#status option:selected").val();
+        var create_user = $("#create_user").val();
         //执行重载
         table.reload('system_site', {
             page: {
                 curr: 1 //重新从第 1 页开始
             }
             ,where: {
-                site_name: site_name,
-                status:status
+                filter_site_name: site_name,
+                filter_create_user:create_user
             }
         });
     }

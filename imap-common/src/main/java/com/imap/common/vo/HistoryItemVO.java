@@ -17,6 +17,7 @@ import java.util.List;
 public class HistoryItemVO {
     private Integer siteId;
     private String title;
+    private String typeName;
     private List<List<String>> data;
 
 }

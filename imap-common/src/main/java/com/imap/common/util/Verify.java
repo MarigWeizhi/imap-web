@@ -147,8 +147,15 @@ public class Verify {
 	public static boolean verifyIsNull(PageData pd, String... keys) {
 		if(pd==null) return true;
 		for (String key : keys) {
-			if(pd.get(key)==null)return true;
+			Object obj = pd.get(key);
+			if(obj==null||obj.equals("")||obj.equals("undefined"))return true;
 		}
 		return false;
+	}
+
+	public static void removeNull(PageData pd, String... keys) {
+		for (String key : keys) {
+			if(verifyIsNull(pd.get(key)))pd.remove(key);
+		}
 	}
 }

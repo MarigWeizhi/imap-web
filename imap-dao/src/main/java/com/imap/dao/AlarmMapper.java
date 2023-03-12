@@ -22,7 +22,7 @@ public interface AlarmMapper {
 
     List<DataItemVO> getAlarmsPerMonth(@Param("time") String time, @Param("n")int n);
 
-    List<DataItemVO> getAllAlarmsWithSite(int n);
+    List<DataItemVO> getAllAlarmsWithSite();
 
     List<AlarmVO> getAlarms(int n);
 

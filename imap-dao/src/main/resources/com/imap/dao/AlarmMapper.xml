@@ -81,7 +81,6 @@
                )
         ) t left join dev_site b on t.site_id =b.site_id
         order by time,value
-        limit #{n}
     </select>
 
     <select id="getAllAlarms" resultType="com.imap.common.util.PageData">
@@ -91,12 +90,6 @@
             a.create_time as time
         from dev_alarm a left join dev_site b on a.site_id = b.site_id
         order by time,site
-    </select>
-
-    <select id="getListSize" resultType="java.lang.Integer">
-        select
-            count(*)
-        from dev_alarm
     </select>
 
     <select id="getAlarms" resultType="com.imap.common.vo.AlarmVO">
@@ -130,8 +123,21 @@
             status,
             a.create_time as create_time
         from dev_alarm a left join dev_site b on a.site_id = b.site_id
+        <if test="pd.filter_site_name != null">and site_name like concat('%', #{pd.filter_site_name}, '%')</if>
+        <if test="pd.filter_type != null">and type = #{pd.filter_type}</if>
+        <if test="pd.filter_status != null">and status = #{pd.filter_status}</if>
         where b.is_delete = 0
         limit #{showCount} offset #{offset}
+    </select>
+
+    <select id="getListSize" resultType="java.lang.Integer">
+        select
+            count(*)
+        from dev_alarm a left join dev_site b on a.site_id = b.site_id
+        <if test="pd.filter_site_name != null">and site_name like concat('%', #{pd.filter_site_name}, '%')</if>
+        <if test="pd.filter_type != null">and type = #{pd.filter_type}</if>
+        <if test="pd.filter_status != null">and status = #{pd.filter_status}</if>
+        where b.is_delete = 0
     </select>
 
     <insert id="addAlarm" parameterType="com.imap.common.po.AlarmPO">

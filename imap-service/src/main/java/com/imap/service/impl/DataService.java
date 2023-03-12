@@ -144,7 +144,7 @@ public class DataService {
     }
 
     public List<DataItemVO> getAllAlarmsWithSite() {
-        List<DataItemVO> allAlarmsWithSite = alarmMapper.getAllAlarmsWithSite(5);
+        List<DataItemVO> allAlarmsWithSite = alarmMapper.getAllAlarmsWithSite();
         return allAlarmsWithSite;
     }
 
@@ -178,6 +178,6 @@ public class DataService {
                                 DateTimeUtil.getDateTimeStr(baseDataPO.getTime()),
                                 baseDataPO.getValue() + ""))
                 .collect(Collectors.toList());
-        return new HistoryItemVO(siteId,title,data);
+        return new HistoryItemVO(siteId,title,dataType.getTypeStr(),data);
     }
 }

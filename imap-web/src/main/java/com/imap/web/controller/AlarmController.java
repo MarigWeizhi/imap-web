@@ -60,6 +60,8 @@ public class AlarmController extends BaseController {
     @RequestMapping(value = "/findListPage", method = RequestMethod.GET)
     public void findListPage(Page page, HttpServletRequest request, HttpServletResponse response, HttpSession session) throws IOException {
         PageData pd = new PageData(request);
+        // 去除无效过滤条件
+        Verify.removeNull(pd,"filter_site_name","filter_type","filter_status");
         //处理分页
         if (Verify.verifyIsNotNull(pd.get("page"))) {
             page.setIndex(Integer.parseInt(pd.get("page").toString()));

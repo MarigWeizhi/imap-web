@@ -21,4 +21,6 @@ public abstract class UserService implements BaseService {
     public abstract User getUserById(int uid);
 
     public abstract PageData findUser(PageData pd);
+
+    public abstract void delUserRole(PageData pd);
 }

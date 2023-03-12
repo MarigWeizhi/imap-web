@@ -18,7 +18,7 @@ public class LoginFilter implements Filter {
     @Override
     public void destroy() {
     }
-    String[] urls = {"login","css","js","register","api","img","report"};
+    String[] urls = {"login","static","css","js","register","api","img","report"};
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws ServletException, IOException {

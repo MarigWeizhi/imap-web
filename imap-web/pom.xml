@@ -72,23 +72,19 @@
     </dependencies>
 
     <build>
-        <plugins>
-
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>2.3.1.RELEASE</version>
-                <configuration>
-                    <fork>true</fork>
-                    <skip>false</skip>
-                    <!-- spring-boot:run 中文乱码解决 -->
-                    <jvmArguments>-Dfile.encoding=UTF-8</jvmArguments>
-                    <!--<jvmArguments>-->
-                    <!-- -Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=5005 -Dfile.encoding=UTF-8-->
-                    <!--</jvmArguments>-->
-                </configuration>
-            </plugin>
-        </plugins>
+<!--        <plugins>-->
+<!--            <plugin>-->
+<!--                <groupId>org.springframework.boot</groupId>-->
+<!--                <artifactId>spring-boot-maven-plugin</artifactId>-->
+<!--                <version>2.3.1.RELEASE</version>-->
+<!--                <configuration>-->
+<!--                    <fork>true</fork>-->
+<!--                    <skip>false</skip>-->
+<!--                    &lt;!&ndash; spring-boot:run 中文乱码解决 &ndash;&gt;-->
+<!--                    <jvmArguments>-Dfile.encoding=UTF-8</jvmArguments>-->
+<!--                </configuration>-->
+<!--            </plugin>-->
+<!--        </plugins>-->
 
         <resources>
             <resource>

@@ -120,7 +120,7 @@
                     <input type="hidden" name="user_id" id="user_id" value="${p.user_id}" />
                     <input type="hidden" name="old_login_name" id="old_login_name" value="${p.login_name}" />
 <%--                    <input type="hidden" name="head_address" id="head_address" value="" />--%>
-                    <button type="button" class="layui-btn layui-btn-sm" id="submit_button" lay-submit="" lay-filter="submit_form">保存</button>
+                    <button class="layui-btn layui-btn-sm" id="submit_button" lay-submit="" lay-filter="submit_form">保存</button>
                     <button type="button" class="layui-btn layui-btn-danger layui-btn-sm" id="cancel">取消</button>
                 </div>
             </td>

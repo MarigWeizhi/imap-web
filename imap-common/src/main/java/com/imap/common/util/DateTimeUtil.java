@@ -460,8 +460,6 @@ public class DateTimeUtil {
 		return date;
 	}
 
-
-
 	/**
 		 * 今年中的第几周
 		 * @param date

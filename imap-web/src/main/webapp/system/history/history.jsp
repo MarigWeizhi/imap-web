@@ -27,12 +27,13 @@
                         <form class="layui-form layui-col-space5">
                             <div class="layui-inline">
                                 <label class="layui-form-lab" style="width: auto">站点编号</label>
-                                <input type="text" name="siteId" id="siteId" style="width: 48px;height: 32px;display: inline" placeholder="请输入站点编号" class="layui-input">
+                                <input type="text" name="siteId" id="siteId" required  lay-verify="required" style="width: 64px;height: 32px;display: inline" class="layui-input">
                             </div>
                             <div class="layui-inline">
                                 <label class="layui-form-lab" style="width: auto">数据类型</label>
                                 <div class="layui-input-inline">
-                                    <select name="dataType" id="dataType" style="width: 60px;height: 32px;" class="layui-input">
+                                    <select name="dataType" id="dataType" required  lay-verify="required" style="width: 60px;height: 32px;" class="layui-input">
+                                        <option value=""></option>
                                         <option value="0">温度</option>
                                         <option value="1">湿度</option>
                                         <option value="2">亮度</option>
@@ -41,9 +42,9 @@
                                 </div>
                             </div>
                             <div class="layui-inline">
-                                <label class="layui-form-lab" style="width: auto">数据粒度</label>
+                                <label class="layui-form-lab" style="width: auto">时间粒度</label>
                                 <div class="layui-input-inline">
-                                    <select name="timeType" id="timeType" style="width: 60px;height: 32px;" class="layui-input">
+                                    <select name="timeType" id="timeType" required  lay-verify="required" style="width: 60px;height: 32px;" class="layui-input">
                                         <option value=""></option>
                                         <option value="1">分</option>
                                         <option value="2">时</option>
@@ -61,7 +62,8 @@
                             </div>
 
                             <div class="layui-inline">
-                                <button type="button" class="layui-btn layui-btn-sm"  lay-submit="" onclick="reloadData()"><i class="layui-icon">&#xe615;</i></button>
+                                <button type="button" class="layui-btn layui-btn-sm"  lay-submit lay-filter="formFilter"><i class="layui-icon">&#xe615;</i></button>
+<%--                                <button type="reset" class="layui-btn layui-btn-primary">重置</button>--%>
                             </div>
                         </form>
                     </div>
@@ -80,14 +82,22 @@
 
 <%--图表--%>
 <script>
-    var laydate;
-    layui.use(['laydate'], function(){
+    var laydate,form;
+    layui.use(['laydate','form'], function(){
+        form = layui.form;
         laydate = layui.laydate;
         laydate.render({
             elem: '#time',
             type:'datetime',
             format: 'yyyy-MM-dd HH:mm:ss',
-            range: true,
+            range: '~',
+            max: 1
+        });
+        //监听提交
+        form.on('submit(formFilter)', function(data){
+            console.log(data);
+            reloadData(data);
+            return false;
         });
     });
 
@@ -108,7 +118,7 @@
         },
         title: {
             left: 'center',
-            text: 'Large Ara Chart'
+            text: '历史数据'
         },
         toolbox: {
             feature: {
@@ -140,7 +150,7 @@
         ],
         series: [
             {
-                name: 'Fake Data',
+                name: 'Test Data',
                 type: 'line',
                 smooth: true,
                 symbol: 'none',
@@ -150,25 +160,22 @@
         ]
     };
     myChart.setOption(option);
-    // reloadData();
-    function reloadData(){
-        var siteId = $('#siteId').val();
-        var dataType = $('#dataType').val();
-        var timeType = $("#timeType option:selected").val();
-        var time = $("#time option:selected").val();
-        var selectedData = {'siteId':siteId,'dataType':dataType,'timeType':timeType,'time':time}
-        console.log(selectedData);
+    function reloadData(formData){
+        console.log(formData);
         $.ajax(
             {
-                url: 'http://localhost:8080/system/history',
+                url: 'http://localhost:8080/system/history/',
                 type: 'GET',
-                data: selectedData,
+                data: formData.field,
                 headers: {"token": null},
                 dataType: "json",
                 xhrFields: {withCredentials: false},
                 success: function (data) {
-                    // console.log(data);
+                    console.log(data);
+                    option.title.text = data.title
+                    option.series[0].series = data.typeName;
                     option.series[0].data = data.data;
+
                     myChart.setOption(option);
                 }
             }
