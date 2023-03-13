@@ -111,7 +111,7 @@
                 const init = () => {
                     $.ajax(
                         {
-                            url: 'http://localhost:8080/api/site/name/${siteId}?',
+                            url: '${pageContext.request.contextPath}/api/site/name/${siteId}?',
                             type: 'GET',
                             data: {},
                             headers: {"token": null},
@@ -267,7 +267,7 @@
                     const init = () => {
                         $.ajax(
                             {
-                                url: 'http://localhost:8080/api/photo/${siteId}?',
+                                url: '${pageContext.request.contextPath}/api/photo/${siteId}?',
                                 type: 'GET',
                                 data: {},
                                 headers: {"token": null},
@@ -500,7 +500,7 @@
                     const init = () => {
                         $.ajax(
                             {
-                                url: 'http://localhost:8080/api/alarm-list/${siteId}?',
+                                url: '${pageContext.request.contextPath}/api/alarm-list/${siteId}?',
                                 type: 'GET',
                                 data: {},
                                 headers: {"token": null},
@@ -798,7 +798,7 @@
                         };
                         $.ajax(
                             {
-                                url: 'http://localhost:8080/api/lx/${siteId}?',
+                                url: '${pageContext.request.contextPath}/api/lx/${siteId}?',
                                 type: 'GET',
                                 data: {},
                                 headers: {"token": null},
@@ -948,19 +948,44 @@
                 let option = {};
 
                 // 指定文字的数据
-                let data = [{"url": "http://192.168.2.12:5000/device/${siteId}"}]
-
-                data = data.map(item => {
-                    return {url: item['url']}
-                })
-                $("#item5353a7dc-b864-4ae4-b436-5f2632ff3d9e img").attr("src", data[0].url)
-                if (data[0].url) {
-                    $("#item5353a7dc-b864-4ae4-b436-5f2632ff3d9e svg").css('display', 'none')
-                    $("#item5353a7dc-b864-4ae4-b436-5f2632ff3d9e img").css('display', 'block')
-                } else {
-                    $("#item5353a7dc-b864-4ae4-b436-5f2632ff3d9e img").css('display', 'none')
-                    $("#item5353a7dc-b864-4ae4-b436-5f2632ff3d9e svg").css('display', 'block')
-                }
+                // //{siteId}
+                // 获取监控url
+                $.ajax(
+                    {
+                        url: '${pageContext.request.contextPath}/api/camera/${siteId}',
+                        type: 'GET',
+                        data: {},
+                        headers: {"token": null},
+                        dataType: "json",
+                        xhrFields: {withCredentials: false},
+                        success: function (data) {
+                            console.log("获取到url：" + data)
+                            $("#item5353a7dc-b864-4ae4-b436-5f2632ff3d9e img").attr("src", data.url)
+                            if (data.url) {
+                                $("#item5353a7dc-b864-4ae4-b436-5f2632ff3d9e svg").css('display', 'none')
+                                $("#item5353a7dc-b864-4ae4-b436-5f2632ff3d9e img").css('display', 'block')
+                            } else {
+                                $("#item5353a7dc-b864-4ae4-b436-5f2632ff3d9e img").css('display', 'none')
+                                $("#item5353a7dc-b864-4ae4-b436-5f2632ff3d9e svg").css('display', 'block')
+                            }
+                        },
+                        error : function() {
+                            console.log("异常")
+                            let data = [{"url": "http://192.168.2.12:5000/device/1"}]
+                            data = data.map(item => {
+                                return {url: item['url']}
+                            })
+                            $("#item5353a7dc-b864-4ae4-b436-5f2632ff3d9e img").attr("src", data[0].url)
+                            if (data[0].url) {
+                                $("#item5353a7dc-b864-4ae4-b436-5f2632ff3d9e svg").css('display', 'none')
+                                $("#item5353a7dc-b864-4ae4-b436-5f2632ff3d9e img").css('display', 'block')
+                            } else {
+                                $("#item5353a7dc-b864-4ae4-b436-5f2632ff3d9e img").css('display', 'none')
+                                $("#item5353a7dc-b864-4ae4-b436-5f2632ff3d9e svg").css('display', 'block')
+                            }
+                        }
+                    }
+                );
             })
         </script>
 
@@ -1810,7 +1835,7 @@
                     };
                     $.ajax(
                         {
-                            url: 'http://localhost:8080/api/tmp/${siteId}?',
+                            url: '${pageContext.request.contextPath}/api/tmp/${siteId}?',
                             type: 'GET',
                             data: {},
                             headers: {"token": null},
@@ -2042,7 +2067,7 @@
                     };
                     $.ajax(
                         {
-                            url: 'http://localhost:8080/api/hmt/${siteId}?',
+                            url: '${pageContext.request.contextPath}/api/hmt/${siteId}?',
                             type: 'GET',
                             data: {},
                             headers: {"token": null},
@@ -2151,7 +2176,7 @@
                 // myChart.clear();
                 $.ajax(
                     {
-                        url: 'http://localhost:8080/api/cur/${siteId}',
+                        url: '${pageContext.request.contextPath}/api/cur/${siteId}',
                         type: 'GET',
                         data: {},
                         headers: {"token": null},

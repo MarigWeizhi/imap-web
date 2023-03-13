@@ -68,7 +68,9 @@ public class DataAPI {
 
     @GetMapping("/camera/{siteId}")
     String getCamera(@PathVariable("siteId")int siteId){
-        return dataService.getCameraUrl(siteId);
+        HashMap<String, String> map = new HashMap<String, String>();
+        map.put("url",dataService.getCameraUrl(siteId));
+        return JSON.toJSONString(map);
     }
 
     @GetMapping("/site/name/{siteId}")

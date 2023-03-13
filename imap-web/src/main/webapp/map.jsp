@@ -149,7 +149,7 @@
                 const init = () => {
                     $.ajax(
                         {
-                            url: 'http://localhost:8080/api/alarm-all?',
+                            url: '${pageContext.request.contextPath}/api/alarm-all?',
                             type: 'GET',
                             data: {},
                             headers: {"token": null},
@@ -588,7 +588,7 @@
                         };
                         $.ajax(
                             {
-                                url: 'http://localhost:8080/api/alarm-top5?',
+                                url: '${pageContext.request.contextPath}/api/alarm-top5?',
                                 type: 'GET',
                                 data: {},
                                 headers: {"token": null},
@@ -845,7 +845,7 @@
                         };
                         $.ajax(
                             {
-                                url: 'http://localhost:8080/api/alarm-types?',
+                                url: '${pageContext.request.contextPath}/api/alarm-types?',
                                 type: 'GET',
                                 data: {},
                                 headers: {"token": null},
@@ -1105,7 +1105,7 @@
                         };
                         $.ajax(
                             {
-                                url: 'http://localhost:8080/api/alarm-month?',
+                                url: '${pageContext.request.contextPath}/api/alarm-month?',
                                 type: 'GET',
                                 data: {},
                                 headers: {"token": null},
@@ -1379,7 +1379,7 @@
                     };
                     $.ajax(
                         {
-                            url: 'http://localhost:8080/api/alarm-site?',
+                            url: '${pageContext.request.contextPath}/api/alarm-site?',
                             type: 'GET',
                             data: {},
                             headers: {"token": null},
@@ -1892,7 +1892,7 @@
                             // 获取监控数据
                             $.ajax(
                                 {
-                                    url: 'http://localhost:8080/api/cur/' + site_id,
+                                    url: '${pageContext.request.contextPath}/api/cur/' + site_id,
                                     type: 'GET',
                                     data: {},
                                     headers: {"token": null},
@@ -1924,7 +1924,7 @@
                     // 获取站点数据
                     $.ajax(
                         {
-                            url: 'http://localhost:8080/system/site/getAllList',
+                            url: '${pageContext.request.contextPath}/system/site/getAllList',
                             type: 'GET',
                             data: {},
                             headers: {"token": null},

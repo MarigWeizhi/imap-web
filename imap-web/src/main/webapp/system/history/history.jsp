@@ -164,7 +164,7 @@
         console.log(formData);
         $.ajax(
             {
-                url: 'http://localhost:8080/system/history/',
+                url: '${pageContext.request.contextPath}/system/history/',
                 type: 'GET',
                 data: formData.field,
                 headers: {"token": null},
