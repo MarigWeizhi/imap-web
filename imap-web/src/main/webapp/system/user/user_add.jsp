@@ -123,6 +123,7 @@
 <!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
 <script>
     var form,layer,layedit,laydate,upload;
+    var isSubmit=false;
     layui.use(['form', 'layedit', 'laydate','upload'], function(){
         form = layui.form;
         layer = layui.layer;
@@ -144,7 +145,8 @@
 
         //监听提交
         form.on('submit(submit_form)', function(data){
-            console.log("提交");
+            if(isSubmit)return true;
+            isSubmit = true;
             layer.msg('正在提交数据。');
             $("#submit_button").attr('disabled',true);
             $.ajax({
@@ -153,6 +155,7 @@
                 url: "${pageContext.request.contextPath}/system/user/save" ,//url
                 data: $('#form').serialize(),
                 success: function (res) {
+                    isSubmit = false;
                     if (res.success) {
                         layer.msg("数据保存成功。", {time: 2000},function(){
                             setOpenCloseParam("reload");
@@ -169,6 +172,7 @@
                     }
                 },
                 error : function() {
+                    isSubmit = false;
                     $("#submit_button").attr('disabled',false);
                     layer.msg("异常！");
                 }

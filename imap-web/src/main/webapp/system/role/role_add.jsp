@@ -28,6 +28,7 @@
 <!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
 <script>
     var form,layer,layedit,laydate;
+    var isSubmit=false;
     layui.use(['form', 'layedit', 'laydate'], function(){
         form = layui.form;
         layer = layui.layer;
@@ -44,7 +45,8 @@
 
         //监听提交
         form.on('submit(submit_form)', function(data){
-
+            if(isSubmit)return true;
+            isSubmit = true;
             if($('#role_level').text <= ${role.roleLevel}){
                 layer.msg("您只能创建大于${role.roleLevel}等级的角色。", {time: 2000});
                 return;
@@ -58,6 +60,7 @@
                 url: "${pageContext.request.contextPath}/system/role/save" ,//url
                 data: $('#form').serialize(),
                 success: function (res) {
+                    isSubmit = false;
                     if (res.success) {
                         layer.msg("数据保存成功。", {time: 2000},function(){
                             setOpenCloseParam("reload");
@@ -74,6 +77,7 @@
                     }
                 },
                 error : function() {
+                    isSubmit = false;
                     $("#submit_button").attr('disabled',false);
                     layer.msg("异常！");
                 }

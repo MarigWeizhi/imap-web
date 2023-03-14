@@ -71,7 +71,7 @@ public class DateTimeUtil {
 
 	public static String getDateTimeStr(Date date){
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");    //格式化规则
-		String strDate= sdf.format(date ); //格式化成yyyy-MM-dd格式的时间字符串
+		String strDate= sdf.format(date); //格式化成yyyy-MM-dd格式的时间字符串
 		Date newDate = null;
 		try {
 			newDate = sdf.parse(strDate);

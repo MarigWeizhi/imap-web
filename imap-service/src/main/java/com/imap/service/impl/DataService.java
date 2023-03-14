@@ -175,8 +175,8 @@ public class DataService {
         List<BaseDataPO> list = dataMapper.getHistoryData(pageData);
         List<List<String>> data = list.stream().map(baseDataPO ->
                         Arrays.asList(
-                                DateTimeUtil.getDateTimeStr(baseDataPO.getTime()),
-                                baseDataPO.getValue() + ""))
+                                baseDataPO.getTime(),
+                                String.valueOf(baseDataPO.getValue())))
                 .collect(Collectors.toList());
         return new HistoryItemVO(siteId,title,dataType.getTypeStr(),data);
     }

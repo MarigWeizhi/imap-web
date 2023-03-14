@@ -11,7 +11,6 @@
         <result column="create_time" property="time"></result>
     </resultMap>
 
-
     <update id="setStatus">
         update dev_alarm set status = 1
         where alarm_id in

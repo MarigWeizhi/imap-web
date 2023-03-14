@@ -135,6 +135,7 @@
 <!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
 <script>
     var form,layer,layedit,laydate,upload;
+    var isSubmit=false;
     layui.use(['form', 'layedit', 'laydate','upload'], function(){
         form = layui.form;
         layer = layui.layer;
@@ -156,22 +157,24 @@
 
         //监听提交
         form.on('submit(submit_form)', function(data){
+            if(isSubmit)return true;
+            isSubmit = true;
             layer.msg('正在提交数据。');
             $("#submit_button").attr('disabled',true);
             //判断组织是否选择重复
-            var organize_ids = [];
+            // var organize_ids = [];
             var bol = true;
-            var organize_names = [];
-            $('input[id^="organize_id_"]').each(function () {
-                if(organize_ids.indexOf($(this).val())!=-1){
-                    bol = false;
-                    if(organize_names.indexOf($(this).attr("title"))==-1){
-                        organize_names.push($(this).attr("title"))
-                    }
-                }else{
-                    organize_ids.push($(this).val())
-                }
-            });
+            // var organize_names = [];
+            // $('input[id^="organize_id_"]').each(function () {
+            //     if(organize_ids.indexOf($(this).val())!=-1){
+            //         bol = false;
+            //         if(organize_names.indexOf($(this).attr("title"))==-1){
+            //             organize_names.push($(this).attr("title"))
+            //         }
+            //     }else{
+            //         organize_ids.push($(this).val())
+            //     }
+            // });
             if(bol){
                 $.ajax({
                     type: "POST",//方法类型
@@ -179,6 +182,7 @@
                     url: "${pageContext.request.contextPath}/system/user/update" ,//url
                     data: $('#form').serialize(),
                     success: function (res) {
+                        isSubmit = false;
                         if (res.success) {
                             layer.msg("数据更新成功。", {time: 2000},function(){
                                 setOpenCloseParam("reload");
@@ -195,6 +199,7 @@
                         }
                     },
                     error : function() {
+                        isSubmit = false;
                         $("#submit_button").attr('disabled',false);
                         layer.msg("异常！");
                     }

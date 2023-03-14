@@ -173,33 +173,13 @@
                 success: function (data) {
                     console.log(data);
                     option.title.text = data.title
-                    option.series[0].series = data.typeName;
+                    option.series[0].name = data.typeName;
                     option.series[0].data = data.data;
-
                     myChart.setOption(option);
                 }
             }
         );
     }
 
-    //设置状态
-    function setStatus(data){
-        var ids = [];
-        for ( var i = 0; i <data.length; i++){
-            ids.push(data[i].alarm_id);
-        }
-        $.get("${pageContext.request.contextPath}/system/alarm/status?alarm_ids="+ids,null,function(res){
-            if (res.success) {
-                layer.msg("设置成功。", {time: 2000});
-                reloadData();
-            }else{
-                if(res.loseSession=='loseSession'){
-                    loseSession(res.msg,res.url)
-                }else{
-                    layer.msg(res.msg, {time: 2000});
-                }
-            }
-        },'json');
-    }
 </script>
 <%@include file="../admin/bottom.jsp"%>
