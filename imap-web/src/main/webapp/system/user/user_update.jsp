@@ -10,6 +10,8 @@
             <td><input type="text" name="name" id="name" value="${p.name}"  lay-verify="required|field_len50" autocomplete="off" placeholder="姓名" class="layui-input"></td>
         </tr>
         <tr>
+            <td width="15%" align="right"><label class="layui-form-label">角色：<span style="color: red">*</span></label></td>
+            <td><input type="text" name="role_id" id="role_id" value="${p.role_id}"  lay-verify="required|field_len50" autocomplete="off" placeholder="角色" class="layui-input"></td>
             <td align="right"><label class="layui-form-label">性别：</label></td>
             <td>
                 <select name="sex" id="sex">
@@ -17,12 +19,12 @@
                     <option value="0" <c:if test="${p.sex=='0'}"> selected </c:if>>女</option>
                 </select>
             </td>
-            <td align="right"><label class="layui-form-label">手机号：</label></td>
-            <td><input type="text" name="phone" id="phone" value="${p.phone}" lay-verify="phone" autocomplete="off" placeholder="手机号" class="layui-input"></td>
-        </tr>
+            </tr>
         <tr>
             <td align="right"><label class="layui-form-label">邮箱：</label></td>
             <td><input type="text" name="email" id="email" value="${p.email}" lay-verify="email" autocomplete="off" placeholder="邮箱" class="layui-input"></td>
+            <td align="right"><label class="layui-form-label">手机号：</label></td>
+            <td><input type="text" name="phone" id="phone" value="${p.phone}" lay-verify="phone" autocomplete="off" placeholder="手机号" class="layui-input"></td>
         </tr>
 <%--        <tr>--%>
 <%--            <td align="right"><label class="layui-form-label">头像地址：</label></td>--%>

@@ -21,18 +21,6 @@
                                 <input type="text" name="role_name" id="role_name" style="width: 180px;height: 32px;display: inline" placeholder="请输入角色名称" class="layui-input">
                             </div>
                             <div class="layui-inline">
-                                <div style="float: left;padding-top: 5px;">
-                                    <label class="layui-form-lab" style="width: auto">状态</label>
-                                </div>
-                                <div style="float: left;padding-left: 5px">
-                                    <select name="status" id="status" style="width: 120px;height: 32px;" class="layui-input">
-                                        <option value=""></option>
-                                        <option value="0">启用</option>
-                                        <option value="1">禁用</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="layui-inline">
                                 <button type="button" class="layui-btn layui-btn-sm"  lay-submit="" onclick="reloadData()"><i class="layui-icon">&#xe615;</i></button>
                             </div>
                         </form>
@@ -56,12 +44,8 @@
 </script>
 
 <script type="text/html" id="barDemo">
-<%--        <a class="layui-btn layui-btn-xs" lay-event="info">详情</a>--%>
-        <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit">编辑</a>
+        <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit">权限分配</a>
         <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i class="layui-icon"></i>删除</a>
-<%--        <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="assignAuth"><i class="layui-icon">&#xe716;</i>分配权限</a>--%>
-<%--        {{ d.status == '0' ? '<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="setStatus1">禁用</a>' : '' }}--%>
-<%--        {{ d.status == '1' ? '<a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="setStatus0">启用</a>' : '' }}--%>
 </script>
 
 <script>
@@ -84,17 +68,10 @@
                 {type: 'checkbox', fixed: 'left', width:50}
                 ,{field:'role_id', fixed: 'left', width:100,title:'角色编号'}
                 ,{field:'role_name', fixed: 'left', width:180,title:'角色名称'}
-                ,{field:'role_level', fixed: 'left', width:100,title:'角色等级'}
-                ,{field:'create_user', fixed: 'left', width:100,title:'创建者编号'}
+                ,{field:'role_config', fixed: 'left', width:300,title:'角色权限'}
+                ,{field:'create_user', fixed: 'left', width:80,title:'创建者'}
                 ,{field:'update_time', fixed: 'left', width:200,title:'更新时间'}
-                ,{field:'is_delete', title: '状态', width:100, sort: true,templet: function(res){
-                    if(res.is_delete=='0'){
-                        return "<span style='color: #32CD32;font-weight: bold'>启用</span>";
-                    }else  if(res.is_delete=='1'){
-                        return "<span style='color: #EE4000;font-weight: bold'>禁用</span>";
-                    }
-                }}
-                ,{fixed: 'right', align:'center',title:'操作', width:220, toolbar: '#barDemo'}
+                ,{fixed: 'right', align:'center',title:'操作', width:200, toolbar: '#barDemo'}
             ]]
             ,id:'system_role'
             ,page: true
@@ -120,25 +97,11 @@
                     if(data.length!=1){
                         layer.msg('请选择一条数据进行操作。' );
                     }else{
-                        if(data[0].role_level <= ${role.roleLevel} && ${role.roleLevel} != 0 ){
-                            layer.msg("没有编辑权限,请选择其他数据进行编辑。", {time: 2000});
-                            return;
-                        }
                         edit(data[0].role_id)
                     }
                     break;
                 case 'del': //删除
                     if(data.length>0){
-                        var delBol = true;
-                        for ( var i = 0; i <data.length; i++){
-                            if(data[i].role_level <= ${role.roleLevel} & ${role.roleLevel} != 0){
-                                delBol = false;
-                            }
-                        }
-                        if(!delBol){
-                            layer.msg("批量删除中存在没有删除权限的数据，请重新选择。", {time: 2000});
-                            return;
-                        }
                         layer.confirm('删除数据会同步删除【角色信息】，真的要删除数据么?', function(index){
                             var ids = [];
                             var names = [];
@@ -210,15 +173,13 @@
 
     function reloadData(){
         var role_name = $('#role_name').val();
-        var status = $("#status option:selected").val();
         //执行重载
         table.reload('system_role', {
             page: {
                 curr: 1 //重新从第 1 页开始
             }
             ,where: {
-                role_name: role_name,
-                status:status
+                filter_role_name: role_name
             }
         });
     }
@@ -232,7 +193,7 @@
             maxmin: true,
             type: 2,
             content: '${pageContext.request.contextPath}/system/role/toAdd?',
-            area: ['800px', '500px'],
+            area: ['800px', '400px'],
             end: function () {
                 var val = getOpenCloseParam();
                 if(val=="reload"){
@@ -252,7 +213,7 @@
             maxmin: true,
             type: 2,
             content: '${pageContext.request.contextPath}/system/role/toAddMore',
-            area: ['800px', '500px'],
+            area: ['800px', '400px'],
             end: function () {
                 var val = getOpenCloseParam();
                 if(val=="reload"){
@@ -271,7 +232,7 @@
             maxmin: true,
             type: 2,
             content: '${pageContext.request.contextPath}/system/role/toUpdate?role_id='+role_id,
-            area: ['800px', '500px'],
+            area: ['800px', '400px'],
             end: function () {
                 var val = getOpenCloseParam();
                 if(val=="reload"){

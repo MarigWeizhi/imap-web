@@ -26,6 +26,8 @@
         <tr>
             <td width="15%" align="right"><label class="layui-form-label">角色：<span style="color: red">*</span></label></td>
             <td><input type="text" name="role" id="role"  lay-verify="required|field_len50" autocomplete="off" placeholder="角色" class="layui-input"></td>
+            <td align="right"><label class="layui-form-label">邮箱：</label></td>
+            <td><input type="text" name="email" id="email"  lay-verify="email" autocomplete="off" placeholder="邮箱" class="layui-input"></td>
         </tr>
         <tr>
             <td align="right"><label class="layui-form-label">性别：</label></td>
@@ -37,74 +39,7 @@
             </td>
             <td align="right"><label class="layui-form-label">手机号：</label></td>
             <td><input type="text" name="phone" id="phone"  lay-verify="phone" autocomplete="off" placeholder="手机号" class="layui-input"></td>
-            <td align="right"><label class="layui-form-label">邮箱：</label></td>
-            <td><input type="text" name="email" id="email"  lay-verify="email" autocomplete="off" placeholder="邮箱" class="layui-input"></td>
         </tr>
-<%--        <tr>--%>
-<%--            <td align="right"><label class="layui-form-label">座右铭：</label></td>--%>
-<%--            <td><input type="text" name="motto" id="motto"  lay-verify="field_len50" autocomplete="off" placeholder="座右铭" class="layui-input"></td>--%>
-<%--            <td align="right"><label class="layui-form-label">排序号：</label></td>--%>
-<%--            <td><input type="text" name="order_by" id="order_by"  lay-verify="field_len50|intNumber" autocomplete="off" placeholder="排序号" class="layui-input"></td>--%>
-<%--        </tr>--%>
-<%--        <tr>--%>
-<%--            <td align="right"><label class="layui-form-label">居住地址：</label></td>--%>
-<%--            <td><input type="text" name="live_address" id="live_address"  lay-verify="field_len120" autocomplete="off" placeholder="居住地址" class="layui-input"></td>--%>
-<%--            <td align="right"><label class="layui-form-label">出生地址：</label></td>--%>
-<%--            <td><input type="text" name="birth_address" id="birth_address"  lay-verify="field_len120" autocomplete="off" placeholder="出生地址" class="layui-input"></td>--%>
-<%--        </tr>--%>
-<%--        <tr>--%>
-<%--            <td align="right"><label class="layui-form-label">头像地址：</label></td>--%>
-<%--            <td colspan="3">--%>
-<%--                <div style="margin-top:5px;">--%>
-<%--                    <input type="hidden" name="fileId" id="fileId_image" value="" class="layui-input">--%>
-<%--                    <input type="hidden" name="filePath" id="filePath_image" value="" class="layui-input">--%>
-<%--                    <button type="button" class="layui-btn layui-btn-xs" id="upload_image">选择头像</button>--%>
-<%--                    <div class="layui-upload-list">--%>
-<%--                        <img class="layui-upload-img" style="width: 160px" id="file_image">--%>
-<%--                        <p id="tip_image"></p>--%>
-<%--                    </div>--%>
-<%--                </div>--%>
-<%--            </td>--%>
-<%--        </tr>--%>
-<%--        <tr id="button_tr">--%>
-<%--            <td width="20%" align="right"><label class="layui-form-label">用户组织</label></td>--%>
-<%--            <td colspan="3">--%>
-<%--                <div style="width:98%; overflow:auto;">--%>
-<%--                    <table class="layui-table" style="width:98%;">--%>
-<%--                        <thead>--%>
-<%--                        <tr>--%>
-<%--                            <th style="width: 80px">类型</th>--%>
-<%--                            <th>组织名称<span style="color: red">*</span></th>--%>
-<%--                            <th>职务</th>--%>
-<%--                            <th style="width: 50px">排序</th>--%>
-<%--                            <th>操作</th>--%>
-<%--                        </tr>--%>
-<%--                        </thead>--%>
-<%--                        <tbody id="table">--%>
-<%--                        <tr>--%>
-<%--                            <td><input type="hidden" name="type" lay-verify="field_len50" value="0" autocomplete="off" class="layui-input">主组织</td>--%>
-<%--                            <td>--%>
-<%--&lt;%&ndash;                                <div style="float: left">&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                    <input type="hidden" name="organize_id" id="organize_id_1" title="${pd.organize_name}" lay-verify="field_len50" value="${pd.organize_id}" autocomplete="off" class="layui-input">&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                    <input type="text" name="organize_name" id="organize_name_1" lay-verify="required|field_len50" value="${pd.organize_name}" autocomplete="off" placeholder="请输入组织名称" class="layui-input">&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                </div>&ndash;%&gt;--%>
-<%--                                <div style="float: left">--%>
-<%--                                    <button style="margin-top: 4px;margin-left: 10px;" type="button" onclick="selectOneOrganize('1')" class="layui-btn layui-btn-xs layui-btn-normal">选择</button>--%>
-<%--                                </div>--%>
-<%--                            </td>--%>
-<%--                            <td><input type="text" name="position" lay-verify="field_len50" value="" autocomplete="off" placeholder="请输入职务" class="layui-input"></td>--%>
-<%--                            <td><input type="text" name="child_order_by" lay-verify="field_len8" autocomplete="off" placeholder="请输入排序号" value="1" class="layui-input"></td>--%>
-<%--                            <td style="width: 78px;"><div class="layui-btn-group"><button onclick="addLine();" type="button" class="layui-btn layui-btn-xs"><i class="layui-icon"></i></button></div></td>--%>
-<%--                        </tr>--%>
-<%--                        </tbody>--%>
-<%--                    </table>--%>
-<%--                </div>--%>
-<%--            </td>--%>
-<%--        </tr>--%>
-<%--        <tr>--%>
-<%--            <td align="right"><label class="layui-form-label">备注：</label></td>--%>
-<%--            <td colspan="3"><textarea name="remark" placeholder="请输入备注" class="layui-textarea"></textarea></td>--%>
-<%--        </tr>--%>
         <tr>
             <td style="text-align: center; padding-top: 10px;" colspan="4">
                 <div class="layui-form-item">

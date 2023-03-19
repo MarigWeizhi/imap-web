@@ -69,40 +69,40 @@
 <%--    </c:if>--%>
     <ul class="layui-nav right" lay-filter="">
         <li class="layui-nav-item to-index">
-            <a href="/" target=“_blank”>数据监控</a>
+            <a href="/online" target=“_blank”>数据监控</a>
         </li>
-        <li class="layui-nav-item">
-            <a href="javascript:;"><i class="layui-icon">&#xe624;</i>弹框示例</a>
-            <dl class="layui-nav-child">
-                <!-- 二级菜单 -->
-                <dd>
-                    <a onclick="xadmin.open('最大化','http://www.baidu.com','','',true)">
-                        <i class="iconfont">&#xe6a2;</i>弹出最大化</a></dd>
-                <dd>
-                    <a onclick="xadmin.open('弹出自动宽高','http://www.baidu.com')">
-                        <i class="iconfont">&#xe6a8;</i>弹出自动宽高</a></dd>
-                <dd>
-                    <a onclick="xadmin.open('弹出指定宽高','http://www.baidu.com',500,300)">
-                        <i class="iconfont">&#xe6a8;</i>弹出指定宽高</a></dd>
-                <dd>
-                    <a onclick="xadmin.add_tab('在tab打开','http://www.baidu.com')">
-                        <i class="iconfont">&#xe6b8;</i>在tab打开</a></dd>
-                <dd>
-                    <a onclick="xadmin.add_tab('在tab打开刷新','http://www.baidu.com',true)">
-                        <i class="iconfont">&#xe6b8;</i>在tab打开刷新</a></dd>
-            </dl>
-        </li>
+<%--        <li class="layui-nav-item">--%>
+<%--            <a href="javascript:;"><i class="layui-icon">&#xe624;</i>弹框示例</a>--%>
+<%--            <dl class="layui-nav-child">--%>
+<%--                <!-- 二级菜单 -->--%>
+<%--                <dd>--%>
+<%--                    <a onclick="xadmin.open('最大化','http://www.baidu.com','','',true)">--%>
+<%--                        <i class="iconfont">&#xe6a2;</i>弹出最大化</a></dd>--%>
+<%--                <dd>--%>
+<%--                    <a onclick="xadmin.open('弹出自动宽高','http://www.baidu.com')">--%>
+<%--                        <i class="iconfont">&#xe6a8;</i>弹出自动宽高</a></dd>--%>
+<%--                <dd>--%>
+<%--                    <a onclick="xadmin.open('弹出指定宽高','http://www.baidu.com',500,300)">--%>
+<%--                        <i class="iconfont">&#xe6a8;</i>弹出指定宽高</a></dd>--%>
+<%--                <dd>--%>
+<%--                    <a onclick="xadmin.add_tab('在tab打开','http://www.baidu.com')">--%>
+<%--                        <i class="iconfont">&#xe6b8;</i>在tab打开</a></dd>--%>
+<%--                <dd>--%>
+<%--                    <a onclick="xadmin.add_tab('在tab打开刷新','http://www.baidu.com',true)">--%>
+<%--                        <i class="iconfont">&#xe6b8;</i>在tab打开刷新</a></dd>--%>
+<%--            </dl>--%>
+<%--        </li>--%>
 
         <li class="layui-nav-item">
             <a href="javascript:;"><i class="layui-icon">&#xe66f;</i>${user.userName}</a>
             <dl class="layui-nav-child">
                 <!-- 二级菜单 -->
-                <dd>
-                    <a onclick="xadmin.open('个人信息','${pageContext.request.contextPath}/system/user/toMyUpdate',800,500)"><i class="layui-icon">&#xe612;</i>个人信息</a>
-                </dd>
-                <dd>
-                    <a onclick="xadmin.open('密码修改','${pageContext.request.contextPath}/system/user/toMyResetPwd',600,280)"><i class="layui-icon">&#xe60f;</i>密码修改</a>
-                </dd>
+<%--                <dd>--%>
+<%--                    <a onclick="xadmin.open('个人信息','${pageContext.request.contextPath}/system/user/toMyUpdate',800,500)"><i class="layui-icon">&#xe612;</i>个人信息</a>--%>
+<%--                </dd>--%>
+<%--                <dd>--%>
+<%--                    <a onclick="xadmin.open('密码修改','${pageContext.request.contextPath}/system/user/toMyResetPwd',600,280)"><i class="layui-icon">&#xe60f;</i>密码修改</a>--%>
+<%--                </dd>--%>
                 <dd>
                     <a href="${pageContext.request.contextPath}/system/user/logout"><i class="layui-icon">&#xe682;</i>退出</a>
                 </dd>
@@ -136,7 +136,7 @@
                 </a>
                 <ul class="sub-menu">
                     <li>
-                    <a href="/" target=“_blank”>
+                    <a href="/online" target=“_blank”>
                     <i class="iconfont left-nav-li" lay-tips="在线监控">&#xe6a8;</i>
                     <cite>在线监控</cite>
 <%--                    <i class="iconfont nav_right">&#xe697;</i>--%>

@@ -97,6 +97,7 @@
             ,title: '用户数据表'
             ,cols: [[
                 {type: 'checkbox', fixed: 'left', width:50}
+                ,{field:'user_id', title:'用户编号', width:100, edit: 'text'}
                 ,{field:'login_name', fixed: 'left',title:'登录名', width:120, templet: function(res){
                         return filterXSS(res.login_name);
                     }}

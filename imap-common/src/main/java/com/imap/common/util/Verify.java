@@ -1,5 +1,8 @@
 package com.imap.common.util;
 
+import com.imap.common.pojo.MenuTypeEnum;
+import com.imap.common.pojo.Role;
+
 import java.text.DecimalFormat;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -157,5 +160,34 @@ public class Verify {
 		for (String key : keys) {
 			if(verifyIsNull(pd.get(key)))pd.remove(key);
 		}
+	}
+
+	public static boolean authority(String url, Role role) {
+		String config = role.getRoleConfig();
+		if(url==null){
+			return true;
+		}
+		if(config == null) {
+			return false;
+		}
+		if(url.contains(MenuTypeEnum.ONLINE.getCode()) && !config.contains(MenuTypeEnum.ONLINE.getCode())){
+			return false;
+		}
+		if(url.contains(MenuTypeEnum.HISTORY.getCode()) && !config.contains(MenuTypeEnum.HISTORY.getCode())){
+			return false;
+		}
+		if(url.contains(MenuTypeEnum.USER.getCode()) && !config.contains(MenuTypeEnum.USER.getCode())){
+			return false;
+		}
+		if(url.contains(MenuTypeEnum.ROLE.getCode()) && !config.contains(MenuTypeEnum.ROLE.getCode())){
+			return false;
+		}
+		if(url.contains(MenuTypeEnum.SITE.getCode()) && !config.contains(MenuTypeEnum.SITE.getCode())){
+			return false;
+		}
+		if(url.contains(MenuTypeEnum.ALARM.getCode()) && !config.contains(MenuTypeEnum.ALARM.getCode())){
+			return false;
+		}
+		return true;
 	}
 }

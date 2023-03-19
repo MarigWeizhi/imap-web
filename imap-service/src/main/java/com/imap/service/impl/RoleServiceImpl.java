@@ -1,5 +1,6 @@
 package com.imap.service.impl;
 
+import com.imap.common.pojo.MenuTypeEnum;
 import com.imap.common.pojo.Role;
 import com.imap.common.util.Page;
 import com.imap.common.util.PageData;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.StringJoiner;
 
 /**
  * @Author: Weizhi
@@ -59,11 +61,27 @@ public class RoleServiceImpl extends RoleService {
 
     @Override
     public void save(PageData pd) {
+        StringJoiner sj = new StringJoiner(";");
+        if(pd.get(MenuTypeEnum.ONLINE.getCode())!=null){sj.add(MenuTypeEnum.ONLINE.getCode());}
+        if(pd.get(MenuTypeEnum.HISTORY.getCode())!=null){sj.add(MenuTypeEnum.HISTORY.getCode() );}
+        if(pd.get(MenuTypeEnum.USER.getCode())!=null){sj.add(MenuTypeEnum.USER.getCode() );}
+        if(pd.get(MenuTypeEnum.ROLE.getCode())!=null){sj.add(MenuTypeEnum.ROLE.getCode() );}
+        if(pd.get(MenuTypeEnum.SITE.getCode())!=null){sj.add(MenuTypeEnum.SITE.getCode() );}
+        if(pd.get(MenuTypeEnum.ALARM.getCode())!=null){sj.add(MenuTypeEnum.ALARM.getCode() );}
+        pd.put("role_config",sj.toString());
         roleMapper.save(pd);
     }
 
     @Override
     public int update(PageData pd) {
+        StringJoiner sj = new StringJoiner(";");
+        if(pd.get(MenuTypeEnum.ONLINE.getCode())!=null){sj.add(MenuTypeEnum.ONLINE.getCode());}
+        if(pd.get(MenuTypeEnum.HISTORY.getCode())!=null){sj.add(MenuTypeEnum.HISTORY.getCode());}
+        if(pd.get(MenuTypeEnum.USER.getCode())!=null){sj.add(MenuTypeEnum.USER.getCode());}
+        if(pd.get(MenuTypeEnum.ROLE.getCode())!=null){sj.add(MenuTypeEnum.ROLE.getCode());}
+        if(pd.get(MenuTypeEnum.SITE.getCode())!=null){sj.add(MenuTypeEnum.SITE.getCode());}
+        if(pd.get(MenuTypeEnum.ALARM.getCode())!=null){sj.add(MenuTypeEnum.ALARM.getCode());}
+        pd.put("role_config",sj.toString());
         roleMapper.update(pd);
         return 200;
     }

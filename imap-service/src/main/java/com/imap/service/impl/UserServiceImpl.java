@@ -7,7 +7,6 @@ import com.imap.dao.UserMapper;
 import com.imap.service.RoleService;
 import com.imap.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -38,8 +37,9 @@ public class UserServiceImpl extends UserService {
     }
 
     @Override
-    public User getUserById(int uid) {
-        return null;
+    public User getUserById(int userId) {
+        User userById = userMapper.getUserById(userId);
+        return userById;
     }
 
     @Override
@@ -76,11 +76,11 @@ public class UserServiceImpl extends UserService {
         return userMapper.findUser(pd);
     }
 
-
-
     @Override
     public int update(PageData pd) {
         userMapper.update(pd);
+        userMapper.updateUserRole(pd);
+
         return 200;
     }
 

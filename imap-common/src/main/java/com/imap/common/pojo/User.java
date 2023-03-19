@@ -24,8 +24,6 @@ public class User {
     private String userName;
     private String phone;
     private String email;
-    private String ipaddr;
-    private Timestamp lastLoginTime;
     private int createUser;
     private int isDelete;
     private int roleId;

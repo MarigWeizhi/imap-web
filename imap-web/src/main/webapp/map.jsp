@@ -1911,7 +1911,7 @@
                                             '</br>亮度：' + data.lx + " lx" +
                                             '</br>站点监控：' + '<button class="layui-btn layui-btn-sm" onclick="xadmin.open(\'' +
                                             name + '\',\'' + url + '\',650,530)"> 监控视频</button>' +
-                                            '</br></br>详细信息：' + '<a href="/site/'+site_id+'"><button class="layui-btn layui-btn-sm">前往站点</button></a>'
+                                            '</br></br>详细信息：' + '<a href="/online/'+site_id+'"><button class="layui-btn layui-btn-sm">前往站点</button></a>'
                                             , opts);
                                         map.openInfoWindow(infoWindow, pt); // 开启信息窗
                                     }

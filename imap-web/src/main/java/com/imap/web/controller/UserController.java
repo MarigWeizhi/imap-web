@@ -154,61 +154,39 @@ public class UserController extends BaseController {
         List<PageData> list = userService.getAllList(pd);
         if (list.size() > 0) {
             json.setSuccess(false);
-            json.setMsg("用户【" + pd.get("login_name").toString() + "】已经存在！");
-        } else {
-            //主键id
-            String time = DateTimeUtil.getDateTimeStr();
-            pd.put("login_name", pd.get("login_name").toString());
-//            pd.put("login_password", PasswordUtil.encrypt(pd.get("login_password").toString(), pd.get("login_name").toString()));
-            pd.put("login_password", pd.get("login_password").toString());
-            pd.put("name", pd.get("name").toString());
-            pd.put("sex", pd.get("sex").toString());
-            pd.put("phone", pd.get("phone").toString());
-            pd.put("email", pd.get("email").toString());
-            pd.put("role", pd.get("role").toString());
-            pd.put("create_time", time);
-            pd.put("update_time", time);
-            User user = (User) session.getAttribute("user");
-            pd.put("create_user", user.getCreateUser());
-            userService.save(pd);
-            json.setSuccess(true);
-            json.setMsg("操作成功。");
+            json.setMsg("用户【 " + pd.get("login_name").toString() + " 】已经存在！");
+            this.writeJson(response, json);
+            return;
         }
+        // 判断用户id是否存在
+        int roleId = Integer.valueOf(pd.get("role").toString());
+        Role role = roleService.getRoleById(roleId);
+        if(role == null){
+            json.setSuccess(false);
+            json.setMsg("角色id【 " + roleId + " 】不存在！");
+            this.writeJson(response, json);
+            return;
+        }
+        //主键id
+        String time = DateTimeUtil.getDateTimeStr();
+        pd.put("login_name", pd.get("login_name").toString());
+//            pd.put("login_password", PasswordUtil.encrypt(pd.get("login_password").toString(), pd.get("login_name").toString()));
+        pd.put("login_password", pd.get("login_password").toString());
+        pd.put("name", pd.get("name").toString());
+        pd.put("sex", pd.get("sex").toString());
+        pd.put("phone", pd.get("phone").toString());
+        pd.put("email", pd.get("email").toString());
+        pd.put("role", pd.get("role").toString());
+        pd.put("create_time", time);
+        pd.put("update_time", time);
+        User user = (User) session.getAttribute("user");
+        pd.put("create_user", user.getUserId());
+        userService.save(pd);
+        json.setSuccess(true);
+        json.setMsg("操作成功。");
         this.writeJson(response, json);
     }
 
-//    //    @RequiresPermissions("user:add")
-//    @RequestMapping(value = "/save", method = RequestMethod.POST)
-//    public void save(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception  {
-//        PageData pd = new PageData(request);
-//        Json json = new Json();
-//
-//        //判断登录用户名称是否存在
-//        pd.put("query_login_name", Arrays.asList(pd.get("login_name").toString().split(",")));
-//        List<PageData> list = userService.findList(pd);
-//        if(list.size()>0){
-//            json.setSuccess(false);
-//            json.setMsg("用户【"+pd.get("login_name").toString()+"】已经存在！");
-//        }else{
-//            //主键id
-//            String time = DateTimeUtil.getDateTimeStr();
-//            pd.put("login_name", pd.get("login_name").toString());
-////            pd.put("login_password", PasswordUtil.encrypt(pd.get("login_password").toString(), pd.get("login_name").toString()));
-//            pd.put("login_password", pd.get("login_password").toString());
-//            pd.put("name", pd.get("name").toString());
-//            pd.put("sex", pd.get("sex").toString());
-//            pd.put("phone", pd.get("phone").toString());
-//            pd.put("email", pd.get("email").toString());
-//            pd.put("create_time", time);
-//            pd.put("update_time", time);
-//            User user = (User) session.getAttribute("user");
-//            pd.put("create_user",user.getCreateUser());
-//            userService.save(pd);
-//            json.setSuccess(true);
-//            json.setMsg("操作成功。");
-//        }
-//        this.writeJson(response,json);
-//    }
 
     //    @RequiresPermissions("user:edit")
     @RequestMapping(value = "/toUpdate", method = RequestMethod.GET)
@@ -216,20 +194,12 @@ public class UserController extends BaseController {
         ModelMap map = mv.getModelMap();
         PageData pd = new PageData(request);
         PageData p = userService.findUser(pd);
-        p.put("user_id", pd.get("user_id"));
-        //查询用户组织
-//        pd.put("user_id",p.get("id"));
-//        List<PageData> list = userService.findUserOrganize(pd);
-//        map.put("list",list);
-        //查询内容附件信息
-//        pd.put("obj_id",p.get("id"));
-//        pd.put("source","userHead");
-//        List<PageData> imgList = uploadService.findFileList(pd);
-//        if(imgList.size()>0){
-//            map.put("filePd",imgList.get(0));
-//        }
+        int userId = Integer.valueOf(pd.get("user_id").toString());
+        User user = userService.getUserById(userId);
+        int roleId = user.getRoleId();
+        p.put("user_id", userId);
+        p.put("role_id", roleId);
         map.put("p", p);
-//        pd.put("file_prefix",ParaUtil.cloudfile);
         map.put("pd", pd);
         mv.setViewName("forward:/system/user/user_update.jsp");
         return mv;
@@ -240,7 +210,6 @@ public class UserController extends BaseController {
         PageData pd = new PageData(request);
         Json json = new Json();
 
-        boolean bol = true;
         if (null != pd.get("old_login_name") && !pd.get("old_login_name").equals(pd.get("login_name"))) {
             //判断登录用户名称是否存在
             pd.put("query_login_name", Arrays.asList(pd.get("login_name").toString().split(",")));
@@ -248,52 +217,26 @@ public class UserController extends BaseController {
             if (list.size() > 0) {
                 json.setSuccess(false);
                 json.setMsg("用户【" + pd.get("login_name").toString() + "】已经存在！");
-                bol = false;
+                this.writeJson(response, json);
+                return;
             }
         }
-        if (bol) {
-            String time = DateTimeUtil.getDateTimeStr();
-            pd.put("update_time", time);
-            userService.update(pd);
-//            if(num==1){
-//                //处理组织信息
-//                String[] child_id = request.getParameterValues("child_id");
-//                String[] type = request.getParameterValues("type");
-//                String[] organize_id = request.getParameterValues("organize_id");
-//                String[] organize_name = request.getParameterValues("organize_name");
-//                String[] position = request.getParameterValues("position");
-//                String[] child_order_by = request.getParameterValues("child_order_by");
-//                for (int i = 0; i < child_id.length; i++) {
-//                    PageData orgPd = new PageData();
-//                    orgPd.put("user_id",id);
-//                    orgPd.put("type",type[i]);
-//                    orgPd.put("use_status",type[i]);
-//                    orgPd.put("organize_id",organize_id[i]);
-//                    orgPd.put("organize_name",organize_name[i]);
-//                    orgPd.put("position",position[i]);
-//                    orgPd.put("order_by",child_order_by[i]);
-//                    if(Verify.verifyIsNotNull(child_id[i])){
-//                        orgPd.put("id",child_id[i]);
-//                        orgPd.put("update_time", time);
-//                        userService.updateUserOrganize(orgPd);
-//                    }else{
-//                        orgPd.put("create_user",user.get("id"));
-//                        orgPd.put("create_time", time);
-//                        orgPd.put("id",GuidUtil.getGuid());
-//                        userService.saveUserOrganize(orgPd);
-//                    }
-//                }
-//                //处理图片资源
-//                PageData filePd = new PageData();
-//                filePd.put("obj_id",pd.get("id"));
-//                filePd.put("update_time", time);
-//                filePd.put("update_user", user.get("id"));
-//                filePd.put("id", pd.get("fileId"));
-//                uploadService.updateFile(filePd);
-//            }
-            json.setSuccess(true);
-            json.setMsg("操作成功。");
+
+        // 判断用户id是否存在
+        int roleId = Integer.valueOf(pd.get("role_id").toString());
+        Role role = roleService.getRoleById(roleId);
+        if(role == null){
+            json.setSuccess(false);
+            json.setMsg("角色id【 " + roleId + " 】不存在！");
+            this.writeJson(response, json);
+            return;
         }
+
+        String time = DateTimeUtil.getDateTimeStr();
+        pd.put("update_time", time);
+        userService.update(pd);
+        json.setSuccess(true);
+        json.setMsg("操作成功。");
         this.writeJson(response, json);
     }
 

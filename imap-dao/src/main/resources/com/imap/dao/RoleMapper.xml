@@ -7,30 +7,30 @@
     <resultMap id="roleResultMap" type="com.imap.common.pojo.Role">
         <result column="role_id" property="roleId"></result>
         <result column="role_name" property="roleName"></result>
+        <result column="role_config" property="roleConfig"></result>
         <result column="create_time" property="createTime"></result>
         <result column="update_time" property="updateTime"></result>
         <result column="create_user" property="createUser"></result>
         <result column="is_delete" property="isDelete"></result>
-        <result column="role_level" property="roleLevel"></result>
     </resultMap>
 
     <insert id="save" parameterType="com.imap.common.util.PageData">
-        insert into sys_role (role_id,role_name,create_time,create_user,is_delete,role_level,update_time)
+        insert into sys_role (role_id,role_name,role_config,create_time,create_user,update_time,is_delete)
         values
             (null,
              #{role_name,jdbcType=VARCHAR},
+             #{role_config,jdbcType=VARCHAR},
              #{create_time,jdbcType=TIMESTAMP},
              #{create_user,jdbcType=INTEGER},
-             0,
-             #{role_level,jdbcType=INTEGER},
-             #{update_time,jdbcType=TIMESTAMP}
+             #{update_time,jdbcType=TIMESTAMP},
+             0
              )
     </insert>
 
     <update id="update" parameterType="com.imap.common.util.PageData">
         update sys_role set
         <if test="role_name != null">role_name=#{role_name},</if>
-        <if test="role_level != null">role_level=#{role_level},</if>
+        <if test="role_config != null">role_config=#{role_config},</if>
         update_time=#{update_time}
         where role_id=#{role_id}
     </update>
@@ -52,13 +52,14 @@
 
     <select id="findListPage" resultType="com.imap.common.util.PageData">
         select *  from sys_role
-        where is_delete = 0 and role_level >= #{pd.roleLevel}
+        where is_delete = 0
+        <if test="pd.filter_role_name != null">and role_name like concat('%', #{pd.filter_role_name}, '%')</if>
         limit #{showCount} offset #{offset}
     </select>
 
     <select id="getAllList" resultType="com.imap.common.util.PageData">
         select *  from sys_role
-        where is_delete = 0 and role_level >= #{pd.roleLevel}
+        where is_delete = 0
     </select>
 
     <select id="getRoleById" resultMap="roleResultMap">
@@ -67,7 +68,7 @@
 
     <select id="findListSize" parameterType="com.imap.common.util.PageData" resultType="java.lang.Integer">
         select count(*) from sys_role
-        where is_delete = 0 and role_level >= #{pd.roleLevel}
+        where is_delete = 0
     </select>
 
 </mapper>

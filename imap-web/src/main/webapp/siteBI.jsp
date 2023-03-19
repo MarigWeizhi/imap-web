@@ -188,7 +188,7 @@
         <!-- 组件67dfb2a7-05b3-4c1a-863c-72e8c9af8184开始-->
 
         <div id="item67dfb2a7-05b3-4c1a-863c-72e8c9af8184">
-            <a href="/">
+            <a href="/online">
                 <img
                         src="/static/images/d0f4f5f2-6696-4281-b8b4-3f9cd1aa77cc.png"
                         alt=""

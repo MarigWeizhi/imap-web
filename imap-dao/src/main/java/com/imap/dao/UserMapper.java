@@ -32,4 +32,5 @@ public interface UserMapper {
 
     void saveUserRole(PageData pd);
 
+    void updateUserRole(PageData pd);
 }

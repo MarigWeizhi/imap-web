@@ -8,9 +8,9 @@
         <result column="login_name" property="loginName"></result>
         <result column="login_password" property="loginPassword"></result>
         <result column="name" property="userName"></result>
-        <result column="last_login_time" property="lastLoginTime"></result>
         <result column="create_user" property="createUser"></result>
         <result column="is_delete" property="isDelete"></result>
+        <result column="role_id" property="roleId"></result>
     </resultMap>
 
     <!--更新-->
@@ -22,10 +22,17 @@
         <if test="sex != null">sex=#{sex},</if>
         <if test="phone != null">phone=#{phone},</if>
         <if test="email != null">email=#{email},</if>
-        <if test="ipaddr != null">ipaddr=#{ipaddr},</if>
         update_time=#{update_time}
         where user_id=#{user_id}
     </update>
+
+    <update id="updateUserRole">
+        update sys_user_role set
+            role_id=#{role_id}
+        where user_id=#{user_id}
+    </update>
+
+
     <!--    删除-->
     <update id="delete" parameterType="com.imap.common.util.PageData">
         update sys_user set
@@ -36,8 +43,9 @@
         </foreach>
     </update>
 
+
     <select id="findUser" resultType="com.imap.common.util.PageData">
-        select login_name,login_password,name,sex,phone,email,create_time,last_login_time,create_user
+        select login_name,login_password,name,sex,phone,email,create_time,create_user
         from sys_user
         where 1=1
         <if test="user_id != null and user_id != ''">
@@ -50,13 +58,13 @@
     <!--保存-->
     <insert id="save" parameterType="com.imap.common.util.PageData">
         insert into sys_user (user_id,login_name,login_password,name,sex,
-                              phone,email,create_time,create_user,last_login_time,is_delete)
+                              phone,email,create_time,create_user,is_delete)
         values
             (null,#{login_name,jdbcType=VARCHAR},#{login_password,jdbcType=VARCHAR},#{name,jdbcType=VARCHAR},
              #{sex,jdbcType=INTEGER},#{phone,jdbcType=VARCHAR},
              #{email,jdbcType=VARCHAR},
              #{create_time,jdbcType=TIMESTAMP},
-             #{create_user,jdbcType=INTEGER},#{last_login_time,jdbcType=TIMESTAMP},0)
+             #{create_user,jdbcType=INTEGER},0)
     </insert>
 
     <insert id="saveUserRole" parameterType="com.imap.common.util.PageData">
@@ -70,8 +78,18 @@
     <!--    </select>-->
 
     <select id="getUserById" resultMap="userResultMap">
-        select * from sys_user
-        where user_id = #{userId}
+        select a.user_id,
+               login_name,
+               name,
+               login_password,
+               sex,
+               phone,
+               email,
+               create_user,
+               is_delete,
+               role_id
+        from sys_user a join sys_user_role b on a.user_id = b.user_id
+        where a.user_id = #{userId}
     </select>
 
     <select id="getAllList" parameterType="com.imap.common.util.PageData" resultType="com.imap.common.util.PageData">
@@ -99,7 +117,7 @@
 
     <select id="findListSize" parameterType="com.imap.common.util.Page" resultType="java.lang.Integer">
         select count(*) from sys_user
-        where is_delete = 0 and (user_id = #{pd.userId} or create_user = #{pd.userId})
+        where is_delete = 0
         <if test="pd.filter_login_name != null">and login_name like concat('%', #{pd.filter_login_name}, '%')</if>
         <if test="pd.filter_name != null">and name like concat('%', #{pd.filter_name}, '%')</if>
         <if test="pd.filter_email != null">and email like concat('%', #{pd.filter_email}, '%')</if>
@@ -116,7 +134,7 @@
                create_time,
                update_time
                from sys_user
-        where is_delete = 0 and (user_id = #{pd.userId} or create_user = #{pd.userId})
+        where is_delete = 0
         <if test="pd.filter_login_name != null">and login_name like concat('%', #{pd.filter_login_name}, '%')</if>
         <if test="pd.filter_name != null">and name like concat('%', #{pd.filter_name}, '%')</if>
         <if test="pd.filter_email != null">and email like concat('%', #{pd.filter_email}, '%')</if>

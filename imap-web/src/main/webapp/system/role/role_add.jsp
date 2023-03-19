@@ -2,24 +2,62 @@
 <%@include file="../admin/top.jsp"%>
 
 <form class="layui-form" action="" id="form">
-    <table width="95%" style="margin: 0 auto">
-        <tr>
-            <td width="15%" align="right"><label class="layui-form-label">角色名称：<span style="color: red">*</span></label></td>
-            <td colspan="3"><input type="text" name="role_name" id="role_name" lay-verify="required|field_len50" autocomplete="off" placeholder="角色名称" class="layui-input"></td>
-        </tr>
-        <tr>
-            <td align="right"><label class="layui-form-label">角色等级：</label></td>
-            <td colspan="3"><input type="text" name="role_level" id="role_level" lay-verify="field_len50|intNumber" autocomplete="off" placeholder="您只能创建大于：${role.roleLevel} 的角色等级" class="layui-input"></td>
-        </tr>
-        <tr>
-            <td style="text-align: center; padding-top: 10px;" colspan="4">
-                <div class="layui-form-item">
-                    <button class="layui-btn layui-btn-sm" id="submit_button" lay-submit="" lay-filter="submit_form">保存</button>
-                    <button type="button" class="layui-btn layui-btn-danger layui-btn-sm" id="cancel">取消</button>
-                </div>
-            </td>
-        </tr>
-    </table>
+    <%--    角色名称、上报周期 --%>
+    <div class="layui-form-item">
+        <div class="layui-inline" style="align-content: center">
+            <label class="layui-form-label" style="width: 200px;">角色名称：<span style="color: red">*</span></label>
+            <div class="layui-input-inline">
+                <input type="text" name="role_name" id="role_name" lay-verify="required|field_len50" autocomplete="off" placeholder="角色名称" class="layui-input">
+            </div>
+        </div>
+    </div>
+
+    <%--        数据权限--%>
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label" style="width: 200px;">在线监控：</label>
+            <div class="layui-input-inline" style="width: 100px;">
+                <input type="checkbox" name="online" lay-skin="switch" lay-filter="switchTest" lay-text="允许|禁止">
+            </div>
+            <label class="layui-form-label" style="width: 200px;">历史数据：</label>
+            <div class="layui-input-inline" style="width: 100px;">
+                <input type="checkbox" name="history" lay-skin="switch" lay-filter="switchTest" lay-text="允许|禁止">
+            </div>
+        </div>
+    </div>
+    <%--        用户设置--%>
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label" style="width: 200px;">用户管理：</label>
+            <div class="layui-input-inline" style="width: 100px;">
+                <input type="checkbox" name="user" lay-skin="switch" lay-filter="switchTest" lay-text="允许|禁止">
+            </div>
+            <label class="layui-form-label" style="width: 200px;">角色管理：</label>
+            <div class="layui-input-inline" style="width: 100px;">
+                <input type="checkbox" name="role" lay-skin="switch" lay-filter="switchTest" lay-text="允许|禁止">
+            </div>
+        </div>
+    </div>
+    <%--        站点设置--%>
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label" style="width: 200px;">站点管理：</label>
+            <div class="layui-input-inline" style="width: 100px;">
+                <input type="checkbox" name="site" lay-skin="switch" lay-filter="switchTest" lay-text="允许|禁止">
+            </div>
+            <label class="layui-form-label" style="width: 200px;">告警管理：</label>
+            <div class="layui-input-inline" style="width: 100px;">
+                <input type="checkbox" name="alarm" lay-skin="switch" lay-filter="switchTest" lay-text="允许|禁止">
+            </div>
+        </div>
+    </div>
+    <%--    提交--%>
+    <div class="layui-form-item" >
+        <div class="layui-inline" style="width: 100%; text-align: center; padding-top: 10px;" >
+            <button type="button" class="layui-btn layui-btn-sm" id="submit_button" lay-submit="" lay-filter="submit_form">保存</button>
+            <button type="button" class="layui-btn layui-btn-danger layui-btn-sm" id="cancel">取消</button>
+        </div>
+    </div>
 </form>
 
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/plugins/xadmin/lib/layui/layui.js" charset="utf-8"></script>
@@ -47,10 +85,6 @@
         form.on('submit(submit_form)', function(data){
             if(isSubmit)return true;
             isSubmit = true;
-            if($('#role_level').text <= ${role.roleLevel}){
-                layer.msg("您只能创建大于${role.roleLevel}等级的角色。", {time: 2000});
-                return;
-            }
 
             layer.msg('正在提交数据。');
             $("#submit_button").attr('disabled',true);

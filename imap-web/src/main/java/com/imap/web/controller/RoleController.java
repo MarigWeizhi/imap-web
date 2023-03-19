@@ -107,12 +107,34 @@ public class RoleController extends BaseController {
         return mv;
     }
 
+    @RequestMapping(value = "/save", method = RequestMethod.POST)
+    public void save(HttpServletRequest request, MultipartFile file, HttpServletResponse response, HttpSession session) throws Exception {
+        PageData pd = new PageData(request);
+        Json json = new Json();
+        String time = DateTimeUtil.getDateTimeStr();
+        pd.put("role_name", pd.get("role_name").toString());
+        pd.put("create_time", time);
+        pd.put("update_time", time);
+
+        User user = (User) session.getAttribute("user");
+        pd.put("create_user", user.getUserId());
+
+        roleService.save(pd);
+        json.setSuccess(true);
+        json.setMsg("操作成功。");
+        this.writeJson(response, json);
+    }
+
     @RequestMapping(value = "/toUpdate", method = RequestMethod.GET)
     public ModelAndView toUpdate(ModelAndView mv, HttpServletRequest request) {
         PageData pd = new PageData(request);
         Role role = roleService.getRoleById(Integer.parseInt((String) pd.get("role_id")));
         PageData p = new PageData();
-        p.putAll(bean2Map(role));
+        for (String code : role.getRoleConfig().split(";")) {
+            p.put(code,1);
+        }
+        p.put("role_name",role.getRoleName());
+        p.put("role_id",role.getRoleId());
         mv.getModelMap().put("p", p);
         mv.setViewName("forward:/system/role/role_update.jsp");
         return mv;
@@ -124,44 +146,9 @@ public class RoleController extends BaseController {
         String time = DateTimeUtil.getDateTimeStr();
         pd.put("create_time", time);
         pd.put("update_time", time);
-        String role_level = pd.get("role_level").toString();
-        Role role = (Role) session.getAttribute("role");
         Json json = new Json();
-        if(role_level!= null && role != null && Integer.parseInt(role_level) <= role.getRoleLevel()){
-            json.setSuccess(false);
-            json.setMsg("您只能创建等级:"+role.getRoleLevel()+" 以上的角色。");
-            this.writeJson(response, json);
-            return;
-        }
         int num = roleService.update(pd);
         json.setCode(num);
-        json.setSuccess(true);
-        json.setMsg("操作成功。");
-        this.writeJson(response, json);
-    }
-
-    @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public void save(HttpServletRequest request, MultipartFile file, HttpServletResponse response, HttpSession session) throws Exception {
-        PageData pd = new PageData(request);
-        Json json = new Json();
-        String time = DateTimeUtil.getDateTimeStr();
-        pd.put("role_name", pd.get("role_name").toString());
-        String role_level = pd.get("role_level").toString();
-        pd.put("role_level", role_level);
-        pd.put("create_time", time);
-        pd.put("update_time", time);
-        User user = (User) session.getAttribute("user");
-        Role role = (Role) session.getAttribute("role");
-        pd.put("create_user", user.getCreateUser());
-
-        if(role_level!= null && role != null && Integer.parseInt(role_level) <= role.getRoleLevel()){
-            json.setSuccess(false);
-            json.setMsg("您只能创建等级:"+role.getRoleLevel()+" 以上的角色。");
-            this.writeJson(response, json);
-            return;
-        }
-
-        roleService.save(pd);
         json.setSuccess(true);
         json.setMsg("操作成功。");
         this.writeJson(response, json);
