@@ -4,6 +4,7 @@ import com.alibaba.fastjson.TypeReference;
 import com.imap.common.po.BaseDataPO;
 import com.imap.common.pojo.DataReport;
 import com.imap.common.pojo.DataTypeEnum;
+import com.imap.common.util.upload.FileUploadUtils;
 import com.imap.common.vo.*;
 import com.imap.common.util.DateTimeUtil;
 import com.imap.common.util.JsonToMap;
@@ -19,6 +20,8 @@ import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.ServletContext;
+import java.io.IOException;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -43,6 +46,9 @@ public class DataService {
 
     @Autowired
     DataMapper dataMapper;
+
+    @Autowired
+    private ServletContext servletContext;
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -107,6 +113,8 @@ public class DataService {
                 dataReport.getData().get("hmt"),
                 dataReport.getData().get("lx")
         );
+        // 压力测试使用
+        logger.info("report time：" + dataReport.getTimestamp() + "current time" + System.currentTimeMillis());
         return siteDataVO;
     }
 
@@ -179,5 +187,20 @@ public class DataService {
                                 String.valueOf(baseDataPO.getValue())))
                 .collect(Collectors.toList());
         return new HistoryItemVO(siteId,title,dataType.getTypeStr(),data);
+    }
+
+    public void savePhoto(PageData pd) {
+        String imgBase64 = pd.get("img").toString();
+        String realPath = servletContext.getRealPath("/img/upload");
+        String uploadURL = null;
+        try {
+            uploadURL = FileUploadUtils.generateJpgFilePathAndSave(imgBase64,realPath,"");
+        } catch (IOException e) {
+            logger.error("upload",e.getMessage());
+            throw new RuntimeException(e);
+        }
+        logger.info("url"+uploadURL);
+        pd.put("url",uploadURL);
+        photoMapper.savePhoto(pd);
     }
 }

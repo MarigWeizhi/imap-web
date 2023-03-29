@@ -37,7 +37,7 @@
                                         <option value="0">温度</option>
                                         <option value="1">湿度</option>
                                         <option value="2">亮度</option>
-                                        <option value="3">告警</option>
+<%--                                        <option value="3">告警</option>--%>
                                     </select>
                                 </div>
                             </div>

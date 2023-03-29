@@ -6,12 +6,53 @@ import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.io.IOUtils;
 
+import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
-import java.io.File;
-import java.io.FileOutputStream;
+import java.awt.image.BufferedImage;
+import java.io.*;
 import java.util.*;
 
 public class FileUploadUtils {
+	public static void main(String[] args) throws IOException {
+		String imgBase64 = convertImageToBase64("A:\\local\\BigData\\imap\\imap-web\\target\\classes\\META-INF\\resources\\img\\upload\\1.jpg");
+		System.out.println(imgBase64);
+		String realPath = "A:\\local\\BigData\\imap\\imap-web\\target\\classes\\META-INF\\resources";
+//		String filePath = generateJpgFilePathAndSave(imgBase64,realPath, "\\img\\upload\\");
+//		System.out.println(filePath);
+	}
+
+	public static void saveBase64Image(String base64Image, String savePath) throws IOException {
+		byte[] decodedBytes = Base64.getDecoder().decode(base64Image);
+		BufferedImage image = ImageIO.read(new ByteArrayInputStream(decodedBytes));
+		File outputFile = new File(savePath);
+		ImageIO.write(image, "jpg", outputFile);
+	}
+
+	public static String convertImageToBase64(String imagePath) throws IOException {
+		BufferedImage image = ImageIO.read(new File(imagePath));
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		ImageIO.write(image, "jpg", baos);
+		byte[] bytes = baos.toByteArray();
+		return Base64.getEncoder().encodeToString(bytes);
+	}
+
+	public static String generateJpgFilePathAndSave(String base64Image, String absolutRoot, String directory) throws IOException {
+		String absolutDirectoryPath = absolutRoot + directory;
+		File absolutDirectory = new File(absolutDirectoryPath);
+		if (!absolutDirectory.exists()) {
+			System.out.println("Directory does not exist.");
+			return null;
+		}
+		String fileName = "";
+		File file = null;
+		do {
+			fileName = UUID.randomUUID().toString() + ".jpg";
+			file = new File(absolutDirectory, fileName);
+		} while (file.exists());
+		// 保存
+		saveBase64Image(base64Image,file.getAbsolutePath());
+		return directory+fileName;
+	}
 
 	/**
 	 * 获取多组数据

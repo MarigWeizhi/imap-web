@@ -138,6 +138,13 @@
         <if test="pd.filter_status != null">and status = #{pd.filter_status}</if>
         where b.is_delete = 0
     </select>
+    <select id="getLastestAlarm" resultType="java.util.Date">
+        select create_time as time
+        from dev_alarm
+        where site_id = #{siteId}
+        order by create_time desc
+        limit 1
+    </select>
 
     <insert id="addAlarm" parameterType="com.imap.common.po.AlarmPO">
         insert into dev_alarm(alarm_id, site_id, type, info, status, create_time)

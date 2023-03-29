@@ -276,7 +276,7 @@
                                 success: function (data) {
 
                                     data = data.map(item => {
-                                        return {url: item['url']}
+                                        return {url: '${pageContext.request.contextPath}/img/upload/' + item['url']}
                                     })
                                     $('#item943b5410-90b1-11ec-aeed-1533f8b11000 .swiper-container').empty()
                                     $('#item943b5410-90b1-11ec-aeed-1533f8b11000 .swiper-container').append(`<div class="swiper-wrapper">

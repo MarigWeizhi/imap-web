@@ -34,8 +34,6 @@ public class AlarmItem implements Serializable {
         }
     }
 
-
-
     @Override
     public String toString() {
         try {

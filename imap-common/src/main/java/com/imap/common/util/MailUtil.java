@@ -1,4 +1,4 @@
-package com.imap.common;
+package com.imap.common.util;
 import java.util.Properties;
 import javax.mail.Authenticator;
 import javax.mail.Message;
@@ -42,9 +42,14 @@ public class MailUtil {
 		Transport.send(message);
 	}
 
-	public static void sendAlarm(String name, String siteName, String info) throws MessagingException {
+	public static void sendAlarm(String name, String siteName, String info) {
 		String msg = "站点管理员：%s 请注意</br> 您负责的站点：%s 正处于异常状态，请立即前往站点查看。</br> 详细信息：%s";
-		MailUtil.sendMail("1456416969@qq.com","站点异常",String.format(msg, name, siteName, info));
+		try {
+			MailUtil.sendMail("1456416969@qq.com","站点异常",String.format(msg, name, siteName, info));
+		} catch (MessagingException e) {
+			System.out.println("email异常");
+			throw new RuntimeException(e);
+		}
 	}
 	public static void main(String[] args) throws MessagingException {
 		String name = "李明";

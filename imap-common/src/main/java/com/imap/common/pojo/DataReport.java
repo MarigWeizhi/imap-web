@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -32,6 +33,7 @@ public class DataReport {
     private Map<String,Double> data;  // 数据
     private String dataStr = "";  // 数据
 
+
     public String getDataStr() {
         try {
             return "".equals(dataStr)?JsonToMap.objToJson(data):dataStr;
@@ -43,6 +45,7 @@ public class DataReport {
     public String getDate() {
         return DateTimeUtil.timeStamp2DateString(timestamp);
     }
+
 
     @Override
     public String toString() {

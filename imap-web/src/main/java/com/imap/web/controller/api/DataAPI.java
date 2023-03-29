@@ -7,12 +7,17 @@ import com.imap.common.pojo.Site;
 import com.imap.common.vo.*;
 import com.imap.service.SiteService;
 import com.imap.service.impl.DataService;
+import io.github.resilience4j.circuitbreaker.CallNotPermittedException;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.TimeoutException;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * @Author: Weizhi
@@ -22,6 +27,7 @@ import java.util.List;
 @CrossOrigin
 @RestController
 @RequestMapping("/api")
+@Log4j2
 public class DataAPI {
 
     @Autowired
@@ -29,6 +35,38 @@ public class DataAPI {
 
     @Autowired
     SiteService siteService;
+
+    private static AtomicInteger count = new AtomicInteger(0);
+
+    @CircuitBreaker(name="test",fallbackMethod="testFail")
+    @GetMapping("/test")
+    public String test() throws TimeoutException {
+        int num = count.getAndIncrement();
+        if(num%4==1){
+            throw new TimeoutException("超时");
+        }
+        if (num % 4 == 3){
+            throw new RuntimeException("特殊异常");
+        }
+        log.info("正常访问，count的值 = " + num);
+        return "success";
+    }
+    public String testFail(TimeoutException  e){
+        log.info("超时" + e.getMessage());
+        return e.getMessage();
+    }
+    public String testFail(RuntimeException  e){
+        log.info("特殊异常" + e.getMessage());
+        return e.getMessage();
+    }
+    public String testFail(CallNotPermittedException e){
+        log.info("异常3" + e.getCausingCircuitBreakerName() + " : " + e.getMessage());
+        return e.getMessage();
+    }
+    public String testFail(Throwable e){
+        log.info("异常4" + e.getMessage());
+        return e.getMessage();
+    }
 
     @GetMapping("/cur/{siteId}")
     String getSiteData(@PathVariable("siteId") int siteId){

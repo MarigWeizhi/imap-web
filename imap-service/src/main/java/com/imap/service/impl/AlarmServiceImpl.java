@@ -1,21 +1,23 @@
 package com.imap.service.impl;
 
+import com.imap.common.util.MailUtil;
 import com.imap.common.po.AlarmPO;
-import com.imap.common.pojo.AlarmItem;
-import com.imap.common.pojo.DataReport;
-import com.imap.common.pojo.MonitorItem;
+import com.imap.common.pojo.*;
 import com.imap.common.util.DateTimeUtil;
 import com.imap.common.vo.AlarmEnum;
 import com.imap.common.vo.AlarmTableVO;
 import com.imap.common.util.Page;
 import com.imap.common.util.PageData;
 import com.imap.dao.AlarmMapper;
+import com.imap.dao.SiteMapper;
+import com.imap.dao.UserMapper;
 import com.imap.service.AlarmService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -29,6 +31,12 @@ public class AlarmServiceImpl extends AlarmService {
 
     @Autowired
     AlarmMapper alarmMapper;
+
+    @Autowired
+    SiteMapper siteMapper;
+
+    @Autowired
+    UserMapper userMapper;
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -77,6 +85,14 @@ public class AlarmServiceImpl extends AlarmService {
         String createDate = DateTimeUtil.timeStamp2DateString(dataReport.getTimestamp());
         AlarmPO alarmPO = new AlarmPO(null,siteId,type,info,status,createDate);
         logger.info("addAlarm:" + alarmPO);
+
+        // 同站点最近5分钟未告警则发送email通知
+        Date time = alarmMapper.getLastestAlarm(siteId);
+        if(time==null || dataReport.getTimestamp() - time.getTime() > 5*60*1000){
+            Site site = siteMapper.getSiteById(siteId);
+            User user = userMapper.getUserById(site.getCreateUser());
+            MailUtil.sendAlarm(user.getUserName(),site.getSiteName(),info);
+        }
         alarmMapper.addAlarm(alarmPO);
     }
 
@@ -89,6 +105,5 @@ public class AlarmServiceImpl extends AlarmService {
     @Override
     public void delete(PageData pd) {
     }
-
 
 }

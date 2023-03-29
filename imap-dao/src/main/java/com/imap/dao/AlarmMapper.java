@@ -10,6 +10,7 @@ import com.imap.common.util.PageData;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.Date;
 import java.util.List;
 
 @Mapper
@@ -37,6 +38,8 @@ public interface AlarmMapper {
     List<PageData> getAllAlarms();
 
     void addAlarm(AlarmPO alarmPO);
+
+    Date getLastestAlarm(Integer siteId);
 }
 
 
