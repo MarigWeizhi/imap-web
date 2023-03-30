@@ -11,7 +11,7 @@
  Target Server Version : 100422
  File Encoding         : 65001
 
- Date: 09/03/2023 02:47:00
+ Date: 30/03/2023 08:39:44
 */
 
 SET NAMES utf8mb4;
@@ -31,7 +31,7 @@ CREATE TABLE `dev_alarm`  (
                               PRIMARY KEY (`alarm_id`) USING BTREE,
                               INDEX `FK_dev_site_alarm`(`site_id`) USING BTREE,
                               CONSTRAINT `dev_alarm_ibfk_1` FOREIGN KEY (`site_id`) REFERENCES `dev_site` (`site_id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 47 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '设备告警信息' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 69 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '设备告警信息' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of dev_alarm
@@ -39,27 +39,45 @@ CREATE TABLE `dev_alarm`  (
 INSERT INTO `dev_alarm` VALUES (1, 1, 3, '设备异常', 1, '2022-10-08 10:31:24');
 INSERT INTO `dev_alarm` VALUES (22, 1, 0, '温度过高：50.0℃', 1, '2023-01-08 13:15:49');
 INSERT INTO `dev_alarm` VALUES (23, 1, 1, '湿度过高：90.0%', 1, '2023-01-08 13:15:49');
-INSERT INTO `dev_alarm` VALUES (24, 2, 2, '亮度异常', 0, '2023-02-08 10:31:24');
+INSERT INTO `dev_alarm` VALUES (24, 2, 2, '亮度异常', 1, '2023-02-08 10:31:24');
 INSERT INTO `dev_alarm` VALUES (25, 1, 3, '设备异常', 1, '2022-10-07 10:31:24');
 INSERT INTO `dev_alarm` VALUES (28, 3, 1, '湿度过高：90.0%', 1, '2023-01-08 13:15:49');
-INSERT INTO `dev_alarm` VALUES (29, 3, 1, '湿度过高：80.0%', 0, '2023-01-08 13:15:49');
+INSERT INTO `dev_alarm` VALUES (29, 3, 1, '湿度过高：80.0%', 1, '2023-01-08 13:15:49');
 INSERT INTO `dev_alarm` VALUES (30, 4, 2, '亮度异常', 0, '2023-02-08 10:31:24');
 INSERT INTO `dev_alarm` VALUES (31, 5, 3, '设备异常', 1, '2023-02-08 10:31:24');
-INSERT INTO `dev_alarm` VALUES (32, 5, 3, '设备异常', 0, '2023-02-08 10:31:24');
+INSERT INTO `dev_alarm` VALUES (32, 5, 3, '设备异常', 1, '2023-02-08 10:31:24');
 INSERT INTO `dev_alarm` VALUES (33, 1, 1, '湿度过高：90.0%', 1, '2023-01-08 13:15:49');
 INSERT INTO `dev_alarm` VALUES (34, 1, 1, '湿度过高：90.0%', 1, '2023-01-08 13:15:49');
 INSERT INTO `dev_alarm` VALUES (35, 1, 2, '亮度异常', 1, '2023-01-08 13:15:49');
 INSERT INTO `dev_alarm` VALUES (36, 1, 0, '温度过高：50.0℃', 0, '2023-01-08 13:15:49');
 INSERT INTO `dev_alarm` VALUES (37, 1, 0, '温度异常: 当前值为：99.96 参考值为：10.0 ~ 60.0', 0, '2023-03-08 17:38:16');
 INSERT INTO `dev_alarm` VALUES (38, 1, 1, '湿度异常: 当前值为：0.91 参考值为：0.1 ~ 0.9', 0, '2023-03-08 17:38:16');
-INSERT INTO `dev_alarm` VALUES (39, 1, 0, '温度异常: 当前值为：99.96 参考值为：10.0 ~ 60.0', 0, '1970-01-20 10:11:37');
-INSERT INTO `dev_alarm` VALUES (40, 1, 1, '湿度异常: 当前值为：0.91 参考值为：0.1 ~ 0.9', 0, '1970-01-20 10:11:37');
-INSERT INTO `dev_alarm` VALUES (41, 1, 1, '湿度异常: 当前值为：0.99 参考值为：0.1 ~ 0.9', 0, '1970-01-20 10:11:37');
-INSERT INTO `dev_alarm` VALUES (42, 1, 1, '湿度异常: 当前值为：0.99 参考值为：0.1 ~ 0.9', 0, '2023-03-08 17:38:16');
-INSERT INTO `dev_alarm` VALUES (43, 1, 1, '湿度异常: 当前值为：0.99 参考值为：0.1 ~ 0.9', 0, '2023-03-08 17:38:16');
-INSERT INTO `dev_alarm` VALUES (44, 1, 1, '湿度异常: 当前值为：0.99 参考值为：0.1 ~ 0.9', 0, '1970-01-20 10:11:37');
-INSERT INTO `dev_alarm` VALUES (45, 1, 1, '湿度异常: 当前值为：0.98 参考值为：0.1 ~ 0.9', 0, '2023-03-08 17:38:16');
-INSERT INTO `dev_alarm` VALUES (46, 2, 0, '温度异常: 当前值为：2000.96 参考值为：10.0 ~ 60.0', 0, '2023-03-08 18:39:21');
+INSERT INTO `dev_alarm` VALUES (42, 1, 1, '湿度异常: 当前值为：0.99 参考值为：0.1 ~ 0.9', 1, '2023-03-08 17:38:16');
+INSERT INTO `dev_alarm` VALUES (43, 1, 1, '湿度异常: 当前值为：0.99 参考值为：0.1 ~ 0.9', 1, '2023-03-08 17:38:16');
+INSERT INTO `dev_alarm` VALUES (45, 1, 1, '湿度异常: 当前值为：0.98 参考值为：0.1 ~ 0.9', 1, '2023-03-08 17:38:16');
+INSERT INTO `dev_alarm` VALUES (46, 2, 0, '温度异常: 当前值为：2000.96 参考值为：10.0 ~ 60.0', 1, '2023-03-08 18:39:21');
+INSERT INTO `dev_alarm` VALUES (47, 1, 1, '湿度异常: 当前值为：0.6986 参考值为：0.1 ~ 0.5', 1, '2023-03-13 13:05:42');
+INSERT INTO `dev_alarm` VALUES (48, 1, 1, '湿度异常: 当前值为：0.6878 参考值为：0.1 ~ 0.5', 0, '2023-03-13 13:05:48');
+INSERT INTO `dev_alarm` VALUES (49, 1, 1, '湿度异常: 当前值为：0.4094 参考值为：0.1 ~ 0.3', 0, '2023-03-13 18:40:56');
+INSERT INTO `dev_alarm` VALUES (50, 1, 1, '湿度异常: 当前值为：0.41009999999999996 参考值为：0.1 ~ 0.3', 1, '2023-03-13 18:41:01');
+INSERT INTO `dev_alarm` VALUES (51, 1, 1, '湿度异常: 当前值为：0.40979999999999994 参考值为：0.1 ~ 0.3', 1, '2023-03-13 18:41:06');
+INSERT INTO `dev_alarm` VALUES (52, 1, 1, '湿度异常: 当前值为：0.4117 参考值为：0.1 ~ 0.3', 0, '2023-03-13 18:41:11');
+INSERT INTO `dev_alarm` VALUES (53, 1, 1, '湿度异常: 当前值为：0.4122 参考值为：0.1 ~ 0.3', 0, '2023-03-13 18:41:17');
+INSERT INTO `dev_alarm` VALUES (54, 1, 1, '湿度异常: 当前值为：0.4118 参考值为：0.1 ~ 0.3', 0, '2023-03-13 18:41:22');
+INSERT INTO `dev_alarm` VALUES (55, 1, 1, '湿度异常: 当前值为：0.4114 参考值为：0.1 ~ 0.3', 0, '2023-03-13 18:41:27');
+INSERT INTO `dev_alarm` VALUES (56, 1, 1, '湿度异常: 当前值为：0.4114 参考值为：0.1 ~ 0.3', 0, '2023-03-13 18:41:32');
+INSERT INTO `dev_alarm` VALUES (57, 1, 1, '湿度异常: 当前值为：0.41259999999999997 参考值为：0.1 ~ 0.3', 0, '2023-03-13 18:41:37');
+INSERT INTO `dev_alarm` VALUES (58, 1, 1, '湿度异常: 当前值为：0.4129 参考值为：0.1 ~ 0.3', 0, '2023-03-13 18:41:42');
+INSERT INTO `dev_alarm` VALUES (59, 1, 1, '湿度异常: 当前值为：0.41229999999999994 参考值为：0.1 ~ 0.3', 0, '2023-03-13 18:41:47');
+INSERT INTO `dev_alarm` VALUES (60, 1, 1, '湿度异常: 当前值为：0.41090000000000004 参考值为：0.1 ~ 0.3', 0, '2023-03-13 18:41:52');
+INSERT INTO `dev_alarm` VALUES (61, 1, 1, '湿度异常: 当前值为：0.4119 参考值为：0.1 ~ 0.3', 0, '2023-03-13 18:41:57');
+INSERT INTO `dev_alarm` VALUES (62, 1, 1, '湿度异常: 当前值为：0.4108 参考值为：0.1 ~ 0.3', 0, '2023-03-13 18:42:02');
+INSERT INTO `dev_alarm` VALUES (63, 1, 1, '湿度异常: 当前值为：0.4107 参考值为：0.1 ~ 0.3', 0, '2023-03-13 18:42:07');
+INSERT INTO `dev_alarm` VALUES (64, 1, 1, '湿度异常: 当前值为：0.4115 参考值为：0.1 ~ 0.3', 0, '2023-03-13 18:42:12');
+INSERT INTO `dev_alarm` VALUES (65, 1, 1, '湿度异常: 当前值为：0.41159999999999997 参考值为：0.1 ~ 0.3', 0, '2023-03-13 18:42:17');
+INSERT INTO `dev_alarm` VALUES (66, 1, 0, '温度异常: 当前值为：88.8 参考值为：0.0 ~ 22.2', 0, '2023-03-23 00:08:38');
+INSERT INTO `dev_alarm` VALUES (67, 1, 0, '温度异常: 当前值为：88.8 参考值为：0.0 ~ 22.2', 0, '2023-03-23 00:08:48');
+INSERT INTO `dev_alarm` VALUES (68, 2, 0, '温度异常: 当前值为：88.8 参考值为：0.0 ~ 22.2', 0, '2023-03-23 00:08:48');
 
 -- ----------------------------
 -- Table structure for dev_avg_data
@@ -78,20 +96,6 @@ CREATE TABLE `dev_avg_data`  (
 -- ----------------------------
 -- Records of dev_avg_data
 -- ----------------------------
-INSERT INTO `dev_avg_data` VALUES (1, '2023-03-02 00:07:15', 2, 58.15, 0.46, 361.09);
-INSERT INTO `dev_avg_data` VALUES (1, '2023-03-02 02:07:20', 2, 95.49, 0.61, 145.60);
-INSERT INTO `dev_avg_data` VALUES (1, '2023-03-02 04:07:30', 2, 65.07, 0.50, 598.20);
-INSERT INTO `dev_avg_data` VALUES (1, '2023-03-02 06:07:35', 2, 48.92, 0.57, 719.72);
-INSERT INTO `dev_avg_data` VALUES (1, '2023-03-02 08:07:40', 2, 29.25, 0.29, 217.27);
-INSERT INTO `dev_avg_data` VALUES (1, '2023-03-02 14:07:45', 2, 41.73, 0.64, 469.65);
-INSERT INTO `dev_avg_data` VALUES (1, '2023-03-03 00:07:15', 2, 58.15, 0.46, 361.09);
-INSERT INTO `dev_avg_data` VALUES (1, '2023-03-03 02:07:20', 2, 95.49, 0.61, 145.60);
-INSERT INTO `dev_avg_data` VALUES (1, '2023-03-03 04:07:30', 2, 65.07, 0.50, 598.20);
-INSERT INTO `dev_avg_data` VALUES (1, '2023-03-03 06:07:35', 2, 48.92, 0.57, 719.72);
-INSERT INTO `dev_avg_data` VALUES (1, '2023-03-03 08:07:40', 2, 29.25, 0.29, 217.27);
-INSERT INTO `dev_avg_data` VALUES (1, '2023-03-03 14:07:45', 2, 41.73, 0.64, 469.65);
-INSERT INTO `dev_avg_data` VALUES (2, '2023-02-27 14:07:20', 2, 47.55, 0.44, 390.20);
-INSERT INTO `dev_avg_data` VALUES (2, '2023-02-27 14:07:25', 2, 51.59, 0.68, 360.43);
 INSERT INTO `dev_avg_data` VALUES (2, '2023-02-27 14:07:30', 5, 42.29, 0.92, 378.73);
 INSERT INTO `dev_avg_data` VALUES (3, '2023-02-27 14:07:20', 5, 51.91, 0.08, 12.88);
 INSERT INTO `dev_avg_data` VALUES (3, '2023-02-27 14:07:30', 5, 16.94, 0.08, 640.02);
@@ -128,7 +132,7 @@ CREATE TABLE `dev_data_report`  (
 -- ----------------------------
 INSERT INTO `dev_data_report` VALUES (15, 5, '2023-02-27 14:26:25', 'report', 1, 0, '{\"tmp\":54.41,\"lx\":691.27,\"hmt\":0.55}');
 INSERT INTO `dev_data_report` VALUES (16, 4, '2023-02-27 14:26:27', 'report', 1, 0, '{\"tmp\":5.25,\"lx\":96.29,\"hmt\":0.12}');
-INSERT INTO `dev_data_report` VALUES (18, 1, '2023-03-09 01:38:16', 'report', 1, 0, '{\"tmp\":20.96,\"lx\":163.86,\"hmt\":0.98}');
+INSERT INTO `dev_data_report` VALUES (18, 1, '2023-03-15 01:46:25', 'report', 1, 0, '{\"tmp\":22.92,\"lx\":53.0,\"hmt\":0.48729999999999996}');
 INSERT INTO `dev_data_report` VALUES (19, 3, '2023-02-27 14:26:30', 'report', 1, 0, '{\"tmp\":30.05,\"lx\":2.06,\"hmt\":0.68}');
 INSERT INTO `dev_data_report` VALUES (22, 2, '2023-03-09 02:39:21', 'report', 1, 0, '{\"tmp\":2000.96,\"lx\":163.86,\"hmt\":0.68}');
 
@@ -146,21 +150,24 @@ CREATE TABLE `dev_monitor_config`  (
                                        `monitor_items` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'monitor_items;',
                                        PRIMARY KEY (`config_id`) USING BTREE,
                                        INDEX `report_idx`(`config_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 13 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '监控配置' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 16 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '监控配置' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of dev_monitor_config
 -- ----------------------------
-INSERT INTO `dev_monitor_config` VALUES (3, 10, '2023-03-07 01:47:58', 1, 2, 1, '{\"tmp\":{\"max\":\"20.6\",\"min\":\"27.2\",\"open\":\"1\",\"type\":\"tmp\"},\"lx\":{\"max\":\"2000\",\"min\":\"0\",\"open\":\"0\",\"type\":\"lx\"},\"hmt\":{\"max\":\"0.1\",\"min\":\"0.8\",\"open\":\"1\",\"type\":\"hmt\"}}');
-INSERT INTO `dev_monitor_config` VALUES (4, 12, '2023-03-07 02:19:26', 1, 20, 0, '{\"tmp\":{\"max\":\"60.0\",\"min\":\"10.0\",\"open\":\"1\",\"type\":\"tmp\"},\"lx\":{\"max\":\"10000.0\",\"min\":\"0.0\",\"open\":\"0\",\"type\":\"lx\"},\"hmt\":{\"max\":\"0.9\",\"min\":\"0.1\",\"open\":\"1\",\"type\":\"hmt\"}}');
-INSERT INTO `dev_monitor_config` VALUES (5, 1, '2023-03-07 02:19:26', 1, 20, 0, '{\"tmp\":{\"max\":\"60.0\",\"min\":\"10.0\",\"open\":\"1\",\"type\":\"tmp\"},\"lx\":{\"max\":\"10000.0\",\"min\":\"0.0\",\"open\":\"0\",\"type\":\"lx\"},\"hmt\":{\"max\":\"0.9\",\"min\":\"0.1\",\"open\":\"1\",\"type\":\"hmt\"}}');
-INSERT INTO `dev_monitor_config` VALUES (6, 2, '2023-03-07 02:19:26', 1, 20, 0, '{\"tmp\":{\"max\":\"60.0\",\"min\":\"10.0\",\"open\":\"1\",\"type\":\"tmp\"},\"lx\":{\"max\":\"10000.0\",\"min\":\"0.0\",\"open\":\"0\",\"type\":\"lx\"},\"hmt\":{\"max\":\"0.9\",\"min\":\"0.1\",\"open\":\"1\",\"type\":\"hmt\"}}');
-INSERT INTO `dev_monitor_config` VALUES (7, 3, '2023-03-07 02:19:26', 1, 20, 0, '{\"tmp\":{\"max\":\"60.0\",\"min\":\"10.0\",\"open\":\"1\",\"type\":\"tmp\"},\"lx\":{\"max\":\"10000.0\",\"min\":\"0.0\",\"open\":\"0\",\"type\":\"lx\"},\"hmt\":{\"max\":\"0.9\",\"min\":\"0.1\",\"open\":\"1\",\"type\":\"hmt\"}}');
-INSERT INTO `dev_monitor_config` VALUES (8, 4, '2023-03-07 02:19:26', 1, 20, 0, '{\"tmp\":{\"max\":\"60.0\",\"min\":\"10.0\",\"open\":\"1\",\"type\":\"tmp\"},\"lx\":{\"max\":\"10000.0\",\"min\":\"0.0\",\"open\":\"0\",\"type\":\"lx\"},\"hmt\":{\"max\":\"0.9\",\"min\":\"0.1\",\"open\":\"1\",\"type\":\"hmt\"}}');
-INSERT INTO `dev_monitor_config` VALUES (9, 5, '2023-03-07 02:19:26', 1, 20, 0, '{\"tmp\":{\"max\":\"60.0\",\"min\":\"10.0\",\"open\":\"1\",\"type\":\"tmp\"},\"lx\":{\"max\":\"10000.0\",\"min\":\"0.0\",\"open\":\"0\",\"type\":\"lx\"},\"hmt\":{\"max\":\"0.9\",\"min\":\"0.1\",\"open\":\"1\",\"type\":\"hmt\"}}');
-INSERT INTO `dev_monitor_config` VALUES (10, 13, '2023-03-08 01:42:45', 1, 30, 1, '{\"tmp\":{\"max\":\"80.0\",\"min\":\"20.0\",\"open\":\"1\",\"type\":\"tmp\"},\"lx\":{\"max\":\"5000.0\",\"min\":\"0.0\",\"open\":\"0\",\"type\":\"lx\"},\"hmt\":{\"max\":\"0.8\",\"min\":\"0.1\",\"open\":\"1\",\"type\":\"hmt\"}}');
-INSERT INTO `dev_monitor_config` VALUES (11, 14, '2023-03-08 02:25:48', 4, 30, 1, '{\"tmp\":{\"max\":\"80.0\",\"min\":\"20.0\",\"open\":\"1\",\"type\":\"tmp\"},\"lx\":{\"max\":\"6000.0\",\"min\":\"0.0\",\"open\":\"0\",\"type\":\"lx\"},\"hmt\":{\"max\":\"0.8\",\"min\":\"0.1\",\"open\":\"1\",\"type\":\"hmt\"}}');
-INSERT INTO `dev_monitor_config` VALUES (12, 15, '2023-03-08 02:44:23', 2, 20, 1, '{\"tmp\":{\"max\":\"50.0\",\"min\":\"20.0\",\"open\":\"1\",\"type\":\"tmp\"},\"lx\":{\"max\":\"2000.0\",\"min\":\"0.0\",\"open\":\"1\",\"type\":\"lx\"},\"hmt\":{\"max\":\"1.0\",\"min\":\"0.0\",\"open\":\"1\",\"type\":\"hmt\"}}');
+INSERT INTO `dev_monitor_config` VALUES (3, 10, '2023-03-07 01:47:58', 1, 2, 1, '{\"tmp\":{\"max\":\"20.6\",\"min\":\"0.0\",\"open\":\"1\",\"type\":\"tmp\"},\"lx\":{\"max\":\"2000\",\"min\":\"0\",\"open\":\"0\",\"type\":\"lx\"},\"hmt\":{\"max\":\"0.1\",\"min\":\"0.8\",\"open\":\"1\",\"type\":\"hmt\"}}');
+INSERT INTO `dev_monitor_config` VALUES (4, 12, '2023-03-13 00:17:55', 2, 20, 1, '{\"tmp\":{\"max\":60.0,\"min\":0.0,\"open\":1,\"type\":\"tmp\"},\"lx\":{\"max\":10000.0,\"min\":0.0,\"open\":0,\"type\":\"lx\"},\"hmt\":{\"max\":0.9,\"min\":0.1,\"open\":1,\"type\":\"hmt\"}}');
+INSERT INTO `dev_monitor_config` VALUES (5, 1, '2023-03-14 23:07:55', 19, 5, 0, '{\"tmp\":{\"max\":60.0,\"min\":-10.2,\"open\":1,\"type\":\"tmp\"},\"lx\":{\"max\":10000.0,\"min\":0.0,\"open\":1,\"type\":\"lx\"},\"hmt\":{\"max\":0.6,\"min\":0.1,\"open\":1,\"type\":\"hmt\"}}');
+INSERT INTO `dev_monitor_config` VALUES (6, 2, '2023-03-07 02:19:26', 1, 20, 0, '{\"tmp\":{\"max\":\"60.0\",\"min\":\"0.0\",\"open\":\"1\",\"type\":\"tmp\"},\"lx\":{\"max\":\"10000.0\",\"min\":\"0.0\",\"open\":\"0\",\"type\":\"lx\"},\"hmt\":{\"max\":\"0.9\",\"min\":\"0.1\",\"open\":\"1\",\"type\":\"hmt\"}}');
+INSERT INTO `dev_monitor_config` VALUES (7, 3, '2023-03-07 02:19:26', 1, 20, 0, '{\"tmp\":{\"max\":\"60.0\",\"min\":\"0.0\",\"open\":\"1\",\"type\":\"tmp\"},\"lx\":{\"max\":\"10000.0\",\"min\":\"0.0\",\"open\":\"0\",\"type\":\"lx\"},\"hmt\":{\"max\":\"0.9\",\"min\":\"0.1\",\"open\":\"1\",\"type\":\"hmt\"}}');
+INSERT INTO `dev_monitor_config` VALUES (8, 4, '2023-03-07 02:19:26', 1, 20, 0, '{\"tmp\":{\"max\":\"60.0\",\"min\":\"0.0\",\"open\":\"1\",\"type\":\"tmp\"},\"lx\":{\"max\":\"10000.0\",\"min\":\"0.0\",\"open\":\"0\",\"type\":\"lx\"},\"hmt\":{\"max\":\"0.9\",\"min\":\"0.1\",\"open\":\"1\",\"type\":\"hmt\"}}');
+INSERT INTO `dev_monitor_config` VALUES (9, 5, '2023-03-07 02:19:26', 1, 20, 0, '{\"tmp\":{\"max\":\"60.0\",\"min\":\"0.0\",\"open\":\"1\",\"type\":\"tmp\"},\"lx\":{\"max\":\"10000.0\",\"min\":\"0.0\",\"open\":\"0\",\"type\":\"lx\"},\"hmt\":{\"max\":\"0.9\",\"min\":\"0.1\",\"open\":\"1\",\"type\":\"hmt\"}}');
+INSERT INTO `dev_monitor_config` VALUES (10, 13, '2023-03-08 01:42:45', 1, 30, 1, '{\"tmp\":{\"max\":\"80.0\",\"min\":\"0.0\",\"open\":\"1\",\"type\":\"tmp\"},\"lx\":{\"max\":\"5000.0\",\"min\":\"0.0\",\"open\":\"0\",\"type\":\"lx\"},\"hmt\":{\"max\":\"0.8\",\"min\":\"0.1\",\"open\":\"1\",\"type\":\"hmt\"}}');
+INSERT INTO `dev_monitor_config` VALUES (11, 14, '2023-03-08 02:25:48', 4, 30, 1, '{\"tmp\":{\"max\":\"80.0\",\"min\":\"0.0\",\"open\":\"1\",\"type\":\"tmp\"},\"lx\":{\"max\":\"6000.0\",\"min\":\"0.0\",\"open\":\"0\",\"type\":\"lx\"},\"hmt\":{\"max\":\"0.8\",\"min\":\"0.1\",\"open\":\"1\",\"type\":\"hmt\"}}');
+INSERT INTO `dev_monitor_config` VALUES (12, 15, '2023-03-08 02:44:23', 2, 20, 1, '{\"tmp\":{\"max\":\"50.0\",\"min\":\"0.0\",\"open\":\"1\",\"type\":\"tmp\"},\"lx\":{\"max\":\"2000.0\",\"min\":\"0.0\",\"open\":\"1\",\"type\":\"lx\"},\"hmt\":{\"max\":\"1.0\",\"min\":\"0.0\",\"open\":\"1\",\"type\":\"hmt\"}}');
+INSERT INTO `dev_monitor_config` VALUES (13, 16, '2023-03-12 23:42:46', 1, 60, 1, '{\"tmp\":{\"max\":\"60.0\",\"min\":\"-5.0\",\"open\":\"1\",\"type\":\"tmp\"},\"lx\":{\"max\":\"10000.0\",\"min\":\"0.0\",\"open\":\"1\",\"type\":\"lx\"},\"hmt\":{\"max\":\"1.0\",\"min\":\"0.0\",\"open\":\"1\",\"type\":\"hmt\"}}');
+INSERT INTO `dev_monitor_config` VALUES (14, 17, '2023-03-12 23:42:46', 1, 60, 1, '{\"tmp\":{\"max\":\"60.0\",\"min\":\"-5.0\",\"open\":\"1\",\"type\":\"tmp\"},\"lx\":{\"max\":\"10000.0\",\"min\":\"0.0\",\"open\":\"1\",\"type\":\"lx\"},\"hmt\":{\"max\":\"1.0\",\"min\":\"0.0\",\"open\":\"1\",\"type\":\"hmt\"}}');
+INSERT INTO `dev_monitor_config` VALUES (15, 18, '2023-03-12 23:57:44', 1, 60, 1, '{\"tmp\":{\"max\":\"1.0\",\"min\":\"0.0\",\"open\":\"0\",\"type\":\"tmp\"},\"lx\":{\"max\":\"1.0\",\"min\":\"0.0\",\"open\":\"0\",\"type\":\"lx\"},\"hmt\":{\"max\":\"1.0\",\"min\":\"0.0\",\"open\":\"0\",\"type\":\"hmt\"}}');
 
 -- ----------------------------
 -- Table structure for dev_site
@@ -177,21 +184,24 @@ CREATE TABLE `dev_site`  (
                              `create_user` int(11) NULL DEFAULT NULL,
                              `is_delete` int(11) NULL DEFAULT NULL,
                              PRIMARY KEY (`site_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 16 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '站点信息' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 19 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '站点信息' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of dev_site
 -- ----------------------------
-INSERT INTO `dev_site` VALUES (1, 'IMAP_SITE_001', 121.65796481150367, 31.27103070027770, 'http://192.168.2.12:5000/device/1', '2023-02-27 11:41:03', '2022-10-07 22:41:02', 1, 0);
-INSERT INTO `dev_site` VALUES (2, 'IMAP_SITE_002', 116.39747700000000, 39.90869200000000, 'http://localhost:5000/device/2', '2023-02-27 11:41:03', '2022-10-07 22:41:02', 1, 0);
-INSERT INTO `dev_site` VALUES (3, 'IMAP_SITE_003', 120.39747700000000, 35.90869200000000, 'http://localhost:5000/device/2', '2023-02-27 11:41:03', '2022-10-07 22:41:02', 1, 0);
-INSERT INTO `dev_site` VALUES (4, 'IMAP_SITE_004', 121.39747700000000, 37.90869200000000, 'http://localhost:5000/device/2', '2023-02-27 11:41:03', '2022-10-07 22:41:02', 1, 0);
-INSERT INTO `dev_site` VALUES (5, 'IMAP_SITE_005', 119.39747700000000, 39.90869200000000, 'http://localhost:5000/device/2', '2023-02-27 11:41:03', '2022-10-07 22:41:02', 1, 0);
+INSERT INTO `dev_site` VALUES (1, 'IMAP_SSPU_001', 121.65796481150367, 31.27103070027770, 'http://180.160.119.78:5000/device/1', '2023-03-14 23:07:55', '2022-10-07 22:41:02', 1, 0);
+INSERT INTO `dev_site` VALUES (2, 'IMAP_SU_002', 120.63698048198502, 31.32943041240300, 'http://localhost:5000/device/2', '2023-02-27 11:41:03', '2022-10-07 22:41:02', 1, 0);
+INSERT INTO `dev_site` VALUES (3, 'IMAP_NAN_003', 118.78575033387865, 32.05640659315841, 'http://localhost:5000/device/2', '2023-02-27 11:41:03', '2022-10-07 22:41:02', 1, 0);
+INSERT INTO `dev_site` VALUES (4, 'IMAP_DONG_004', 121.50624740542344, 31.24551844510179, 'http://localhost:5000/device/2', '2023-02-27 11:41:03', '2022-10-07 22:41:02', 1, 0);
+INSERT INTO `dev_site` VALUES (5, 'IMAP_DI_005', 121.66866105173406, 31.15444437621832, 'http://localhost:5000/device/2', '2023-02-27 11:41:03', '2022-10-07 22:41:02', 1, 0);
 INSERT INTO `dev_site` VALUES (10, '测试', 20.00000000000000, 20.00000000000000, 'url', '2023-03-07 01:47:58', '2023-03-07 01:47:58', 1, 1);
-INSERT INTO `dev_site` VALUES (12, 'IMAP_测试', 60.00000000000000, 20.00000000000000, 'url', '2023-03-07 02:19:26', '2023-03-07 02:19:26', 1, 0);
+INSERT INTO `dev_site` VALUES (12, 'IMAP_测试', 60.00000000000000, 22.00000000000000, 'url', '2023-03-13 00:17:55', '2023-03-07 02:19:26', 1, 1);
 INSERT INTO `dev_site` VALUES (13, '测试站点2', 20.00000000000000, 2.00000000000000, 'url', '2023-03-08 01:42:45', '2023-03-08 01:42:45', 1, 1);
 INSERT INTO `dev_site` VALUES (14, '测试站点5', 50.00000000000000, 2.00000000000000, 'url', '2023-03-08 02:25:48', '2023-03-08 01:45:53', 2, 1);
 INSERT INTO `dev_site` VALUES (15, '测试2', 23.00000000000000, 20.00000000000000, '20', '2023-03-08 02:44:23', '2023-03-08 02:43:22', 2, 1);
+INSERT INTO `dev_site` VALUES (16, 'IMAP_Test', 135.00000000000000, 23.50000000000000, 'localhosts:8080', '2023-03-12 23:42:46', '2023-03-12 23:42:46', 1, 1);
+INSERT INTO `dev_site` VALUES (17, 'IMAP_Test', 135.00000000000000, 23.50000000000000, 'localhosts:8080', '2023-03-12 23:42:46', '2023-03-12 23:42:46', 1, 1);
+INSERT INTO `dev_site` VALUES (18, 'ces', 20.00000000000000, 60.00000000000000, 'url', '2023-03-12 23:57:44', '2023-03-12 23:57:44', 1, 1);
 
 -- ----------------------------
 -- Table structure for dev_site_photo
@@ -203,33 +213,16 @@ CREATE TABLE `dev_site_photo`  (
                                    `url` varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
                                    `create_time` timestamp(0) NULL DEFAULT NULL,
                                    PRIMARY KEY (`photo_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '站点照片' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 95 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '站点照片' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of dev_site_photo
 -- ----------------------------
-INSERT INTO `dev_site_photo` VALUES (1, 1, 'http://localhost:8080/img/upload/1.jpg', '2022-11-15 08:53:16');
-INSERT INTO `dev_site_photo` VALUES (2, 1, 'http://localhost:8080/img/upload/2.jpg', '2022-11-15 08:53:20');
-INSERT INTO `dev_site_photo` VALUES (3, 1, 'http://localhost:8080/img/upload/3.jpg', '2022-11-15 08:53:20');
-INSERT INTO `dev_site_photo` VALUES (4, 1, 'http://localhost:8080/img/upload/4.jpg', '2022-11-15 08:53:21');
-
--- ----------------------------
--- Table structure for sys_menu
--- ----------------------------
-DROP TABLE IF EXISTS `sys_menu`;
-CREATE TABLE `sys_menu`  (
-                             `menu_id` int(11) NOT NULL AUTO_INCREMENT,
-                             `name` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-                             `code` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-                             `parent_id` int(11) NULL DEFAULT NULL,
-                             `url` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-                             `icon` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-                             PRIMARY KEY (`menu_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '菜单信息' ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of sys_menu
--- ----------------------------
+INSERT INTO `dev_site_photo` VALUES (1, 1, '1.jpg', '2022-11-15 08:53:16');
+INSERT INTO `dev_site_photo` VALUES (2, 1, '2.jpg', '2022-11-15 08:53:20');
+INSERT INTO `dev_site_photo` VALUES (3, 1, '3.jpg', '2022-11-15 08:53:20');
+INSERT INTO `dev_site_photo` VALUES (4, 1, '4.jpg', '2022-11-15 08:53:21');
+INSERT INTO `dev_site_photo` VALUES (5, 1, '5.jpg', '2022-11-15 08:53:21');
 
 -- ----------------------------
 -- Table structure for sys_role
@@ -238,42 +231,21 @@ DROP TABLE IF EXISTS `sys_role`;
 CREATE TABLE `sys_role`  (
                              `role_id` int(11) NOT NULL AUTO_INCREMENT,
                              `role_name` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-                             `create_time` datetime(0) NULL DEFAULT NULL,
+                             `role_config` varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
                              `create_user` int(11) NULL DEFAULT NULL,
+                             `create_time` datetime(0) NULL DEFAULT NULL,
+                             `update_time` datetime(0) NULL DEFAULT NULL,
                              `is_delete` int(11) NULL DEFAULT 0,
-                             `role_level` int(11) NULL DEFAULT NULL,
-                             `update_time` timestamp(0) NULL DEFAULT NULL,
                              PRIMARY KEY (`role_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '角色信息' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '角色信息' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_role
 -- ----------------------------
-INSERT INTO `sys_role` VALUES (1, '管理员', '2022-09-27 19:36:43', 1, 0, 0, '2022-11-16 09:22:25');
-INSERT INTO `sys_role` VALUES (2, '高级用户', '2022-09-27 19:37:06', 1, 0, 1, '2022-11-16 09:22:27');
-INSERT INTO `sys_role` VALUES (3, '普通用户', '2022-09-27 19:37:20', 1, 0, 2, '2022-11-16 14:06:17');
-INSERT INTO `sys_role` VALUES (4, '高级用户2', '2022-09-27 19:37:06', 1, 0, 1, '2022-11-16 09:22:27');
-INSERT INTO `sys_role` VALUES (5, '测试2', '2022-09-27 19:36:43', 1, 1, 2, '2022-09-27 19:36:43');
-INSERT INTO `sys_role` VALUES (7, '测试的角色', '2022-11-16 14:06:31', 1, 1, 3, '2022-11-16 14:06:31');
-INSERT INTO `sys_role` VALUES (8, '低级用户', '2022-12-12 13:29:32', 1, 1, 3, '2022-12-12 13:29:32');
-INSERT INTO `sys_role` VALUES (9, '低级用户', '2022-12-12 13:49:22', 1, 0, 3, '2022-12-12 13:49:22');
-
--- ----------------------------
--- Table structure for sys_role_menu
--- ----------------------------
-DROP TABLE IF EXISTS `sys_role_menu`;
-CREATE TABLE `sys_role_menu`  (
-                                  `role_id` int(11) NOT NULL,
-                                  `menu_id` int(11) NOT NULL,
-                                  PRIMARY KEY (`role_id`, `menu_id`) USING BTREE,
-                                  INDEX `FK_sys_role_menu2`(`menu_id`) USING BTREE,
-                                  CONSTRAINT `sys_role_menu_ibfk_1` FOREIGN KEY (`role_id`) REFERENCES `sys_role` (`role_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-                                  CONSTRAINT `sys_role_menu_ibfk_2` FOREIGN KEY (`menu_id`) REFERENCES `sys_menu` (`menu_id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '角色-菜单' ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of sys_role_menu
--- ----------------------------
+INSERT INTO `sys_role` VALUES (1, '管理员', 'online;history;user;role;site;alarm', 1, '2022-09-27 19:36:43', '2022-11-16 09:22:25', 0);
+INSERT INTO `sys_role` VALUES (2, '高级用户', 'online;history;site;alarm', 1, '2023-03-19 22:19:13', '2023-03-19 22:58:59', 0);
+INSERT INTO `sys_role` VALUES (3, '普通用户', 'online;history;alarm', 1, '2023-03-19 23:49:22', '2023-03-19 23:49:22', 0);
+INSERT INTO `sys_role` VALUES (4, '监控用户', 'online', 1, '2023-03-19 23:49:40', '2023-03-19 23:49:40', 0);
 
 -- ----------------------------
 -- Table structure for sys_user
@@ -287,25 +259,22 @@ CREATE TABLE `sys_user`  (
                              `sex` int(11) NULL DEFAULT NULL,
                              `phone` char(11) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
                              `email` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-                             `last_login_time` datetime(0) NULL DEFAULT NULL,
-                             `ipaddr` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
                              `create_time` datetime(0) NULL DEFAULT NULL,
                              `create_user` int(11) NULL DEFAULT NULL,
                              `is_delete` int(11) NULL DEFAULT NULL,
                              `update_time` datetime(0) NULL DEFAULT NULL,
                              PRIMARY KEY (`user_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 13 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '用户信息' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '用户信息' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_user
 -- ----------------------------
-INSERT INTO `sys_user` VALUES (1, 'admin', '123456', 'admin', 1, '13312344568', 'admin@fims.com', NULL, NULL, '2022-10-08 12:13:34', 1, 0, '2022-10-21 09:24:52');
-INSERT INTO `sys_user` VALUES (2, 'admin1', '123456', 'admin1', 1, '13312344567', 'admin@fims.com', NULL, NULL, '2022-10-08 12:13:36', 1, 0, NULL);
-INSERT INTO `sys_user` VALUES (3, 'test', '123456', 'test', 2, '13312344567', 'admin@fims.com', NULL, NULL, '2022-10-08 12:13:39', 3, 0, NULL);
-INSERT INTO `sys_user` VALUES (5, 'test2', '123456', '测试2', 0, '13255547856', '21@test.com', NULL, NULL, '2022-10-08 17:02:31', 1, 0, NULL);
-INSERT INTO `sys_user` VALUES (8, '测试', '123456', '测试', 1, '', '', NULL, NULL, '2022-11-23 08:58:07', 1, 1, NULL);
-INSERT INTO `sys_user` VALUES (9, '测试22', '123456', '测试22', 1, '15317852610', '123@qq.com', NULL, NULL, '2022-11-23 09:10:22', 1, 1, NULL);
-INSERT INTO `sys_user` VALUES (12, 'user1', '123456', '测试用户1', 1, '', '', NULL, NULL, '2022-12-12 13:24:22', 1, 0, NULL);
+INSERT INTO `sys_user` VALUES (1, 'admin', '123456', 'admin', 1, '13312344568', 'admin@fims.com', '2022-10-08 12:13:34', 1, 0, '2022-10-21 09:24:52');
+INSERT INTO `sys_user` VALUES (2, 'admin1', '123456', 'admin1', 1, '13312344567', 'admin@fims.com', '2022-10-08 12:13:36', 1, 0, NULL);
+INSERT INTO `sys_user` VALUES (3, 'test', '123456', 'test', 0, '13312344567', 'admin@fims.com', '2022-10-08 12:13:39', 3, 0, '2023-03-19 23:53:19');
+INSERT INTO `sys_user` VALUES (4, 'imap', '123456', '王经理', 1, '13999998888', '1456416969@qq.com', '2023-03-19 23:50:39', 1, 0, '2023-03-19 23:55:00');
+INSERT INTO `sys_user` VALUES (5, 'user1', '123456', '李明', 1, '13999998888', '1456416969@qq.com', '2023-03-19 23:52:49', 1, 0, NULL);
+INSERT INTO `sys_user` VALUES (6, 'ob', '123456', '监控大屏', 1, '', '', '2023-03-19 23:54:26', 1, 0, NULL);
 
 -- ----------------------------
 -- Table structure for sys_user_role
@@ -324,8 +293,10 @@ CREATE TABLE `sys_user_role`  (
 -- Records of sys_user_role
 -- ----------------------------
 INSERT INTO `sys_user_role` VALUES (1, 1);
-INSERT INTO `sys_user_role` VALUES (2, 2);
-INSERT INTO `sys_user_role` VALUES (3, 3);
-INSERT INTO `sys_user_role` VALUES (12, 3);
+INSERT INTO `sys_user_role` VALUES (2, 1);
+INSERT INTO `sys_user_role` VALUES (3, 1);
+INSERT INTO `sys_user_role` VALUES (4, 2);
+INSERT INTO `sys_user_role` VALUES (5, 3);
+INSERT INTO `sys_user_role` VALUES (6, 4);
 
 SET FOREIGN_KEY_CHECKS = 1;
