@@ -36,19 +36,21 @@ public class KafkaService {
     public void listenAlarm(String alarm) {
         // 处理接收到的消息
         AlarmItem alarmItem = AlarmItem.from(alarm);
-        alarmService.addAlarm(alarmItem);
-        logger.info("listenAlarm：" + alarm);
+        if(alarmItem!=null){
+            alarmService.addAlarm(alarmItem);
+            logger.info("accepted an Alarm：" + alarm);
+        }
     }
 
     @KafkaListener(topics = "report")
     public void listenDataReport(String dataReport) {
         try {
             dataService.setSiteData(JsonToMap.jsonToObj(dataReport, DataReport.class));
+//        logger.info("listenDataReport：" + dataReport);
         } catch (IOException e) {
             logger.warn("无法解析该数据");
             logger.warn(e.getMessage());
         }
-        System.out.println("listenDataReport：" + dataReport);
     }
 
     public void sendMessage(String topic, String message){

@@ -4,6 +4,7 @@ import com.alibaba.fastjson.TypeReference;
 import com.imap.common.po.BaseDataPO;
 import com.imap.common.pojo.DataReport;
 import com.imap.common.pojo.DataTypeEnum;
+import com.imap.common.util.Verify;
 import com.imap.common.util.upload.FileUploadUtils;
 import com.imap.common.vo.*;
 import com.imap.common.util.DateTimeUtil;
@@ -20,6 +21,7 @@ import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
+import java.util.concurrent.atomic.AtomicInteger;
 import javax.servlet.ServletContext;
 import java.io.IOException;
 import java.time.temporal.ChronoUnit;
@@ -99,9 +101,13 @@ public class DataService {
         return siteDataVO;
     }
 
+    AtomicInteger count = new AtomicInteger();
+
     @CachePut(cacheNames = "siteData", key = "#result.site_id")
     public SiteDataVO setSiteData(DataReport dataReport) {
+        // 压力测试时注释掉数据库更新
         siteMapper.setCurSiteData(dataReport);
+        count.addAndGet(1);
         Map<String,Double> map = JsonToMap.jsonToObj(dataReport.getDataStr(), new TypeReference<Map<String,Double>>(){});
         dataReport.setData(map);
         SiteDataVO siteDataVO = new SiteDataVO(
@@ -114,14 +120,14 @@ public class DataService {
                 dataReport.getData().get("lx")
         );
         // 压力测试使用
-        logger.info("report time：" + dataReport.getTimestamp() + "current time" + System.currentTimeMillis());
+//        Verify.checkStatus(count,dataReport);
         return siteDataVO;
     }
 
     @Cacheable(cacheNames = "yesterday", key = "#siteId + #type",unless = "#result==null")
-    public List<TmpOrHmtVO> getYesterdayData(int siteId, String type) {
+    public List<YesterdayDataVO> getYesterdayData(int siteId, String type) {
         String time = DateTimeUtil.subtractTime(1, ChronoUnit.DAYS);
-        List<TmpOrHmtVO> list = new ArrayList<>();
+        List<YesterdayDataVO> list = new ArrayList<>();
         if("tmp".equals(type)){
             list = dataMapper.getTmp(siteId,time);
         }
@@ -135,7 +141,7 @@ public class DataService {
             Date date = new Date(item.getDate().getTime() + 8 * 60 * 60 * 1000);
             item.setTime(DateTimeUtil.transform(item.getDate(),"HH:mm"));
         });
-        list.sort(Comparator.comparing(TmpOrHmtVO::getTime));
+        list.sort(Comparator.comparing(YesterdayDataVO::getTime));
         logger.info("yesterday " + siteId + " "+ type);
         return list;
     }

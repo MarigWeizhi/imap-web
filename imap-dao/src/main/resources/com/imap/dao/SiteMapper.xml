@@ -147,13 +147,23 @@
 
     <select id="getMonitorConfig" resultType="com.imap.common.po.MonitorConfigPO">
         select site_id siteId,
-               `timestamp`,
+               `timestamp` time,
                 version,
                 `interval`,
                 is_delete isDelete,
                 monitor_items monitorItems
         from dev_monitor_config
         where site_id = #{siteId}
+    </select>
+
+    <select id="getAllMonitorConfig" resultType="com.imap.common.po.MonitorConfigPO">
+        select site_id siteId,
+               `timestamp` time,
+               version,
+               `interval`,
+               is_delete isDelete,
+               monitor_items monitorItems
+        from dev_monitor_config
     </select>
 
     <update id="setMonitorConfig" parameterType="com.imap.common.po.MonitorConfigPO">

@@ -44,7 +44,7 @@ public class MonitorConfigPO implements Serializable {
         }
     }
 
-    public MonitorConfig to() {
+    public MonitorConfig toMonitorConfig() {
         long ts = Timestamp.valueOf(time).getTime();
         return new MonitorConfig(siteId,ts,version,interval,isDelete,
                 JsonToMap.jsonToObj(monitorItems,new TypeReference<Map<String,MonitorItem>>(){}));

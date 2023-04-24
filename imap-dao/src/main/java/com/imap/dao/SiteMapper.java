@@ -41,4 +41,5 @@ public interface SiteMapper {
     MonitorConfigPO getMonitorConfig(Integer siteId);
     void setMonitorConfig(MonitorConfigPO monitorConfig);
 
+    List<MonitorConfigPO> getAllMonitorConfig();
 }

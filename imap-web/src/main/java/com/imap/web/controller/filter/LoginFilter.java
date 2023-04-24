@@ -28,7 +28,7 @@ public class LoginFilter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws ServletException, IOException {
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
         String url = httpServletRequest.getRequestURL().toString();
-        System.out.println(url);
+//        System.out.println(url);
         // 符合条件的url，免登入访问
         for (String u : ALLOW_URLS) {
             if(url.contains(u)){

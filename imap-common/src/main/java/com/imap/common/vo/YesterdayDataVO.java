@@ -13,7 +13,7 @@ import java.util.Date;
  */
 
 @Data
-public class TmpOrHmtVO implements Serializable {
+public class YesterdayDataVO implements Serializable {
 
     private String time;
     @JSONField(serialize = false)

@@ -1,7 +1,6 @@
 package com.imap.web.controller.api;
 
 import com.alibaba.fastjson.JSON;
-import com.imap.common.po.MonitorConfigPO;
 import com.imap.common.pojo.MonitorConfig;
 import com.imap.common.pojo.Site;
 import com.imap.common.vo.*;
@@ -76,19 +75,19 @@ public class DataAPI {
 
     @GetMapping("/hmt/{siteId}")
     String getYesterdayHmt(@PathVariable("siteId") int siteId){
-        List<TmpOrHmtVO> hmtList = dataService.getYesterdayData(siteId,"hmt");
+        List<YesterdayDataVO> hmtList = dataService.getYesterdayData(siteId,"hmt");
         return JSON.toJSONString(hmtList);
     }
 
     @GetMapping("/tmp/{siteId}")
     String getYesterdayTmp(@PathVariable("siteId") int siteId){
-        List<TmpOrHmtVO> tmpList = dataService.getYesterdayData(siteId,"tmp");
+        List<YesterdayDataVO> tmpList = dataService.getYesterdayData(siteId,"tmp");
         return JSON.toJSONString(tmpList);
     }
 
     @GetMapping("/lx/{siteId}")
     String getYesterdayLx(@PathVariable("siteId") int siteId){
-        List<TmpOrHmtVO> tmpList = dataService.getYesterdayData(siteId,"lx");
+        List<YesterdayDataVO> tmpList = dataService.getYesterdayData(siteId,"lx");
         return JSON.toJSONString(tmpList);
     }
 

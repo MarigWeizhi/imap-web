@@ -1,9 +1,11 @@
 package com.imap.common.util;
 
+import com.imap.common.pojo.DataReport;
 import com.imap.common.pojo.MenuTypeEnum;
 import com.imap.common.pojo.Role;
 
 import java.text.DecimalFormat;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -189,5 +191,24 @@ public class Verify {
 			return false;
 		}
 		return true;
+	}
+
+	public static void checkStatus(AtomicInteger count, DataReport siteDataVO) {
+		if(siteDataVO.getStatus() == 2){
+			long start = System.currentTimeMillis();
+			System.out.println("=================");
+			System.out.println("测试开始，当前数据偏移量：" +  count.get());
+			System.out.println("系统时间：" +  start);
+			System.out.println("首条消息时间：" +  siteDataVO.getTimestamp());
+			System.out.println("时延：" +  (start - siteDataVO.getTimestamp()) + "ms");
+		}
+		if(siteDataVO.getStatus() == 3){
+			long end = System.currentTimeMillis();
+			System.out.println("测试开始，当前数据偏移量：" +  count.get());
+			System.out.println("最终数据产生时间：" +  siteDataVO.getTimestamp());
+			System.out.println("测试结束系统时间：" +  end);
+			// 1400是单次测试的误差，抹去后测试数据积累后的时延
+			System.out.println("时延：" +  (end - siteDataVO.getTimestamp()) + "ms");
+		}
 	}
 }

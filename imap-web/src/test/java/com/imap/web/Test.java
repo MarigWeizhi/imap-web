@@ -15,9 +15,14 @@ import static com.imap.common.util.DateTimeUtil.getDateTimeStr;
  * @Description:
  */
 public class Test {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         String str = "{\"tmp\":2000.96,\"lx\":163.86,\"hmt\":0.68}";
         System.out.println(JsonToMap.jsonToObj(str, new TypeReference<Map<String,Double>>(){}));
         System.out.println(DateTimeUtil.timeStamp2DateString(1678297096000L));
+
+        for (int i = 0; i < 100; i++) {
+            System.out.println(System.currentTimeMillis());
+            Thread.sleep(1000);
+        }
     }
 }

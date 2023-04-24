@@ -15,6 +15,7 @@ public class ImapWebApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(ImapWebApplication.class, args);
+        System.out.println("IMAP 启动完成");
     }
 
 }

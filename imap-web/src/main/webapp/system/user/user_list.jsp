@@ -48,18 +48,7 @@
 
 <script type="text/html" id="toolbarDemo">
     <div class="layui-btn-container">
-<%--        <shiro:hasPermission name="user:add">--%>
             <button type="button" class="layui-btn layui-btn-sm" lay-event="add"><i class="layui-icon"></i>新增</button>
-<%--        </shiro:hasPermission>--%>
-<%--        <shiro:hasPermission name="user:del">--%>
-<%--            <button type="button" class="layui-btn layui-btn-danger layui-btn-sm" lay-event="del"><i class="layui-icon"></i>删除</button>--%>
-<%--        </shiro:hasPermission>--%>
-<%--        <shiro:hasPermission name="user:resetPwd">--%>
-<%--            <button type="button" class="layui-btn layui-btn-primary layui-btn-sm" lay-event="resetPwd"><i class="layui-icon">&#xe673;</i>密码重置</button>--%>
-<%--        </shiro:hasPermission>--%>
-<%--        <shiro:hasPermission name="user:assignAuth">--%>
-<%--            <button type="button" class="layui-btn layui-btn-primary layui-btn-sm" lay-event="assignAuth"><i class="layui-icon">&#xe716;</i>权限分配</button>--%>
-<%--        </shiro:hasPermission>--%>
     </div>
 </script>
 
@@ -68,17 +57,7 @@
     <a class="layui-btn layui-btn-danger layui-btn-sm" lay-event="del">删除</a>
 </script>
 
-<%--<script type="text/html" id="switchTpl">--%>
-<%--    <!-- 这里的checked的状态只是演示 -->--%>
-<%--    <input type = "checkbox" name = "sex" value = "{{d.id}}" lay-skin = "switch"lay-text = "男|女" lay-filter = "sexDemo" {{ d.sex == '1' ? 'checked': ''}} >--%>
-<%--</script>--%>
 
-<%--<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery-1.9.1.min.js"></script>--%>
-<%--<script type="text/javascript" src="${pageContext.request.contextPath}/resources/plugins/ztree/js/jquery.ztree.core.js"></script>--%>
-<%--<script type="text/javascript" src="${pageContext.request.contextPath}/resources/plugins/ztree/js/jquery.ztree.all.js"></script>--%>
-<%--<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/plugins/ztree/css/zTreeStyle/zTreeStyle.css" type="text/css" />--%>
-<%--<%@include file="../organize/organize_ztree.jsp" %>--%>
-<%--<%@include file="../organize/organize_laytree.jsp" %>--%>
 <script>
     var table,form;
     layui.use(['table','form'], function(){
@@ -97,14 +76,10 @@
             ,title: '用户数据表'
             ,cols: [[
                 {type: 'checkbox', fixed: 'left', width:50}
-                ,{field:'user_id', title:'用户编号', width:100, edit: 'text'}
-                ,{field:'login_name', fixed: 'left',title:'登录名', width:120, templet: function(res){
-                        return filterXSS(res.login_name);
-                    }}
-                ,{field:'name', title:'姓名', width:120, templet: function(res){
-                        return filterXSS(res.name);
-                    }}
-               ,{field:'sex', title:'性别', width:80, sort: true, templet: function(res){
+                ,{field:'user_id', fixed: 'left',title:'用户编号', width:100}
+                ,{field:'login_name', fixed: 'left',title:'登录名', width:180}
+                ,{field:'name', fixed: 'left', title:'姓名', width:120}
+               ,{field:'sex',  fixed: 'left',title:'性别', width:80, sort: true, templet: function(res){
                    if(res.sex=='1'){
                        return '男';
                    }else if(res.sex=='0'){
@@ -113,11 +88,11 @@
                        return '未知';
                    }
                }}
-                ,{field:'phone', title:'手机号', width:120, edit: 'text'}
-               ,{field:'email', title:'邮箱', width:200, edit: 'text', templet: function(res){
+                ,{field:'phone', fixed: 'left',title:'手机号', width:120, edit: 'text'}
+               ,{field:'email', fixed: 'left',title:'邮箱', width:200, edit: 'text', templet: function(res){
                    return '<em>'+ res.email +'</em>'
                }}
-                ,{field:'create_time', title:'创建时间'}
+                ,{field:'create_time',fixed: 'left', title:'创建时间'}
                 ,{fixed: 'right', align:'center',title:'操作', width:200, toolbar: '#barDemo'}
             ]]
             ,id:'system_user'
@@ -146,11 +121,6 @@
                 case 'del': //删除
                     if(data.length>0){
                         var delBol = true;
-                        // for ( var i = 0; i <data.length; i++){
-                        //     if($("#del_"+data[i].user_id).text()==undefined||$("#del_"+data[i].user_id).text()==''||$("#del_"+data[i].user_id).text()==null){
-                        //         delBol = false;
-                        //     }
-                        // }
                         if(!delBol){
                             layer.msg("批量删除中存在没有删除权限的数据，请重新选择。", {time: 2000});
                             return;

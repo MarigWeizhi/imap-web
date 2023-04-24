@@ -18,15 +18,14 @@
 <div id="loginDiv" style="height: 350px">
 
     <form action="${pageContext.request.contextPath}/system/user/login" method="post" id="form">
-        <h1>LOGIN IN</h1>
+        <h1>用户登录</h1>
         <div id="loginMsg">${loginMsg}</div>
 
-        <p>Username:<input id="username" name="userName" type="text"></p>
-        <p>Password:<input id="password" name="password" type="password"></p>
-        <p>Remember:<input id="remember" name="remember" type="checkbox"></p>
+        <p>用户名:<input id="username" name="userName" type="text"></p>
+        <p>密码:<input id="password" name="password" type="password"></p>
         <div id="subDiv">
-            <input type="submit" class="button" value="login up">
-            <input type="reset" class="button" value="reset">&nbsp;&nbsp;&nbsp;
+            <input type="submit" class="button" value="登录">
+            <input type="reset" class="button" value="重置">&nbsp;&nbsp;&nbsp;
         </div>
     </form>
 

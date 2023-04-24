@@ -141,7 +141,7 @@
     <select id="getLastestAlarm" resultType="java.util.Date">
         select create_time as time
         from dev_alarm
-        where site_id = #{siteId}
+        where site_id = #{siteId} and status = 0
         order by create_time desc
         limit 1
     </select>

@@ -36,7 +36,6 @@ public class DataReportAPI extends BaseController {
         DataReport dataReport = JsonToMap.jsonToObj(report, DataReport.class);
         dataService.setSiteData(dataReport);
     }
-
     @PostMapping("/alarm/{siteId}")
     void alarm(HttpServletRequest request,HttpServletResponse response,@PathVariable("siteId") int siteId) throws IOException {
         PageData pd = new PageData(request);
@@ -60,7 +59,5 @@ public class DataReportAPI extends BaseController {
         json.setMsg("上报成功。");
         this.writeJson(response, json);
     }
-
-
 
 }

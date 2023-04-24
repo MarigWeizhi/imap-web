@@ -21,6 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
 
 /**
  * @Author: Weizhi
@@ -114,7 +115,13 @@ public class SiteServiceImpl extends SiteService {
     @Override
     @Cacheable(value = "config" ,key = "#siteId")
     public MonitorConfig getMonitorConfig(Integer siteId) {
-        return siteMapper.getMonitorConfig(siteId).to();
+        return siteMapper.getMonitorConfig(siteId).toMonitorConfig();
+    }
+
+    @Override
+    public List<MonitorConfig> getAllMonitorConfig() {
+        List<MonitorConfigPO> list = siteMapper.getAllMonitorConfig();
+        return list.stream().map(config -> config.toMonitorConfig()).collect(Collectors.toList());
     }
 
     @Override
