@@ -91,7 +91,12 @@ public class AlarmServiceImpl extends AlarmService {
 //            logger.info("addAlarm:" + alarmPO);
             Site site = siteMapper.getSiteById(siteId);
             User user = userMapper.getUserById(site.getCreateUser());
-            MailUtil.sendAlarm(user.getUserName(), site.getSiteName(), info);
+            try{
+                MailUtil.sendAlarm(user.getEmail(),user.getUserName(), site.getSiteName(), info);
+            }catch (Exception e){
+                logger.warn("email发送异常");
+                e.printStackTrace();
+            }
             alarmMapper.addAlarm(alarmPO);
         }
     }

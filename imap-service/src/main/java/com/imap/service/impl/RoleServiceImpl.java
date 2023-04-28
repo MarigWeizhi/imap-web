@@ -60,6 +60,12 @@ public class RoleServiceImpl extends RoleService {
     }
 
     @Override
+    public String getRoleConfig(Integer roleId) {
+        Role role = getRoleById(roleId);
+        return role.getRoleConfig();
+    }
+
+    @Override
     public void save(PageData pd) {
         StringJoiner sj = new StringJoiner(";");
         if(pd.get(MenuTypeEnum.ONLINE.getCode())!=null){sj.add(MenuTypeEnum.ONLINE.getCode());}

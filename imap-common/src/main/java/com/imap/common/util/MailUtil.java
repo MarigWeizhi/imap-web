@@ -42,10 +42,10 @@ public class MailUtil {
 		Transport.send(message);
 	}
 
-	public static void sendAlarm(String name, String siteName, String info) {
+	public static void sendAlarm(String email,String name, String siteName, String info) {
 		String msg = "站点管理员：%s 请注意</br> 您负责的站点：%s 正处于异常状态，请立即前往站点查看。</br> 详细信息：%s";
 		try {
-			MailUtil.sendMail("1456416969@qq.com","站点异常",String.format(msg, name, siteName, info));
+			MailUtil.sendMail(email,"站点异常",String.format(msg, name, siteName, info));
 		} catch (MessagingException e) {
 			System.out.println("email异常");
 			throw new RuntimeException(e);
@@ -55,7 +55,7 @@ public class MailUtil {
 		String name = "李明";
 		String siteName = "IMAP_SSPU_001";
 		String info = "温度异常: 当前值为：99.96 参考值为：10.0 ~ 60.0";
-		sendAlarm(name, siteName, info);
+		sendAlarm("1456416969@qq.com",name, siteName, info);
 	}
 
 }

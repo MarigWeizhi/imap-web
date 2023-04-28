@@ -14,4 +14,6 @@ public abstract class RoleService implements BaseService{
     public abstract Role getRoleById(int roleId);
 
     public abstract PageData findInfo(PageData pd);
+
+    public abstract String getRoleConfig(Integer roleId);
 }

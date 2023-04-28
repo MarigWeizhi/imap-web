@@ -106,8 +106,8 @@ public class DataService {
     @CachePut(cacheNames = "siteData", key = "#result.site_id")
     public SiteDataVO setSiteData(DataReport dataReport) {
         // 压力测试时注释掉数据库更新
-        siteMapper.setCurSiteData(dataReport);
-        count.addAndGet(1);
+//        siteMapper.setCurSiteData(dataReport);
+//        count.addAndGet(1);
         Map<String,Double> map = JsonToMap.jsonToObj(dataReport.getDataStr(), new TypeReference<Map<String,Double>>(){});
         dataReport.setData(map);
         SiteDataVO siteDataVO = new SiteDataVO(
