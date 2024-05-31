@@ -26,5 +26,5 @@
 # 项目地址
 
 云：https://gitee.com/Marig_Weizhi/imap-flink  
-边：https://gitee.com/Marig_Weizhi/imap-pi
-端：https://gitee.com/Marig_Weizhi/imap-web
+边：https://gitee.com/Marig_Weizhi/imap-pi  
+端：https://gitee.com/Marig_Weizhi/imap-web   
